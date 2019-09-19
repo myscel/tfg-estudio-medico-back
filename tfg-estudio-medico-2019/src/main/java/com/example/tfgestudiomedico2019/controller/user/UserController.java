@@ -13,7 +13,7 @@ import com.example.tfgestudiomedico2019.model.rest.UserDto;
 @RequestMapping("/user")
 public interface UserController {
 	
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin()
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<ResponseDto> loginUser(@RequestBody UserDto userDto);
 
