@@ -1,6 +1,8 @@
 package com.example.tfgestudiomedico2019.model.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,30 +21,44 @@ public class UserEntity {
 	private String dni;
 	private String password;
 	
+	@Enumerated(EnumType.STRING)
+	private Role role;
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getDni() {
 		return dni;
 	}
+
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
-		return "UserEntity [id=" + id + ", dni=" + dni + ", password=" + password + "]";
+		return "UserEntity [id=" + id + ", dni=" + dni + ", password=" + password + ", role=" + role + "]";
 	}
-	
-	
-	
-	
+
 }
