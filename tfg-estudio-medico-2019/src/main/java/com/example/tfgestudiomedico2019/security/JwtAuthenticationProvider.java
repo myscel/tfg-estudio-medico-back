@@ -43,7 +43,6 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 			throws AuthenticationException {
 		
 		JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) usernamePasswordAuthenticationToken;
-		
 		String token = jwtAuthenticationToken.getToken();
 		
 		JwtUser jwtUser =  validator.validate(token);
