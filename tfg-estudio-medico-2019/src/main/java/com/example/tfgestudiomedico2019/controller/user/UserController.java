@@ -1,5 +1,6 @@
 package com.example.tfgestudiomedico2019.controller.user;
 
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,5 +17,6 @@ public interface UserController {
 	@CrossOrigin()
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<ResponseDto> loginUser(@RequestBody UserDto userDto);
+	
 
 }
