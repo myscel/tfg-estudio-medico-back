@@ -27,8 +27,9 @@ public class UserControllerImpl implements UserController {
 		ModelMapper mapper = new ModelMapper();
 		
 		UserEntity user = mapper.map(userDto, UserEntity.class);
+		UserEntity userLogged = this.userBusiness.loginUser(user);
 		
-		if(this.userBusiness.loginUser(user)) {
+		if(userLogged != null) {
 			return new ResponseEntity<>(new ResponseDto("User logueado con éxito"), HttpStatus.OK); 
 		}
 		

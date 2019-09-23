@@ -13,9 +13,8 @@ public class JwtUserDetails implements UserDetails {
 	private Long id;
 	private Collection<? extends GrantedAuthority> authorities;
 	
-	public JwtUserDetails(String username, long id, String token, List<GrantedAuthority> grantedAuthorities) {
+	public JwtUserDetails(String username, String token, List<GrantedAuthority> grantedAuthorities) {
 		this.username = username;
-		this.id = id;
 		this.token = token;
 		this.authorities = grantedAuthorities;
 	}
@@ -66,11 +65,6 @@ public class JwtUserDetails implements UserDetails {
 		return token;
 	}
 
-
-
-	public Long getId() {
-		return id;
-	}
 
 
 

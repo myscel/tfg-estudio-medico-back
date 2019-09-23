@@ -13,13 +13,8 @@ public class UserBusinessImpl implements UserBusiness{
 	private UserRepository userRepository;
 
 	@Override
-	public Boolean loginUser(UserEntity userEntity) {
-		
-		if(this.userRepository.findByDniAndPassword(userEntity.getDni(), userEntity.getPassword()) == null) {
-			return false;
-		}
-		
-		return true;
+	public UserEntity loginUser(UserEntity userEntity) {	
+		return this.userRepository.findByDniAndPassword(userEntity.getDni(), userEntity.getPassword());
 	}
 
 	@Override

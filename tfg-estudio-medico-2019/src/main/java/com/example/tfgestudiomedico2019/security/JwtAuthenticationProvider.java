@@ -56,7 +56,7 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 		
 		System.out.println(grantedAuthorities);
 		
-		return new JwtUserDetails(jwtUser.getUsername(), jwtUser.getId(), token, grantedAuthorities);
+		return new JwtUserDetails(jwtUser.getUsername(), token, grantedAuthorities);
 	}
 
 	
