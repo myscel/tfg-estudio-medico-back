@@ -11,9 +11,7 @@ public class HolaMundoController {
 	
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String empezar() {
-        return "Hola Mundo";
-        
-        
+        return "Hola Mundo";    
     }
 
 }

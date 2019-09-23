@@ -2,6 +2,7 @@ package com.example.tfgestudiomedico2019.controller.user;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,7 +43,20 @@ public class UserControllerImpl implements UserController {
 			jwtUser.setUsername(userLogged.getDni());
 			jwtUser.setRole(userLogged.getRole().toString());
 			String token = this.jwtGenerator.generate(jwtUser);
-			return new ResponseEntity<>(new ResponseDto("User logueado con éxito: " + token), HttpStatus.OK); 
+			
+			/* 
+			 *  HttpHeaders responseHeaders = new HttpHeaders();
+			    responseHeaders.set("Baeldung-Example-Header", 
+			      "Value-ResponseEntityBuilderWithHttpHeaders");
+			 
+			    return ResponseEntity.ok()
+			      .headers(responseHeaders)
+			      .body("Response with header using ResponseEntity");*/
+			
+			HttpHeaders responseHeaders = new HttpHeaders();
+		    responseHeaders.set("Authentication", token);
+		    
+			return new ResponseEntity<>(new ResponseDto("User logueado con éxito:"), responseHeaders , HttpStatus.OK); 
 		}
 		
 		return new ResponseEntity<>(new ResponseDto("Fallo en el login"), HttpStatus.BAD_REQUEST); 
