@@ -19,7 +19,7 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
 	
 	public JwtAuthenticationTokenFilter() {
 		//super("/**");
-		super("**/rest/**");
+		super("/rest/**");
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
 		
 		String header = request.getHeader("Authorization");
 		
-		if(header == null || header.startsWith("Token ")) {
+		if(header == null || !header.startsWith("Token ")) {
 			throw new RuntimeException("Jwt Token is missing");
 		}
 		

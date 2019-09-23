@@ -13,11 +13,11 @@ import com.example.tfgestudiomedico2019.security.JwtGenerator;
 @RequestMapping("/token")
 public class TokenController {
 	
-	@PostMapping("/{userName}")
+	@PostMapping()
 	public String generate(@RequestBody final JwtUser jwtUser) {
 		
 		JwtGenerator jwtGenerator = new JwtGenerator();
-		jwtGenerator.generate(jwtUser);
+		return jwtGenerator.generate(jwtUser);
 	}
 
 }
