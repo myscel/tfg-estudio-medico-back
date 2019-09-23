@@ -10,7 +10,7 @@ import com.example.tfgestudiomedico2019.model.entity.JwtUser;
 import com.example.tfgestudiomedico2019.security.JwtGenerator;
 
 @RestController
-@RequestMapping("/token")
+@RequestMapping("/app/token")
 public class TokenController {
 	
 	@PostMapping()

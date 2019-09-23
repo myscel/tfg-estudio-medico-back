@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
+import com.example.tfgestudiomedico2019.model.entity.JwtUser;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
+import com.example.tfgestudiomedico2019.security.JwtGenerator;
 
 @RestController
 public class UserControllerImpl implements UserController {
@@ -18,8 +20,11 @@ public class UserControllerImpl implements UserController {
 	@Autowired
 	private UserBusiness userBusiness;
 	
+	@Autowired
+	private JwtGenerator jwtGenerator;
 	
-	@CrossOrigin(origins = "http://localhost:4200")
+	
+	@CrossOrigin
 	@Override
 	public ResponseEntity<ResponseDto> loginUser(UserDto userDto) {
 		System.out.println(userDto);
@@ -29,8 +34,15 @@ public class UserControllerImpl implements UserController {
 		UserEntity user = mapper.map(userDto, UserEntity.class);
 		UserEntity userLogged = this.userBusiness.loginUser(user);
 		
+		
+		
 		if(userLogged != null) {
-			return new ResponseEntity<>(new ResponseDto("User logueado con éxito"), HttpStatus.OK); 
+			//Crear Token
+			JwtUser jwtUser = new JwtUser();
+			jwtUser.setUsername(userLogged.getDni());
+			jwtUser.setRole(userLogged.getRole().toString());
+			String token = this.jwtGenerator.generate(jwtUser);
+			return new ResponseEntity<>(new ResponseDto("User logueado con éxito: " + token), HttpStatus.OK); 
 		}
 		
 		return new ResponseEntity<>(new ResponseDto("Fallo en el login"), HttpStatus.BAD_REQUEST); 

@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/rest/hello")
+@RequestMapping("/app")
 public class HolaMundoController {
 	
-	@GetMapping
+	@RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String empezar() {
         return "Hola Mundo";
         
