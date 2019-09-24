@@ -22,4 +22,14 @@ public class UserBusinessImpl implements UserBusiness{
 		return true;
 	}
 
+	@Override
+	public UserEntity findByDni(String dni) {
+		return this.userRepository.findByDni(dni);
+	}
+
+	@Override
+	public UserEntity saveUser(UserEntity user) {
+		return this.userRepository.save(user);
+	}
+
 }

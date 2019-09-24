@@ -14,10 +14,11 @@ import lombok.Data;
 public class UserEntity {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String dni;
 	private String password;
+	private Role role;
 	
 	public Integer getId() {
 		return id;
@@ -36,6 +37,13 @@ public class UserEntity {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	@Override
 	public String toString() {
