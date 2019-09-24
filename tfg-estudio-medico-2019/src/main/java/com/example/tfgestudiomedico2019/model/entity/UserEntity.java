@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -16,9 +17,12 @@ public class UserEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private String dni;
+	private String username;
 	private String password;
 	private String role;
+	
+	@Transient
+    private String token;
 	
 	public Integer getId() {
 		return id;
@@ -26,11 +30,11 @@ public class UserEntity {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getDni() {
-		return dni;
+	public String getUsername() {
+		return username;
 	}
-	public void setDni(String dni) {
-		this.dni = dni;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;
@@ -45,10 +49,18 @@ public class UserEntity {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	@Override
 	public String toString() {
-		return "UserEntity [id=" + id + ", dni=" + dni + ", password=" + password + "]";
+		return "UserEntity [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + "]";
 	}
+	
 	
 	
 	

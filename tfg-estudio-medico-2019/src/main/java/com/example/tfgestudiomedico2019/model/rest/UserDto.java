@@ -10,14 +10,15 @@ import lombok.Data;
 
 public class UserDto {
 	
-	private String dni;
+	private String username;
 	private String password;
 	
-	public String getDni() {
-		return dni;
+	
+	public String getUsername() {
+		return username;
 	}
-	public void setDni(String dni) {
-		this.dni = dni;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;
