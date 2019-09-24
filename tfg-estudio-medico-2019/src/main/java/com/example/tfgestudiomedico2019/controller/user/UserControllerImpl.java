@@ -1,5 +1,7 @@
 package com.example.tfgestudiomedico2019.controller.user;
 
+import java.security.Principal;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +54,19 @@ public class UserControllerImpl implements UserController {
 		user.setRole(Role.USER.toString());
 		
 		return new ResponseEntity<>(this.userBusiness.saveUser(user), HttpStatus.OK);
+		
+	}
+
+
+	@Override
+	public ResponseEntity<?> login(Principal principal) {
+		
+		if(principal == null) {
+			//Will be used for logout
+			return ResponseEntity.ok(principal);
+		}
+		
+		return new ResponseEntity<>(this.userBusiness.findByDni(principal.getName()), HttpStatus.OK);
 		
 	}
 

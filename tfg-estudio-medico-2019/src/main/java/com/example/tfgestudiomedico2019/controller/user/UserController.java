@@ -1,5 +1,7 @@
 package com.example.tfgestudiomedico2019.controller.user;
 
+import java.security.Principal;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,11 +18,15 @@ import com.example.tfgestudiomedico2019.model.rest.UserDto;
 public interface UserController {
 	
 	@CrossOrigin
-	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/log", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<ResponseDto> loginUser(@RequestBody UserDto userDto);
 	
 	@CrossOrigin
 	@RequestMapping(value = "/registration", method = RequestMethod.POST ,  produces = "application/json")
     public ResponseEntity<UserEntity> saveUser(@RequestBody UserDto userDto);
+	
+	@CrossOrigin
+	@RequestMapping(value = "/login", method = RequestMethod.GET ,  produces = "application/json")
+    public ResponseEntity<?> login(@RequestBody Principal  principal);
 
 }
