@@ -18,7 +18,7 @@ public class UserEntity {
 	private Integer id;
 	private String dni;
 	private String password;
-	private Role role;
+	private String role;
 	
 	public Integer getId() {
 		return id;
@@ -39,10 +39,10 @@ public class UserEntity {
 		this.password = password;
 	}
 	
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 	@Override

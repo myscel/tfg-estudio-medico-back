@@ -49,7 +49,7 @@ public class UserControllerImpl implements UserController {
 		
 		UserEntity user = mapper.map(userDto, UserEntity.class);
 		
-		user.setRole(Role.USER);
+		user.setRole(Role.USER.toString());
 		
 		return new ResponseEntity<>(this.userBusiness.saveUser(user), HttpStatus.OK);
 		
