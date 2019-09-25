@@ -34,7 +34,6 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //Cross-origin-resource-sharing: localhost:8080, localhost:4200(allow for it.)
         http.cors().and()
                 .authorizeRequests()
                 //These are public paths

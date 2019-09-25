@@ -25,10 +25,6 @@ public class JwtTokenProvider {
     @Value("${expirationTime-ms}")
     private Long tokenExpirationTime;
 
-
-    @Value("${app.jwt.header.string}")
-    private String jwtHeaderString;
-
     
 
     public String generateJwtToken(Authentication authentication){
@@ -47,7 +43,7 @@ public class JwtTokenProvider {
     	
     	String token;
     	
-    	String tokenAux = request.getHeader(jwtHeaderString);
+    	String tokenAux = request.getHeader("Authorization");
         if(tokenAux != null && tokenAux.startsWith("Bearer")){
             token = tokenAux.substring(7, tokenAux.length());
         }
@@ -70,10 +66,10 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(username, null, authorities);
     }
 
-    public boolean validateToken(HttpServletRequest request){
+    public boolean validateTokenAndExpirationTime(HttpServletRequest request){
     	String token;
     	
-    	String tokenAux = request.getHeader(jwtHeaderString);
+    	String tokenAux = request.getHeader("Authorization");
         if(tokenAux != null && tokenAux.startsWith("Bearer")){
             token = tokenAux.substring(7, tokenAux.length());
         }

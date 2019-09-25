@@ -27,7 +27,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             throws IOException, ServletException {
         Authentication authentication = jwtTokenProvider.getAuthentication(request);
 
-        if(authentication !=null && jwtTokenProvider.validateToken(request)){
+        if(authentication !=null && jwtTokenProvider.validateTokenAndExpirationTime(request)){
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);

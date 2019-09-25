@@ -29,7 +29,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 		//default role.
-        user.setRole(Role.USER.name());
+        user.setRole(Role.RESEARCHER.name());
         return new ResponseEntity<>(userBusiness.saveUser(user), HttpStatus.CREATED);
     }
 
