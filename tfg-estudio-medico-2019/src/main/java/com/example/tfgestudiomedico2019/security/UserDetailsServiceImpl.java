@@ -1,4 +1,4 @@
-package com.example.tfgestudiomedico2019.business.user;
+package com.example.tfgestudiomedico2019.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserEntity user = userRepository.findByUsername(username);
         
         if(user == null){
-            throw new UsernameNotFoundException("Username doesn't exist");
+            throw new UsernameNotFoundException("Error: Username doesn't exist");
         }
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
