@@ -38,7 +38,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
         http.cors().and()
                 .authorizeRequests()
                 //These are public paths
-                .antMatchers("/api/user/login",  "/error", "/api/user/**").permitAll()
+                .antMatchers("/resources/**",  "/error", "/api/user/**").permitAll()
                 //These can be reachable for just have admin role.
                 .antMatchers("/api/admin/**").hasRole("ADMIN")
                 //All remaining paths should need authentication.
