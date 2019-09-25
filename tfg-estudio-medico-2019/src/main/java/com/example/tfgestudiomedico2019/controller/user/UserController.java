@@ -43,7 +43,8 @@ public class UserController {
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) principal;
         UserEntity user = userBusiness.findByUsername(authenticationToken.getName());
-        user.setToken(tokenProvider.generateToken(authenticationToken));
+        
+        user.setToken(tokenProvider.generateJwtToken(authenticationToken));
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
