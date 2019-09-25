@@ -36,37 +36,22 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
                 .authorizeRequests()
-                //These are public paths
                 .antMatchers("/resources/**",  "/error", "/api/user/**").permitAll()
-                //These can be reachable for just have admin role.
                 .antMatchers("/api/admin/**").hasRole("ADMIN")
-                //All remaining paths should need authentication.
+                .antMatchers("/api/researcher/**").hasRole("RESEARCHER")
                 .anyRequest().fullyAuthenticated()
                 .and()
-                //logout will log the user out by invalidated session.
                 .logout().permitAll()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/api/user/logout", "POST"))
                 .and()
-                //login form and path
-                .formLogin().loginPage("/api/user/login").and()
-                //enable basic authentication
-                .httpBasic().and()
-                //We will handle it later.
-                //Cross side request forgery
+                .formLogin().loginPage("/api/user/login")
+                .and()
+                .httpBasic()
+                .and()
                 .csrf().disable();
-
-        //jwt filter
         http.addFilter(new JWTAuthorizationFilter(authenticationManager(),jwtTokenProvider));
     }
 
-
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
-
-    //Cross origin resource sharing.
     @Bean
     public WebMvcConfigurer corsConfigurer(){
         return new WebMvcConfigurer() {
@@ -76,4 +61,9 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
             }
         };
     }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }  
 }
