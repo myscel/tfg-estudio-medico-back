@@ -50,7 +50,7 @@ public class UserControllerImpl implements UserController {
 	public ResponseEntity<?> login(Principal principal) {
 		
 		if(principal == null){
-            //logout will also use here so we should return ok http status.
+            //Will enter here when logout
             return new ResponseEntity<>(principal, HttpStatus.OK);
         }
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
