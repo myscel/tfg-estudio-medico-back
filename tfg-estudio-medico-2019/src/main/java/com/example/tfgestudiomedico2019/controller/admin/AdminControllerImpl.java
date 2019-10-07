@@ -29,10 +29,6 @@ public class AdminControllerImpl implements AdminController{
 			listDto.getList().add(new UserDto(elem.getUsername()));	
 		}
 		
-		if(listDto.getList().isEmpty()) {
-			return new ResponseEntity<>(new ResponseDto("Acutlamente No hay investigadores"), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
 		return new ResponseEntity<>(listDto, HttpStatus.OK);
 	}
 
