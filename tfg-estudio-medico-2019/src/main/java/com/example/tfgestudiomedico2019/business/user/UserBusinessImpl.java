@@ -1,9 +1,12 @@
 package com.example.tfgestudiomedico2019.business.user;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.tfgestudiomedico2019.model.entity.Role;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.repository.UserRepository;
 
@@ -28,5 +31,10 @@ public class UserBusinessImpl implements UserBusiness {
     public UserEntity findByUsername(String username){
         return userRepository.findByUsername(username);
     }
+
+	@Override
+	public List<UserEntity> getAllResearchers() {
+		return this.userRepository.findByRole(Role.RESEARCHER.name());
+	}
 
 }
