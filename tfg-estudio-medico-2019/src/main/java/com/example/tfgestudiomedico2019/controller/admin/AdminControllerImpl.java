@@ -26,7 +26,7 @@ public class AdminControllerImpl implements AdminController{
 		UserListDto listDto = new UserListDto();
 		
 		for(UserEntity elem: listResearchers) {
-			listDto.getList().add(new UserDto(elem.getUsername()));	
+			listDto.getList().add(new UserDto(elem.getUsername(), elem.getName()));	
 		}
 		
 		return new ResponseEntity<>(listDto, HttpStatus.OK);

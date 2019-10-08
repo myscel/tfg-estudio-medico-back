@@ -15,6 +15,7 @@ public class UserEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	private String name;
 	private String username;
 	private String password;
 	private String role;
@@ -27,6 +28,12 @@ public class UserEntity {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getUsername() {
 		return username;
@@ -54,15 +61,7 @@ public class UserEntity {
 	}
 	@Override
 	public String toString() {
-		return "UserEntity [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role
-				+ ", token=" + token + "]";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
+		return "UserEntity [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password
+				+ ", role=" + role + ", token=" + token + "]";
+	}	
 }
