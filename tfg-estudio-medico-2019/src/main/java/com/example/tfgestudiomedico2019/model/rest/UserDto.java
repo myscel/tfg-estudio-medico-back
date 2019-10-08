@@ -3,21 +3,21 @@ package com.example.tfgestudiomedico2019.model.rest;
 
 public class UserDto {
 	
-	private String dni;
+	private String username;
 	
 	
 	
-	public UserDto(String dni) {
+	public UserDto(String username) {
 		super();
-		this.dni = dni;
+		this.username = username;
 	}
 	
 	
-	public String getDni() {
-		return dni;
+	public String getUsername() {
+		return username;
 	}
-	public void setDni(String dni) {
-		this.dni = dni;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	
