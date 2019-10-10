@@ -5,12 +5,14 @@ public class UserDto {
 	
 	private String username;
 	private String name;
+	private String gender;
 	
 	
-	public UserDto(String username, String name) {
+	public UserDto(String username, String name, String gender) {
 		super();
 		this.username = username;
 		this.name = name;
+		this.gender = gender;
 	}
 	
 	public String getUsername() {
@@ -24,5 +26,11 @@ public class UserDto {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 }

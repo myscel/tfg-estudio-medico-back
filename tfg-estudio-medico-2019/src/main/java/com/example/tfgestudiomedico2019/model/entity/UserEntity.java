@@ -17,6 +17,7 @@ public class UserEntity {
 	private Integer id;
 	private String name;
 	private String username;
+	private String gender;
 	private String password;
 	private String role;
 	
@@ -41,6 +42,12 @@ public class UserEntity {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 	public String getRole() {
 		return role;
 	}
@@ -61,7 +68,7 @@ public class UserEntity {
 	}
 	@Override
 	public String toString() {
-		return "UserEntity [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password
-				+ ", role=" + role + ", token=" + token + "]";
+		return "UserEntity [id=" + id + ", name=" + name + ", username=" + username + ", gender=" + gender
+				+ ", password=" + password + ", role=" + role + ", token=" + token + "]";
 	}	
 }
