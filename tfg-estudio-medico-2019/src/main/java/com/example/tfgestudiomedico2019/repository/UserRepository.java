@@ -3,10 +3,14 @@ package com.example.tfgestudiomedico2019.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+@Repository
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	
     UserEntity findByUsername(String username);
     List<UserEntity> findByRole(String role);
+	Long deleteByUsername(String username);
 }

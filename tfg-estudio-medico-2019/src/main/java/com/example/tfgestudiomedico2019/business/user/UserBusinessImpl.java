@@ -2,6 +2,8 @@ package com.example.tfgestudiomedico2019.business.user;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import com.example.tfgestudiomedico2019.repository.UserRepository;
 
 
 @Service
+@Transactional
 public class UserBusinessImpl implements UserBusiness {
 
     @Autowired
@@ -35,6 +38,14 @@ public class UserBusinessImpl implements UserBusiness {
 	@Override
 	public List<UserEntity> getAllResearchers() {
 		return this.userRepository.findByRole(Role.RESEARCHER.name());
+	}
+
+	@Override
+	public boolean deleteResearcher(String username) {
+		if(this.userRepository.deleteByUsername(username) == 1) {
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -8,5 +8,6 @@ public interface UserBusiness {
     public UserEntity saveUser(UserEntity user);
     public UserEntity findByUsername(String username);
     public List<UserEntity> getAllResearchers();
+    public boolean deleteResearcher(String username);
 
 }

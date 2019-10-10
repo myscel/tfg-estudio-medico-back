@@ -32,4 +32,17 @@ public class AdminControllerImpl implements AdminController{
 		return new ResponseEntity<>(listDto, HttpStatus.OK);
 	}
 
+	@Override
+	public ResponseEntity<?> deleteResearcher(String username) {
+
+		if(this.userBusiness.deleteResearcher(username)) {
+			return new ResponseEntity<>(new ResponseDto("Usuario borrado correctamente!"),HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(new ResponseDto("Error al borrar el usuario"),HttpStatus.NOT_FOUND);
+
+		}
+		
+	}
+
 }
