@@ -24,28 +24,6 @@ public class UserControllerImpl implements UserController {
     private JwtTokenProvider tokenProvider;
 	
 	
-
-	@Override
-	public ResponseEntity<?> register(UserEntity user) {
-		
-		 if(userBusiness.findByUsername(user.getUsername())!=null){
-			 ResponseDto response = new ResponseDto("Error registring user...");
-	         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-	     }
-
-
-	     user.setRole(Role.RESEARCHER.name());
-	        
-	     UserEntity userSaved = this.userBusiness.saveUser(user);
-	        
-	     if(userSaved == null) {
-	    	 ResponseDto response = new ResponseDto("Error saving user...");
-	         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);	
-	     }
-	     
-	     return new ResponseEntity<>(userSaved, HttpStatus.CREATED);
-	}
-
 	@Override
 	public ResponseEntity<?> login(Principal principal) {
 		

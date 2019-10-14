@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
+import com.example.tfgestudiomedico2019.model.entity.Role;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
@@ -45,4 +46,32 @@ public class AdminControllerImpl implements AdminController{
 		
 	}
 
+	@Override
+	public ResponseEntity<?> registerResearcher(UserEntity user) {
+		
+		try {
+			 if(userBusiness.findByUsername(user.getUsername())!=null){
+				 ResponseDto response = new ResponseDto("Error registering user...");
+		         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+		     }
+
+
+		     user.setRole(Role.RESEARCHER.name());
+		        
+		     UserEntity userSaved = this.userBusiness.saveUser(user);
+		        
+		     if(userSaved == null) {
+		    	 ResponseDto response = new ResponseDto("Error saving user...");
+		         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);	
+		     }
+		     
+		     return new ResponseEntity<>(userSaved, HttpStatus.CREATED);
+		}
+		catch(Exception e) {
+			 ResponseDto response = new ResponseDto("Unknown error");
+	         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
+	}
 }
