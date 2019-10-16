@@ -25,7 +25,7 @@ public class ResearcherBusinessImpl implements ResearcherBusiness {
 		UserEntity researcher = new UserEntity();
 		researcher.setId(idResearcher);
 		
-		List<SubjectEntity> list = this.researcherRepository.findByIdResearcher(researcher);
+		List<SubjectEntity> list = this.researcherRepository.findByResearcher(researcher);
 		
 		SubjectListFromResearcherDto dtoList = new SubjectListFromResearcherDto();
 		

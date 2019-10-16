@@ -10,5 +10,5 @@ import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 
 @Repository
 public interface ResearcherRepository extends JpaRepository<SubjectEntity, Long> {
-	List<SubjectEntity> findByIdResearcher(UserEntity researcher);	
+	List<SubjectEntity> findByResearcher(UserEntity researcher);	
 }

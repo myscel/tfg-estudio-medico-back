@@ -1,9 +1,14 @@
 package com.example.tfgestudiomedico2019.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -21,9 +26,25 @@ public class UserEntity {
 	private String password;
 	private String role;
 	
+	@OneToMany(
+	        mappedBy = "researcher",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	)
+	private List<SubjectEntity> subjects = new ArrayList<>();
+	
 	@Transient
 	private String token;
 	
+	
+	
+	
+	public List<SubjectEntity> getSubjects() {
+		return subjects;
+	}
+	public void setSubjects(List<SubjectEntity> subjects) {
+		this.subjects = subjects;
+	}
 	public Integer getId() {
 		return id;
 	}

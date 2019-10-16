@@ -3,14 +3,16 @@ package com.example.tfgestudiomedico2019.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,10 +25,9 @@ public class SubjectEntity {
 	@Column(name = "identificationnumber")
 	private Integer identificationNumber;
 	
-	
-	@OneToOne ()
-	@JoinColumn(name="idresearcher")
-	private UserEntity idResearcher;
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idresearcher")
+	private UserEntity researcher;
 	
 	
 	
@@ -50,11 +51,11 @@ public class SubjectEntity {
 	}
 
 	public UserEntity getIdResearcher() {
-		return idResearcher;
+		return researcher;
 	}
 
-	public void setIdResearcher(UserEntity idResearcher) {
-		this.idResearcher = idResearcher;
+	public void setIdResearcher(UserEntity researcher) {
+		this.researcher = researcher;
 	}
 
 	public List<InvestigationEntity> getInvestigations() {
@@ -67,7 +68,10 @@ public class SubjectEntity {
 
 	@Override
 	public String toString() {
-		return "SubjectEntity [id=" + id + ", identificationNumber=" + identificationNumber + ", idResearcher="
-				+ idResearcher + "]";
+		return "SubjectEntity [id=" + id + ", identificationNumber=" + identificationNumber + ", researcher="
+				+ researcher + "]";
 	}
+	
+	
+
 }
