@@ -22,15 +22,22 @@ public class AdminControllerImpl implements AdminController{
 
 	@Override
 	public ResponseEntity<?> getAllUsers() {
-		List<UserEntity> listResearchers = this.userBusiness.getAllResearchers();
 		
-		UserListDto listDto = new UserListDto();
-		
-		for(UserEntity elem: listResearchers) {
-			listDto.getList().add(new UserDto(elem.getUsername(), elem.getName(), elem.getGender()));	
+		try {
+			List<UserEntity> listResearchers = this.userBusiness.getAllResearchers();
+			
+			UserListDto listDto = new UserListDto();
+			
+			for(UserEntity elem: listResearchers) {
+				listDto.getList().add(new UserDto(elem.getUsername(), elem.getName(), elem.getGender()));	
+			}
+			
+			return new ResponseEntity<>(listDto, HttpStatus.OK);
 		}
-		
-		return new ResponseEntity<>(listDto, HttpStatus.OK);
+		catch(Exception e) {
+			 ResponseDto response = new ResponseDto("Unknown error");
+	         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
 	}
 
 	@Override

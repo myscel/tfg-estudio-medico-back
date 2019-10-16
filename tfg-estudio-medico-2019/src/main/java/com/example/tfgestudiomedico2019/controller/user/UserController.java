@@ -16,5 +16,8 @@ public interface UserController {
     
     @GetMapping(path = "/login", produces = "application/json")
     public ResponseEntity<?> login(Principal principal);
+    
+    @GetMapping(path = "/pruebas", produces = "application/json")
+    public ResponseEntity<?> prueba1();
 
 }
