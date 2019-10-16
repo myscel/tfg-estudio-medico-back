@@ -60,8 +60,4 @@ public class UserControllerImpl implements UserController {
         return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
-	
-	
-
-
 }
