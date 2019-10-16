@@ -7,14 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusinessImpl;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
-import com.example.tfgestudiomedico2019.model.entity.Role;
-import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
-import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.security.JwtTokenProvider;
 
@@ -49,9 +47,21 @@ public class UserControllerImpl implements UserController {
 
 	@Override
 	public ResponseEntity<?> prueba1() {
-		SubjectListFromResearcherDto list = this.researcherBusinessImpl.getAllSubjectsByResearcher(138);
+		SubjectListFromResearcherDto list = this.researcherBusinessImpl.getAllSubjectsAndInvestigationsByResearcher(138);
 		
         return new ResponseEntity<>(list, HttpStatus.OK);
 	}
+
+
+	@Override
+	public ResponseEntity<?> prueba2(@PathVariable String id) {
+		SubjectListFromResearcherDto list = this.researcherBusinessImpl.getAllSubjectsAndInvestigationsByResearcher(Integer.parseInt(id));
+		
+        return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
+	
+	
+
 
 }

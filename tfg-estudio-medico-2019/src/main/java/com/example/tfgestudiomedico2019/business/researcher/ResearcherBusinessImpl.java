@@ -21,7 +21,7 @@ public class ResearcherBusinessImpl implements ResearcherBusiness {
 	private ResearcherRepository researcherRepository;
 
 	@Override
-	public SubjectListFromResearcherDto getAllSubjectsByResearcher(Integer idResearcher) {
+	public SubjectListFromResearcherDto getAllSubjectsAndInvestigationsByResearcher(Integer idResearcher) {
 		UserEntity researcher = new UserEntity();
 		researcher.setId(idResearcher);
 		
