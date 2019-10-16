@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusinessImpl;
+import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 
 @RestController
@@ -16,8 +17,19 @@ public class ResearcherControllerImpl implements ResearcherController {
 
 	@Override
 	public ResponseEntity<?> getSubjectsAndInvestigationsFromIdResearcher(String id) {
-		SubjectListFromResearcherDto list = this.researcherBusinessImpl.getAllSubjectsAndInvestigationsByResearcher(Integer.parseInt(id));
-        return new ResponseEntity<>(list, HttpStatus.OK);
+		try {
+			SubjectListFromResearcherDto list = this.researcherBusinessImpl.getAllSubjectsAndInvestigationsByResearcher(Integer.parseInt(id));
+	        return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+		catch(NumberFormatException e) {
+			 ResponseDto response = new ResponseDto("El id no es un número entero");
+	         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+		catch(Exception e) {
+			ResponseDto response = new ResponseDto("Unknown error");
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		 
 	}
 
 }
