@@ -39,7 +39,11 @@ public class UserControllerImpl implements UserController {
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
         UserEntity userLogged = userBusiness.findByUsername(authenticationToken.getName());
         
+        userLogged.setSubjects(null);
+        
         userLogged.setToken(tokenProvider.generateJwtToken(authenticationToken));
+        
+        
 
         return new ResponseEntity<>(userLogged, HttpStatus.OK);
 	}
