@@ -23,6 +23,9 @@ public interface AdminController {
     @PostMapping(path = "/registerResearcher", produces = "application/json")
   	public ResponseEntity<?> registerResearcher(@RequestBody UserEntity user);
     
+    @GetMapping(path = "/subjects", produces = "application/json")
+   	public ResponseEntity<?> getAllSubjects();
+    
     
 
 }

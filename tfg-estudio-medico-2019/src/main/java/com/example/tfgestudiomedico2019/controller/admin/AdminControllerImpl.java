@@ -7,10 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
 import com.example.tfgestudiomedico2019.model.entity.Role;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
+import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.UserListDto;
 
@@ -19,6 +21,9 @@ public class AdminControllerImpl implements AdminController{
 	
 	@Autowired
 	private UserBusiness userBusiness;
+	
+	@Autowired
+	private ResearcherBusiness researcherBusiness;
 
 	@Override
 	public ResponseEntity<?> getAllUsers() {
@@ -80,5 +85,20 @@ public class AdminControllerImpl implements AdminController{
 		}
 		
 		
+	}
+	
+	@Override
+	public ResponseEntity<?> getAllSubjects() {
+		
+		try {
+			SubjectInfoListDto list = this.researcherBusiness.getAllSubjects();
+			
+			
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			 ResponseDto response = new ResponseDto("Unknown error");
+	         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
 	}
 }

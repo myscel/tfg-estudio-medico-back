@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.SubjectFromResearcherDto;
+import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
+import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.repository.ResearcherRepository;
 
@@ -50,4 +52,21 @@ public class ResearcherBusinessImpl implements ResearcherBusiness {
 		return dtoList;
 	}
 
+	@Override
+	public SubjectInfoListDto getAllSubjects() {
+		List<SubjectEntity> entityList = this.researcherRepository.findAll();
+		
+		SubjectInfoListDto dtoList = new SubjectInfoListDto();
+		
+		for(SubjectEntity elem: entityList) {
+			SubjectInfoDto dto = new SubjectInfoDto();
+			dto.setIdentificationNumber(elem.getIdentificationNumber());
+			dto.setUsernameResearcher(elem.getIdResearcher().getUsername());
+			
+			dtoList.getList().add(dto);	
+		}
+		
+		
+		return dtoList;
+	}
 }
