@@ -47,6 +47,12 @@ public class AdminControllerImpl implements AdminController{
 
 	@Override
 	public ResponseEntity<?> deleteResearcher(String username) {
+		
+		UserEntity userToDelete = this.userBusiness.findByUsername(username);
+		
+		if(!userToDelete.getSubjects().isEmpty()) {
+			return new ResponseEntity<>(new ResponseDto("El usuario tiene pacientes asocidados!"),HttpStatus.CONFLICT);
+		}
 
 		if(this.userBusiness.deleteResearcher(username)) {
 			return new ResponseEntity<>(new ResponseDto("Usuario borrado correctamente!"),HttpStatus.OK);
