@@ -30,6 +30,9 @@ public interface AdminController {
     @GetMapping(path = "/{id}/subjects", produces = "application/json")
     public ResponseEntity<?> getSubjectsAndInvestigationsFromIdAdmin(@PathVariable String id);
     
+    @DeleteMapping(path = "/deleteSubject", produces = "application/json")
+   	public ResponseEntity<?> deleteSubject(@RequestParam String identificationNumber);
+    
     
 
 }

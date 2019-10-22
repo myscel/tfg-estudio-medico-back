@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusiness;
+import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
 import com.example.tfgestudiomedico2019.model.entity.Role;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
@@ -25,6 +26,9 @@ public class AdminControllerImpl implements AdminController{
 	
 	@Autowired
 	private ResearcherBusiness researcherBusiness;
+	
+	@Autowired
+	private SubjectBusiness subjectBusiness;
 
 	@Override
 	public ResponseEntity<?> getAllUsers() {
@@ -123,6 +127,26 @@ public class AdminControllerImpl implements AdminController{
 			ResponseDto response = new ResponseDto("Unknown error");
 	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		 
 	}
+	
+	public ResponseEntity<?> deleteSubject(String identificationNumber) {
+		try {
+			if(this.subjectBusiness.deleteSubjectByIdentificationNumber(Integer.parseInt(identificationNumber))) {
+				return new ResponseEntity<>(new ResponseDto("Usuario borrado correctamente!"),HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<>(new ResponseDto("Error al borrar el usuario"),HttpStatus.NOT_FOUND);
+
+			}
+		}
+		catch(NumberFormatException e) {
+			ResponseDto response = new ResponseDto("Error: el número de identificación debe ser un entero");
+	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+		catch(Exception e) {
+			ResponseDto response = new ResponseDto("Unknown error");
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

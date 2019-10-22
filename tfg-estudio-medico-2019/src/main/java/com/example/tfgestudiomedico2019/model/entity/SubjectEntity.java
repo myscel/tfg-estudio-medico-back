@@ -31,7 +31,7 @@ public class SubjectEntity {
 	
 	
 	
-	@OneToMany(mappedBy = "subject")
+	@OneToMany(mappedBy = "subject", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<InvestigationEntity> investigations = new ArrayList<>();
 	
 	public Integer getId() {

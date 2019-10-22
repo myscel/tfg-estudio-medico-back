@@ -9,5 +9,4 @@ public interface UserBusiness {
     public UserEntity findByUsername(String username);
     public List<UserEntity> getAllResearchers();
     public boolean deleteResearcher(String username);
-
 }
