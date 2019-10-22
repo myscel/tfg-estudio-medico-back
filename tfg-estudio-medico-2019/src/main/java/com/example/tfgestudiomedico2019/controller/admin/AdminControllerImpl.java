@@ -13,6 +13,7 @@ import com.example.tfgestudiomedico2019.model.entity.Role;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
+import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.UserListDto;
 
@@ -106,5 +107,22 @@ public class AdminControllerImpl implements AdminController{
 			 ResponseDto response = new ResponseDto("Unknown error");
 	         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}	
+	}
+	
+	@Override
+	public ResponseEntity<?> getSubjectsAndInvestigationsFromIdAdmin(String id) {
+		try {
+			SubjectListFromResearcherDto list = this.researcherBusiness.getAllSubjectsAndInvestigationsByResearcher(Integer.parseInt(id));
+	        return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+		catch(NumberFormatException e) {
+			 ResponseDto response = new ResponseDto("El id no es un número entero");
+	         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+		catch(Exception e) {
+			ResponseDto response = new ResponseDto("Unknown error");
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		 
 	}
 }
