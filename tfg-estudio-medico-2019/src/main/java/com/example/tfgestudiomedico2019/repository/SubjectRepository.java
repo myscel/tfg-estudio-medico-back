@@ -8,4 +8,5 @@ import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 @Repository
 public interface SubjectRepository extends JpaRepository<SubjectEntity, Long> {
 	Long deleteByIdentificationNumber(Integer identificationNumber);
+	SubjectEntity findByIdentificationNumber(Integer identificationNumber);
 }

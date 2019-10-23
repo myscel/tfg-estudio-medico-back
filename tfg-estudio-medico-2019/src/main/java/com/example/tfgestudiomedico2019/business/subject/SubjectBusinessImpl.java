@@ -1,10 +1,14 @@
 package com.example.tfgestudiomedico2019.business.subject;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
+import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.repository.SubjectRepository;
 
 @Service
@@ -20,6 +24,28 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public Integer getNumberInvestigationsCompletedFromSubject(Integer identificationNumber) {
+		
+		SubjectEntity subject = this.SubjectRepository.findByIdentificationNumber(identificationNumber);
+		
+		List<InvestigationEntity> investigations = subject.getInvestigations();
+		
+		if(investigations == null || investigations.isEmpty()) {
+			return 0;
+		}
+		
+		int contInvestigationsCompleted = 0;
+		
+		for(InvestigationEntity elem: investigations) {
+			if(elem.getCompleted()) {
+				++contInvestigationsCompleted;
+			}
+		}
+		
+		return contInvestigationsCompleted;
 	}
 
 }

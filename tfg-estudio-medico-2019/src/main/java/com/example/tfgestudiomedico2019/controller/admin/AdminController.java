@@ -33,6 +33,9 @@ public interface AdminController {
     @DeleteMapping(path = "/deleteSubject", produces = "application/json")
    	public ResponseEntity<?> deleteSubject(@RequestParam String identificationNumber);
     
+    @GetMapping(path = "/investigationsCompletedSubject/{identificationNumber}", produces = "application/json")
+    public ResponseEntity<?> getNumberInvestigationsCompletedFromSubject(@PathVariable String identificationNumber);
+    
     
 
 }
