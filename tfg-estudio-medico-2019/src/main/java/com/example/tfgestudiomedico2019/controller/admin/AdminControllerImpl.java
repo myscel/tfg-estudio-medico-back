@@ -191,4 +191,24 @@ public class AdminControllerImpl implements AdminController{
 		}
 	}
 
+	
+	@Override
+	public ResponseEntity<?> getSubjectsFromDNIResearcher(String username) {
+		try {
+			SubjectInfoListDto dtoList = this.subjectBusiness.getSubjectsFromDNIResearcher(username);
+			
+			if(dtoList == null) {
+		        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			}
+			
+			return new ResponseEntity<>(dtoList, HttpStatus.OK);
+			
+		}
+		catch(Exception e) {
+			ResponseDto response = new ResponseDto("Unknown error");
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	
 }

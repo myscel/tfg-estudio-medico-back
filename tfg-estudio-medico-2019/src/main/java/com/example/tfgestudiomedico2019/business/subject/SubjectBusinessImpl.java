@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
+import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
+import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.repository.SubjectRepository;
+import com.example.tfgestudiomedico2019.repository.UserRepository;
 
 @Service
 @Transactional
@@ -19,6 +22,9 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 	
 	@Autowired
 	private SubjectRepository SubjectRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	public Boolean deleteSubjectByIdentificationNumber(Integer identificationNumber) {
@@ -62,6 +68,33 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 		SubjectInfoDto dto  = mapper.map(entity, SubjectInfoDto.class);
 		
 		return dto;
+	}
+
+	
+	@Override
+	public SubjectInfoListDto getSubjectsFromDNIResearcher(String username) {
+		
+		SubjectInfoListDto dtoList = new SubjectInfoListDto();
+		
+		ModelMapper mapper = new ModelMapper();
+
+		UserEntity researcher = this.userRepository.findByUsername(username);
+		
+		if(researcher == null) {
+			return null;
+		}
+		
+		List<SubjectEntity> subjects = researcher.getSubjects();
+		
+		if(subjects == null) {
+			return null;
+		}
+			
+		for(SubjectEntity elem: subjects) {
+			dtoList.getList().add(mapper.map(elem,SubjectInfoDto.class));
+		}
+		
+		return dtoList;
 	}
 
 }

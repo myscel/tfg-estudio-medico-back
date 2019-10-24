@@ -40,5 +40,8 @@ public interface AdminController {
     @GetMapping(path = "/subjects/{identificationNumber}", produces = "application/json")
     public ResponseEntity<?> getSubjectByNumberIdentification(@PathVariable String identificationNumber);
     
+    @GetMapping(path = "/{username}/subjects", produces = "application/json")
+    public ResponseEntity<?> getSubjectsFromDNIResearcher(@PathVariable String username);
+    
 
 }

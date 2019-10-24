@@ -13,21 +13,21 @@ import com.example.tfgestudiomedico2019.model.rest.SubjectFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
-import com.example.tfgestudiomedico2019.repository.ResearcherRepository;
+import com.example.tfgestudiomedico2019.repository.SubjectRepository;
 
 @Service
 @Transactional
 public class ResearcherBusinessImpl implements ResearcherBusiness {
 	
 	@Autowired
-	private ResearcherRepository researcherRepository;
+	private SubjectRepository subjectRepository;
 
 	@Override
 	public SubjectListFromResearcherDto getAllSubjectsAndInvestigationsByResearcher(Integer idResearcher) {
 		UserEntity researcher = new UserEntity();
 		researcher.setId(idResearcher);
 		
-		List<SubjectEntity> list = this.researcherRepository.findByResearcher(researcher);
+		List<SubjectEntity> list = this.subjectRepository.findByResearcher(researcher);
 		
 		SubjectListFromResearcherDto dtoList = new SubjectListFromResearcherDto();
 		
@@ -54,7 +54,7 @@ public class ResearcherBusinessImpl implements ResearcherBusiness {
 
 	@Override
 	public SubjectInfoListDto getAllSubjects() {
-		List<SubjectEntity> entityList = this.researcherRepository.findAll();
+		List<SubjectEntity> entityList = this.subjectRepository.findAll();
 		
 		SubjectInfoListDto dtoList = new SubjectInfoListDto();
 		
