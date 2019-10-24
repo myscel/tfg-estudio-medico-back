@@ -11,9 +11,11 @@ import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusiness;
 import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
 import com.example.tfgestudiomedico2019.model.entity.Role;
+import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
+import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
@@ -150,7 +152,6 @@ public class AdminControllerImpl implements AdminController{
 		}
 	}
 
-	
 	@Override
 	public ResponseEntity<?> getNumberInvestigationsCompletedFromSubject(String identificationNumber) {
 		try {
@@ -168,5 +169,26 @@ public class AdminControllerImpl implements AdminController{
 		}
 	}
 
-	
+	@Override
+	public ResponseEntity<?> getSubjectByNumberIdentification(String identificationNumber) {
+		try {
+			SubjectInfoDto dto = this.subjectBusiness.getSubjectFromIdentificationNumber(Integer.parseInt(identificationNumber));
+			
+			if(dto == null) {
+				ResponseDto response = new ResponseDto("Error: no existe el paciente");
+		        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+			}
+			
+			return new ResponseEntity<>(dto, HttpStatus.OK);	
+		}
+		catch(NumberFormatException e) {
+			ResponseDto response = new ResponseDto("Error: el número de identificación debe ser un entero");
+	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+		catch(Exception e) {
+			ResponseDto response = new ResponseDto("Unknown error");
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

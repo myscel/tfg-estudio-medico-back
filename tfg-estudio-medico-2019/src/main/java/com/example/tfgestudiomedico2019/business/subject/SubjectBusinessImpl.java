@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
+import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.repository.SubjectRepository;
 
 @Service
@@ -46,6 +48,20 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 		}
 		
 		return contInvestigationsCompleted;
+	}
+
+	@Override
+	public SubjectInfoDto getSubjectFromIdentificationNumber(Integer identificationNumber) {
+		SubjectEntity entity =  this.SubjectRepository.findByIdentificationNumber(identificationNumber);
+		
+		if(entity == null) {
+			return null;
+		}
+		
+		ModelMapper mapper = new ModelMapper();
+		SubjectInfoDto dto  = mapper.map(entity, SubjectInfoDto.class);
+		
+		return dto;
 	}
 
 }

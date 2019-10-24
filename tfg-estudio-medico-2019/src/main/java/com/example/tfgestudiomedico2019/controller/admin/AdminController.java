@@ -37,5 +37,8 @@ public interface AdminController {
     public ResponseEntity<?> getNumberInvestigationsCompletedFromSubject(@PathVariable String identificationNumber);
     
     
+    @GetMapping(path = "/subjects/{identificationNumber}", produces = "application/json")
+    public ResponseEntity<?> getSubjectByNumberIdentification(@PathVariable String identificationNumber);
+    
 
 }
