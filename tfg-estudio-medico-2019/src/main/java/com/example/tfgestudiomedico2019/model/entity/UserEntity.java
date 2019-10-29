@@ -25,6 +25,7 @@ public class UserEntity {
 	private String gender;
 	private String password;
 	private String role;
+	private String surname;
 	
 	@OneToMany(
 	        mappedBy = "researcher",
@@ -87,9 +88,15 @@ public class UserEntity {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	public String getSurname() {
+		return surname;
+	}
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
 	@Override
 	public String toString() {
 		return "UserEntity [id=" + id + ", name=" + name + ", username=" + username + ", gender=" + gender
-				+ ", password=" + password + ", role=" + role + ", token=" + token + "]";
-	}	
+				+ ", password=" + password + ", role=" + role + ", surname=" + surname + "]";
+	}
 }

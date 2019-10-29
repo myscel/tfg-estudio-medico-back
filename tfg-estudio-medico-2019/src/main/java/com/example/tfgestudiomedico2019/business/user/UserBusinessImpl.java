@@ -48,4 +48,10 @@ public class UserBusinessImpl implements UserBusiness {
 		return false;
 	}
 
+	@Override
+	public UserEntity findById(Integer id) {
+		// TODO Auto-generated method stub
+		return this.userRepository.findById(id);
+	}
+
 }

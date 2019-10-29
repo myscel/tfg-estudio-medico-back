@@ -2,6 +2,7 @@ package com.example.tfgestudiomedico2019.controller.admin;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ public class AdminControllerImpl implements AdminController{
 			UserListDto listDto = new UserListDto();
 			
 			for(UserEntity elem: listResearchers) {
-				listDto.getList().add(new UserDto(elem.getUsername(), elem.getName(), elem.getGender()));	
+				listDto.getList().add(new UserDto(elem.getUsername(), elem.getName(), elem.getSurname(), elem.getGender(), elem.getId()));	
 			}
 			
 			return new ResponseEntity<>(listDto, HttpStatus.OK);
@@ -203,6 +204,28 @@ public class AdminControllerImpl implements AdminController{
 			
 			return new ResponseEntity<>(dtoList, HttpStatus.OK);
 			
+		}
+		catch(Exception e) {
+			ResponseDto response = new ResponseDto("Unknown error");
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getResearcherFromId(String id) {
+		try {
+			System.out.println("Vamos a buscar el investigador con id: " + id);
+			UserEntity entity = this.userBusiness.findById(Integer.parseInt(id));
+			
+			if(entity == null) {
+				ResponseDto response = new ResponseDto("Error: el usuario no existe");
+		        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+			}
+			
+			UserDto dto = new UserDto(entity.getUsername(), entity.getName(), entity.getSurname(), entity.getGender(), entity.getId());
+			
+			
+	        return new ResponseEntity<>(dto, HttpStatus.OK);
 		}
 		catch(Exception e) {
 			ResponseDto response = new ResponseDto("Unknown error");

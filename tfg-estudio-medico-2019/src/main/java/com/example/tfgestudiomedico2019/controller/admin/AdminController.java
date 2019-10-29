@@ -43,5 +43,8 @@ public interface AdminController {
     @GetMapping(path = "/{username}/subject", produces = "application/json")
     public ResponseEntity<?> getSubjectsFromDNIResearcher(@PathVariable String username);
     
+    @GetMapping(path = "/researchers/{id}", produces = "application/json")
+    public ResponseEntity<?> getResearcherFromId(@PathVariable String id);
+    
 
 }
