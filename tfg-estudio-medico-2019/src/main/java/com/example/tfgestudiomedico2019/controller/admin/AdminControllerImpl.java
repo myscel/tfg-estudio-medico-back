@@ -217,7 +217,7 @@ public class AdminControllerImpl implements AdminController{
 			System.out.println("Vamos a buscar el investigador con id: " + id);
 			UserEntity entity = this.userBusiness.findById(Integer.parseInt(id));
 			
-			if(entity == null) {
+			if(entity == null || entity.getRole().equals(Role.ADMIN.name())) {
 				ResponseDto response = new ResponseDto("Error: el usuario no existe");
 		        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 			}
