@@ -57,20 +57,20 @@ public class AdminControllerImpl implements AdminController{
 	@Override
 	public ResponseEntity<?> deleteResearcher(String username) {
 		
-		UserEntity userToDelete = this.userBusiness.findByUsername(username);
-		
-		if(!userToDelete.getSubjects().isEmpty()) {
-			return new ResponseEntity<>(new ResponseDto("El usuario tiene pacientes asocidados!"),HttpStatus.CONFLICT);
-		}
+		try {
+			UserEntity userToDelete = this.userBusiness.findByUsername(username);
 
-		if(this.userBusiness.deleteResearcher(username)) {
-			return new ResponseEntity<>(new ResponseDto("Usuario borrado correctamente!"),HttpStatus.OK);
+			if(this.userBusiness.deleteResearcher(username)) {
+				return new ResponseEntity<>(new ResponseDto("Usuario borrado correctamente!"),HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<>(new ResponseDto("Error al borrar el usuario"),HttpStatus.NOT_FOUND);
+			}
 		}
-		else {
-			return new ResponseEntity<>(new ResponseDto("Error al borrar el usuario"),HttpStatus.NOT_FOUND);
+		catch(Exception e) {
+			return new ResponseEntity<>(new ResponseDto("Error en el srrvidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 
-		}
-		
+		}	
 	}
 
 	@Override
@@ -81,7 +81,6 @@ public class AdminControllerImpl implements AdminController{
 				 ResponseDto response = new ResponseDto("Error registering user...");
 		         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
 		     }
-
 
 		     user.setRole(Role.RESEARCHER.name());
 		        
@@ -157,6 +156,12 @@ public class AdminControllerImpl implements AdminController{
 	public ResponseEntity<?> getNumberInvestigationsCompletedFromSubject(String identificationNumber) {
 		try {
 			NumberInvestigationsCompletedSubjectDto dto = new NumberInvestigationsCompletedSubjectDto(this.subjectBusiness.getNumberInvestigationsCompletedFromSubject(Integer.parseInt(identificationNumber)));
+			
+			if(dto == null) {
+				ResponseDto response = new ResponseDto("Error: el paciente no existe");
+		        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+			}
+			
 	        return new ResponseEntity<>(dto, HttpStatus.OK);
 
 		}
@@ -171,7 +176,7 @@ public class AdminControllerImpl implements AdminController{
 	}
 
 	@Override
-	public ResponseEntity<?> getSubjectByNumberIdentification(String identificationNumber) {
+	public ResponseEntity<?> getSubjectByIdentificationNumber(String identificationNumber) {
 		try {
 			SubjectInfoDto dto = this.subjectBusiness.getSubjectFromIdentificationNumber(Integer.parseInt(identificationNumber));
 			
@@ -192,7 +197,6 @@ public class AdminControllerImpl implements AdminController{
 		}
 	}
 
-	
 	@Override
 	public ResponseEntity<?> getSubjectsFromDNIResearcher(String username) {
 		try {

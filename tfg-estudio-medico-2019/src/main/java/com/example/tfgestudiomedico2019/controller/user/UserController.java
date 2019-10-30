@@ -7,17 +7,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
+@Api(value="Public")
 @RequestMapping("/api/user")
 public interface UserController {
 	
-    
+    @ApiOperation(value = "Login and logout user")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "Successfully logued"),
+    		@ApiResponse(code = 500, message = "Server error")
+    })
     @GetMapping(path = "/login", produces = "application/json")
     public ResponseEntity<?> login(Principal principal);
-    
-    @GetMapping(path = "/pruebas", produces = "application/json")
-    public ResponseEntity<?> prueba1();
-    
-    @GetMapping(path = "/pruebas2/{id}", produces = "application/json")
-    public ResponseEntity<?> prueba2(@PathVariable String id);
-
 }
