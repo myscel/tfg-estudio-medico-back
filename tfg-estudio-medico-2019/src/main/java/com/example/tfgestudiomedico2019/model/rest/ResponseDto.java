@@ -1,11 +1,14 @@
 package com.example.tfgestudiomedico2019.model.rest;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class ResponseDto {
 
 	public ResponseDto(String description) {
 	this.description = description;
 	}
 
+	@ApiModelProperty(value="The description of the response", example= "Message information")
 	private String description;
 
 	public String getDescription() {

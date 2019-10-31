@@ -23,12 +23,10 @@ public class ResearcherControllerImpl implements ResearcherController {
 	        return new ResponseEntity<>(list, HttpStatus.OK);
 		}
 		catch(NumberFormatException e) {
-			 ResponseDto response = new ResponseDto("El id no es un número entero");
-	         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	         return new ResponseEntity<>(new ResponseDto("El id no es un número entero"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
-			ResponseDto response = new ResponseDto("Unknown error");
-	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		 
 	}

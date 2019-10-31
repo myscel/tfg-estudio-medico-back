@@ -1,7 +1,10 @@
 package com.example.tfgestudiomedico2019.model.rest;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class NumberInvestigationsCompletedSubjectDto {
 	
+	@ApiModelProperty(value="The number of investigations completed by the subject", allowableValues = "0, 1, 2")
 	private Integer numberInvestigationsCompleted;
 	
 	public NumberInvestigationsCompletedSubjectDto() {

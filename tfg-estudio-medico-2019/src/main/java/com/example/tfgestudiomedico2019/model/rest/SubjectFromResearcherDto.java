@@ -1,8 +1,13 @@
 package com.example.tfgestudiomedico2019.model.rest;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class SubjectFromResearcherDto {
+	@ApiModelProperty(value="The identification number of the subject", example = "12345678")
 	private Integer identificationNumber;
+	@ApiModelProperty(value="Flag to check if the first investigation is done", example="true" )
 	private Boolean firstInvestigationCompleted;
+	@ApiModelProperty(value="Flag to check if the second investigation is done", example="false" )
 	private Boolean secondInvestigationCompleted;
 	
 	

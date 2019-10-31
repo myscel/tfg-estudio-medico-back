@@ -1,12 +1,17 @@
 package com.example.tfgestudiomedico2019.model.rest;
 
+import io.swagger.annotations.ApiModelProperty;
 
 public class UserDto {
-	
+	@ApiModelProperty(value = "The username of the user", example = "12345678A")
 	private String username;
+	@ApiModelProperty(value = "The name of the user", example = "SERGIO")
 	private String name;
+	@ApiModelProperty(value = "The gender of the user", example= "RESEARCHER")
 	private String gender;
+	@ApiModelProperty(value = "The id of the user", example = "23")
 	private Integer id;
+	@ApiModelProperty(value = "The surname of the user", example = "PACHECO FERNÁNDEZ")
 	private String surname;
 	
 	

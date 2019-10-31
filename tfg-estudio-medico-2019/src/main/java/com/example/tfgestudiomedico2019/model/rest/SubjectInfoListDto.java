@@ -3,7 +3,10 @@ package com.example.tfgestudiomedico2019.model.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class SubjectInfoListDto {
+	@ApiModelProperty(value="The list of subjects")
 	private List<SubjectInfoDto> list = new ArrayList<>();
 
 	public List<SubjectInfoDto> getList() {
