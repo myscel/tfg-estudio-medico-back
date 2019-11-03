@@ -3,10 +3,15 @@ package com.example.tfgestudiomedico2019.controller.researcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
+import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
+import com.example.tfgestudiomedico2019.model.rest.UserDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,4 +31,13 @@ public interface ResearcherController {
     })
 	  @GetMapping(path = "/{id}/subjects", produces = "application/json")
 	    public ResponseEntity<?> getSubjectsAndInvestigationsFromIdResearcher(@PathVariable String id);
+	
+	@ApiOperation(value = "Register a subject")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 201, message = "Successfully subject registered", response= UserDto.class),
+    		@ApiResponse(code = 409, message = "Subject already exists", response= ResponseDto.class),
+    		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
+    })
+    @PostMapping(path = "/registerSubject", produces = "application/json")
+  	public ResponseEntity<?> registerSubject(@RequestBody SubjectEntity subject);
 }
