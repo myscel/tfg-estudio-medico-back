@@ -21,6 +21,7 @@ import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.UserListDto;
+import com.example.tfgestudiomedico2019.model.rest.UserToUpdateDto;
 
 @RestController
 public class AdminControllerImpl implements AdminController{
@@ -217,6 +218,28 @@ public class AdminControllerImpl implements AdminController{
 			
 			
 	        return new ResponseEntity<>(dto, HttpStatus.OK);
+		}
+		catch(Exception e) {
+	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> updateResearcher(UserToUpdateDto dto) {
+		try {
+			UserEntity userEntity = new UserEntity();
+			userEntity.setName(dto.getName());
+			userEntity.setSurname(dto.getSurname());
+			userEntity.setPassword(dto.getPassword());
+			userEntity.setId(Integer.parseInt(dto.getId()));
+			
+			UserEntity userUpdated = this.userBusiness.updateUser(userEntity);
+			
+			if(userUpdated == null) {
+		         return new ResponseEntity<>(new ResponseDto("Error user not found..."), HttpStatus.NOT_FOUND);	
+			}
+			
+	        return new ResponseEntity<>(userUpdated, HttpStatus.OK);
 		}
 		catch(Exception e) {
 	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);

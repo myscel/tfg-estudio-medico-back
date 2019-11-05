@@ -50,8 +50,27 @@ public class UserBusinessImpl implements UserBusiness {
 
 	@Override
 	public UserEntity findById(Integer id) {
-		// TODO Auto-generated method stub
 		return this.userRepository.findById(id);
+	}
+
+	@Override
+	public UserEntity updateUser(UserEntity user) {
+		
+		UserEntity userToUpdate = this.userRepository.findById(user.getId());
+	    
+		if(user.getPassword() != null && !user.getPassword().equals("")) {
+			userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+		}
+		
+		if(user.getName() != null && user.getName() != "") {
+			userToUpdate.setName(user.getName());
+		}
+		
+		if(user.getSurname() != null && user.getSurname() != "") {
+			userToUpdate.setSurname(user.getSurname());
+		}
+		
+		return this.userRepository.save(userToUpdate);
 	}
 
 }

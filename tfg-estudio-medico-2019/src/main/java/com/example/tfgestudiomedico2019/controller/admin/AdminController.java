@@ -17,6 +17,7 @@ import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.UserListDto;
+import com.example.tfgestudiomedico2019.model.rest.UserToUpdateDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -120,5 +121,14 @@ public interface AdminController {
     })
     @GetMapping(path = "/researchers/{id}", produces = "application/json")
     public ResponseEntity<?> getResearcherFromId(@PathVariable String id);
+	
+	@ApiOperation(value = "Update a researcher")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "Researcher successfully updated", response= UserDto.class),
+    		@ApiResponse(code = 404, message = "Researcher doesn't exists", response= ResponseDto.class),
+    		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
+    })
+    @PostMapping(path = "/updateResearcher", produces = "application/json")
+  	public ResponseEntity<?> updateResearcher(@RequestBody UserToUpdateDto user);
     
 }
