@@ -24,6 +24,9 @@ public class UserDto {
 		this.id = id;
 	}
 	
+	public UserDto() {
+	}
+
 	public String getUsername() {
 		return username;
 	}

@@ -239,7 +239,12 @@ public class AdminControllerImpl implements AdminController{
 		         return new ResponseEntity<>(new ResponseDto("Error user not found..."), HttpStatus.NOT_FOUND);	
 			}
 			
-	        return new ResponseEntity<>(userUpdated, HttpStatus.OK);
+			UserDto dtoReturn = new UserDto();
+			dtoReturn.setId(userUpdated.getId());
+			dtoReturn.setName(userUpdated.getName());
+			dtoReturn.setSurname(userUpdated.getSurname());
+			
+	        return new ResponseEntity<>(dtoReturn, HttpStatus.OK);
 		}
 		catch(Exception e) {
 	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
