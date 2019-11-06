@@ -21,6 +21,7 @@ import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.UserListDto;
+import com.example.tfgestudiomedico2019.model.rest.UserToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.UserToUpdateDto;
 
 @RestController
@@ -74,22 +75,30 @@ public class AdminControllerImpl implements AdminController{
 	}
 
 	@Override
-	public ResponseEntity<?> registerResearcher(UserEntity user) {
+	public ResponseEntity<?> registerResearcher(UserToRegisterDto user) {
 		
 		try {
 			 if(userBusiness.findByUsername(user.getUsername())!=null){
 		         return new ResponseEntity<>(new ResponseDto("Error registering user..."), HttpStatus.CONFLICT);
 		     }
 
-		     user.setRole(Role.RESEARCHER.name());
+		     
+		     
+		     UserEntity userToRegisterEntity = new UserEntity();
+		     userToRegisterEntity.setName(user.getName());
+		     userToRegisterEntity.setUsername(user.getUsername());
+		     userToRegisterEntity.setGender(user.getGender());
+		     userToRegisterEntity.setSurname(user.getSurname());
+		     userToRegisterEntity.setPassword(user.getPassword());
+		     userToRegisterEntity.setRole(Role.RESEARCHER.name());
 		        
-		     UserEntity userSaved = this.userBusiness.saveUser(user);
+		     UserEntity userSaved = this.userBusiness.saveUser(userToRegisterEntity);
 		        
 		     if(userSaved == null) {
 		         return new ResponseEntity<>(new ResponseDto("Error saving user..."), HttpStatus.INTERNAL_SERVER_ERROR);	
 		     }
 		     
-		     UserDto dto = new UserDto(userSaved.getUsername(), userSaved.getName(), userSaved.getName(), userSaved.getGender(), userSaved.getId());
+		     UserDto dto = new UserDto(userSaved.getUsername(), userSaved.getName(), userSaved.getSurname(), userSaved.getGender(), userSaved.getId());
 		     
 		     
 		     return new ResponseEntity<>(dto, HttpStatus.CREATED);

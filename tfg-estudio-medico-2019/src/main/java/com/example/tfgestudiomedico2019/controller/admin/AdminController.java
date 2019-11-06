@@ -17,6 +17,7 @@ import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.UserListDto;
+import com.example.tfgestudiomedico2019.model.rest.UserToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.UserToUpdateDto;
 
 import io.swagger.annotations.Api;
@@ -55,7 +56,7 @@ public interface AdminController {
     		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
     })
     @PostMapping(path = "/registerResearcher", produces = "application/json")
-  	public ResponseEntity<?> registerResearcher(@RequestBody UserEntity user);
+  	public ResponseEntity<?> registerResearcher(@RequestBody UserToRegisterDto user);
     
 	@ApiOperation(value = "Get all subjects")
     @ApiResponses(value = {
