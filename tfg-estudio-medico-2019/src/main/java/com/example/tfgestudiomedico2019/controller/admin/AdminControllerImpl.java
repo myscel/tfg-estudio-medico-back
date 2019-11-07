@@ -81,9 +81,7 @@ public class AdminControllerImpl implements AdminController{
 			 if(userBusiness.findByUsername(user.getUsername())!=null){
 		         return new ResponseEntity<>(new ResponseDto("Error registering user..."), HttpStatus.CONFLICT);
 		     }
-
-		     
-		     
+			 
 		     UserEntity userToRegisterEntity = new UserEntity();
 		     userToRegisterEntity.setName(user.getName());
 		     userToRegisterEntity.setUsername(user.getUsername());
