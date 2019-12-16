@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
-import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
+import com.example.tfgestudiomedico2019.model.rest.SubjectToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
 
 import io.swagger.annotations.Api;
@@ -23,7 +22,7 @@ import io.swagger.annotations.Authorization;
 @RequestMapping("/api/researcher")
 public interface ResearcherController {
 	
-	@ApiOperation(value = "Get all subjects and investigatios who belong to a researcher")
+	@ApiOperation(value = "Get all subjects and investigations who belong to a researcher")
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Successfully got subjects with their investigations", response = SubjectListFromResearcherDto.class),
     		@ApiResponse(code = 400, message = "Id format invalid", response = ResponseDto.class),
@@ -39,5 +38,5 @@ public interface ResearcherController {
     		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
     })
     @PostMapping(path = "/registerSubject", produces = "application/json")
-  	public ResponseEntity<?> registerSubject(@RequestBody SubjectEntity subject);
+  	public ResponseEntity<?> registerSubject(@RequestBody SubjectToRegisterDto subject);
 }
