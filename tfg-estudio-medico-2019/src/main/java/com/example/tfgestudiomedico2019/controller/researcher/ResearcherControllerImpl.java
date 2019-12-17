@@ -63,7 +63,7 @@ public class ResearcherControllerImpl implements ResearcherController {
 			 //Set researcher
 			 UserEntity user = userBusiness.findByUsername(subject.getUsernameResearcher());
 			 if(userBusiness.findByUsername(subject.getUsernameResearcher())==null){
-		         return new ResponseEntity<>(new ResponseDto("Error registering user..."), HttpStatus.CONFLICT);
+		         return new ResponseEntity<>(new ResponseDto("Error registering user..."), HttpStatus.GONE);
 		     }
 			 subjectToSave.setIdResearcher(user);
 			 
