@@ -86,6 +86,13 @@ public class ResearcherBusinessImpl implements ResearcherBusiness {
 		
 		return investigationEntity;
 	}
+
+	@Override
+	public Boolean saveInvestigationDetails(InvestigationEntity investigationEntity) {
+		InvestigationEntity InvestigationSaved =  this.investigationRepository.save(investigationEntity);
+		
+		return InvestigationSaved != null;
+	}
 	
 	
 }

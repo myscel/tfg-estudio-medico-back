@@ -9,4 +9,6 @@ public interface ResearcherBusiness {
 	public SubjectListFromResearcherDto getAllSubjectsAndInvestigationsByResearcher(Integer idResearcher);
     public SubjectInfoListDto getAllSubjects();
     public InvestigationEntity getInvestigationBySubjectAndNumberInvestigation(Integer idSubject, Integer numberInvestigation);
+    public Boolean saveInvestigationDetails(InvestigationEntity investigationEntity);
+
 }

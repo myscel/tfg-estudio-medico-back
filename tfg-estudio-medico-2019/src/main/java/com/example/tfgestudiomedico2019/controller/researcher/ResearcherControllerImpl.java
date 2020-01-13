@@ -3,6 +3,7 @@ package com.example.tfgestudiomedico2019.controller.researcher;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusinessIm
 import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
+import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.Role;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
@@ -146,21 +148,29 @@ public class ResearcherControllerImpl implements ResearcherController {
 
 	@Override
 	public ResponseEntity<?> registerInvestigationDetails(InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto) {
-		System.out.println("DETALLES CITA: " + investigationDetailsToRegisterDto);
 		
 		InvestigationEntity investigationEntityToSave = this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(investigationDetailsToRegisterDto.getIdSubject(), investigationDetailsToRegisterDto.getNumberInvestigation());
 		
+		if(investigationEntityToSave == null) {
+	        return new ResponseEntity<>(new ResponseDto("Error al cargar la cita"), HttpStatus.BAD_REQUEST);
+		}
 		
-		
-		System.out.println("CITA DE LA BBDD: " + investigationEntityToSave);
-		
-		if(investigationEntityToSave.getCompleted() || investigationEntityToSave.getSubject() != null) {
+		if(investigationEntityToSave.getCompleted() || investigationEntityToSave.getInvestigationEntityDetails() != null) {
 	        return new ResponseEntity<>(new ResponseDto("La cita ya está realizada"), HttpStatus.CONFLICT);
 		}
+		
+		ModelMapper mapper = new ModelMapper();
+		InvestigationEntityDetails investigationEntityDetails = mapper.map(investigationDetailsToRegisterDto, InvestigationEntityDetails.class);
+		
+		investigationEntityToSave.setInvestigationEntityDetails(investigationEntityDetails);
+		investigationEntityToSave.setCompleted(true);
+		
+		if(!this.researcherBusiness.saveInvestigationDetails(investigationEntityToSave)) {
+	        return new ResponseEntity<>(new ResponseDto("Error al guardar los detalles de la cita"), HttpStatus.BAD_REQUEST);
 
+		}
 		
-		
-        return new ResponseEntity<>(new ResponseDto("Investigación dada de alta"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto("Investigación dada de alta"), HttpStatus.CREATED);
 
 	}
 }

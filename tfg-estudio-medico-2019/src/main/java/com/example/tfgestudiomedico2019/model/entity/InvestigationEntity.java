@@ -68,11 +68,21 @@ public class InvestigationEntity {
 		this.completed = completed;
 	}
 
+	public InvestigationEntityDetails getInvestigationEntityDetails() {
+		return investigationEntityDetails;
+	}
+
+	public void setInvestigationEntityDetails(InvestigationEntityDetails investigationEntityDetails) {
+		this.investigationEntityDetails = investigationEntityDetails;
+	}
+
 	@Override
 	public String toString() {
 		return "InvestigationEntity [id=" + id + ", subject=" + subject + ", numberInvestigation=" + numberInvestigation
-				+ ", completed=" + completed + "]";
+				+ ", completed=" + completed + ", investigationEntityDetails=" + investigationEntityDetails + "]";
 	}
+
+	
 	
 	
 
