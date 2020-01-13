@@ -3,6 +3,8 @@ package com.example.tfgestudiomedico2019.model.rest;
 import io.swagger.annotations.ApiModelProperty;
 
 public class SubjectFromResearcherDto {
+	@ApiModelProperty(value="The id of the subject", example = "2")
+	private Integer id;
 	@ApiModelProperty(value="The identification number of the subject", example = "12345678")
 	private Integer identificationNumber;
 	@ApiModelProperty(value="Flag to check if the first investigation is done", example="true" )
@@ -29,15 +31,16 @@ public class SubjectFromResearcherDto {
 	public void setSecondInvestigationCompleted(Boolean secondInvestigationCompleted) {
 		this.secondInvestigationCompleted = secondInvestigationCompleted;
 	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
-		return "SubjectFromResearcherDto [identificationNumber=" + identificationNumber
+		return "SubjectFromResearcherDto [id=" + id + ", identificationNumber=" + identificationNumber
 				+ ", firstInvestigationCompleted=" + firstInvestigationCompleted + ", secondInvestigationCompleted="
 				+ secondInvestigationCompleted + "]";
-	}
-	
-	
-	
-
-	
+	}	
 }

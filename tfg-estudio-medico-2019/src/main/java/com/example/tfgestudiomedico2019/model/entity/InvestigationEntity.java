@@ -7,7 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.CascadeType;
+
 
 @Entity
 @Table(name = "investigation")
@@ -27,6 +30,11 @@ public class InvestigationEntity {
 	@Column(name = "completed")
 	private Boolean completed;
 	
+	 @OneToOne(cascade = {CascadeType.ALL})
+	 @JoinColumn(name="idinvestigationdetails")
+	 private InvestigationEntityDetails investigationEntityDetails;
+	 
+
 
 	public Integer getId() {
 		return id;

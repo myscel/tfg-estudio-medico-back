@@ -16,6 +16,7 @@ import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.Role;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
+import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
@@ -141,5 +142,25 @@ public class ResearcherControllerImpl implements ResearcherController {
 		catch(Exception e) {
 	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@Override
+	public ResponseEntity<?> registerInvestigationDetails(InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto) {
+		System.out.println("DETALLES CITA: " + investigationDetailsToRegisterDto);
+		
+		InvestigationEntity investigationEntityToSave = this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(investigationDetailsToRegisterDto.getIdSubject(), investigationDetailsToRegisterDto.getNumberInvestigation());
+		
+		
+		
+		System.out.println("CITA DE LA BBDD: " + investigationEntityToSave);
+		
+		if(investigationEntityToSave.getCompleted() || investigationEntityToSave.getSubject() != null) {
+	        return new ResponseEntity<>(new ResponseDto("La cita ya está realizada"), HttpStatus.CONFLICT);
+		}
+
+		
+		
+        return new ResponseEntity<>(new ResponseDto("Investigación dada de alta"), HttpStatus.OK);
+
 	}
 }

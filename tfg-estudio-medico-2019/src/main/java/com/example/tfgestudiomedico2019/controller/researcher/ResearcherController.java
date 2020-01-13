@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
@@ -62,4 +63,14 @@ public interface ResearcherController {
     })
     @DeleteMapping(path = "/deleteSubjectResearcher", produces = "application/json")
    	public ResponseEntity<?> deleteSubjectResearcher(@RequestParam String identificationNumber);
+	
+	
+	@ApiOperation(value = "Register an investigation details")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 201, message = "Successfully investigation details registered", response= ResponseDto.class),
+    		@ApiResponse(code = 409, message = "Investigation details already exists", response= ResponseDto.class),
+    		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
+    })
+    @PostMapping(path = "/registerInvestigationDetails", produces = "application/json")
+  	public ResponseEntity<?> registerInvestigationDetails(@RequestBody InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto);
 }
