@@ -41,6 +41,7 @@ public class InvestigationDetailsToRegisterDto {
 
 	private Integer numberInvestigation;
 	private Integer idSubject;
+	private Date investigationDate;
 
 	public Float getVitaminD() {
 		return vitaminD;
@@ -306,6 +307,14 @@ public class InvestigationDetailsToRegisterDto {
 		this.idSubject = idSubject;
 	}
 
+	public Date getInvestigationDate() {
+		return investigationDate;
+	}
+
+	public void setInvestigationDate(Date investigationDate) {
+		this.investigationDate = investigationDate;
+	}
+
 	@Override
 	public String toString() {
 		return "InvestigationDetailsToRegisterDto [vitaminD=" + vitaminD + ", hba1c=" + hba1c + ", season=" + season
@@ -318,7 +327,7 @@ public class InvestigationDetailsToRegisterDto {
 				+ dyslipemy + ", creatinine=" + creatinine + ", glomerular=" + glomerular + ", kidneyInsufficiency="
 				+ kidneyInsufficiency + ", fototype=" + fototype + ", diabetesTreatment=" + diabetesTreatment
 				+ ", vitaminDSupplementation=" + vitaminDSupplementation + ", numberInvestigation="
-				+ numberInvestigation + ", idSubject=" + idSubject + "]";
+				+ numberInvestigation + ", idSubject=" + idSubject + ", investigationDate=" + investigationDate + "]";
 	}
 
 }

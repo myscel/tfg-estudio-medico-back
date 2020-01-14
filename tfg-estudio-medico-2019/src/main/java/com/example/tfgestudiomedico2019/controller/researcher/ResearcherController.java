@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToRegisterDto;
+import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
@@ -73,4 +74,15 @@ public interface ResearcherController {
     })
     @PostMapping(path = "/registerInvestigationDetails", produces = "application/json")
   	public ResponseEntity<?> registerInvestigationDetails(@RequestBody InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto);
+	
+	
+	@ApiOperation(value = "Get the investigation details based on the idSubject and numberInvestigation")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "Investigation details found successfully", response = InvestigationDetailsToShowDto.class),
+    		@ApiResponse(code = 400, message = "Inputs format invalid", response= ResponseDto.class),
+    		@ApiResponse(code = 409, message = "Investigation details doesn't exists", response= ResponseDto.class),
+    		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
+    })
+    @GetMapping(path = "/getInvestigationDetails/{idSubject}/{numberInvestigation}", produces = "application/json")
+    public ResponseEntity<?> getInvestigationDetails(@PathVariable String idSubject, @PathVariable String numberInvestigation);
 }

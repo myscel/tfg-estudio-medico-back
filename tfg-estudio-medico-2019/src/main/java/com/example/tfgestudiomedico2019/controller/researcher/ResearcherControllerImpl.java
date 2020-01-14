@@ -19,6 +19,7 @@ import com.example.tfgestudiomedico2019.model.entity.Role;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToRegisterDto;
+import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
@@ -172,5 +173,37 @@ public class ResearcherControllerImpl implements ResearcherController {
 		
         return new ResponseEntity<>(new ResponseDto("Investigación dada de alta"), HttpStatus.CREATED);
 
+	}
+
+	@Override
+	public ResponseEntity<?> getInvestigationDetails(String idSubject, String numberInvestigation) {
+	
+		try {
+			int idSubjectAux = Integer.parseInt(idSubject);
+			int numberInvestigationAux = Integer.parseInt(numberInvestigation);
+			
+			InvestigationEntity investigationEntity = this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(idSubjectAux, numberInvestigationAux);
+
+			if(investigationEntity == null) {
+		        return new ResponseEntity<>(new ResponseDto("Error al obtener la cita"), HttpStatus.CONFLICT);
+			}
+			
+			if(!investigationEntity.getCompleted() || investigationEntity.getInvestigationEntityDetails() == null) {
+		        return new ResponseEntity<>(new ResponseDto("Error al obtener la cita"), HttpStatus.CONFLICT);
+			}
+			
+			ModelMapper mapper = new ModelMapper();
+			InvestigationDetailsToShowDto investigationDetailsToShowDto = mapper.map(investigationEntity.getInvestigationEntityDetails(), InvestigationDetailsToShowDto.class);
+			investigationDetailsToShowDto.setIdentificationNumber(investigationEntity.getSubject().getIdentificationNumber());
+			System.out.println("DETALLES: " + investigationDetailsToShowDto);
+			
+	        return new ResponseEntity<>(investigationDetailsToShowDto, HttpStatus.OK);
+		}
+		catch(NumberFormatException e) {
+	        return new ResponseEntity<>(new ResponseDto("Campos de entrada no válidos"), HttpStatus.BAD_REQUEST);
+		}
+		catch(Exception e) {
+	        return new ResponseEntity<>(new ResponseDto("Error en base de datos"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
 	}
 }
