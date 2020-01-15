@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowDto;
+import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowListDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
@@ -85,4 +86,17 @@ public interface ResearcherController {
     })
     @GetMapping(path = "/getInvestigationDetails/{idSubject}/{numberInvestigation}", produces = "application/json")
     public ResponseEntity<?> getInvestigationDetails(@PathVariable String idSubject, @PathVariable String numberInvestigation);
+	
+	
+	
+	
+	@ApiOperation(value = "Get a list of investigation details based on the idSubject")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "List Investigation details found successfully", response = InvestigationDetailsToShowListDto.class),
+    		@ApiResponse(code = 400, message = "Inputs format invalid", response= ResponseDto.class),
+    		@ApiResponse(code = 409, message = "List Investigation details doesn't exists", response= ResponseDto.class),
+    		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
+    })
+    @GetMapping(path = "/getAllInvestigationDetails/{idSubject}", produces = "application/json")
+    public ResponseEntity<?> getAllInvestigationDetails(@PathVariable String idSubject);
 }

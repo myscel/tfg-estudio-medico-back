@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
+import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowDto;
+import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
@@ -92,6 +94,17 @@ public class ResearcherBusinessImpl implements ResearcherBusiness {
 		InvestigationEntity InvestigationSaved =  this.investigationRepository.save(investigationEntity);
 		
 		return InvestigationSaved != null;
+	}
+
+	
+	@Override
+	public List<SubjectEntity> getAllSubjectsByResearcher(Integer idResearcher) {
+		UserEntity researcher = new UserEntity();
+		researcher.setId(idResearcher);
+		
+		List<SubjectEntity> listSubjects = this.subjectRepository.findByResearcher(researcher);
+		
+		return listSubjects;
 	}
 	
 	
