@@ -129,24 +129,7 @@ public class ResearcherControllerImpl implements ResearcherController {
 	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	public ResponseEntity<?> deleteSubjectResearcher(String identificationNumber) {
-		try {
-			if(this.subjectBusiness.deleteSubjectByIdentificationNumber(Integer.parseInt(identificationNumber))) {
-				return new ResponseEntity<>(new ResponseDto("Usuario borrado correctamente!"),HttpStatus.OK);
-			}
-			else {
-				return new ResponseEntity<>(new ResponseDto("Error al borrar el usuario"),HttpStatus.NOT_FOUND);
 
-			}
-		}
-		catch(NumberFormatException e) {
-	        return new ResponseEntity<>(new ResponseDto("Error: el número de identificación debe ser un entero"), HttpStatus.BAD_REQUEST);
-		}
-		catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
 
 	@Override
 	public ResponseEntity<?> registerInvestigationDetails(InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto) {

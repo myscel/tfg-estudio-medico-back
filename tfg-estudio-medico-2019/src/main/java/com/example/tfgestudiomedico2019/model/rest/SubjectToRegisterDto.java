@@ -9,6 +9,8 @@ public class SubjectToRegisterDto {
 	@ApiModelProperty(value = "The username researcher", example = "12345678A")
 	private String usernameResearcher;
 	
+	public SubjectToRegisterDto() {
+	}
 	
 	public SubjectToRegisterDto(String identificationNumber, String usernameResearcher) {
 		super();

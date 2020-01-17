@@ -40,6 +40,7 @@ public interface ResearcherController {
     @ApiResponses(value = {
     		@ApiResponse(code = 201, message = "Successfully subject registered", response= UserDto.class),
     		@ApiResponse(code = 409, message = "Subject already exists", response= ResponseDto.class),
+    		@ApiResponse(code = 410, message = "Researcher doesn't exist", response= ResponseDto.class),
     		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
     })
     @PostMapping(path = "/registerSubject", produces = "application/json")
@@ -55,16 +56,6 @@ public interface ResearcherController {
     @GetMapping(path = "/investigationsCompletedSubjectResearcher/{identificationNumber}", produces = "application/json")
     public ResponseEntity<?> getNumberInvestigationsCompletedFromSubjectResearcher(@PathVariable String identificationNumber);
     
-	@ApiOperation(value = "Delete a subject based on his/her identification number")
-    @ApiResponses(value = {
-    		@ApiResponse(code = 200, message = "Successfully deleted subject", response = ResponseDto.class),
-    		@ApiResponse(code = 400, message = "Id format invalid", response = ResponseDto.class),
-    		@ApiResponse(code = 404, message = "Subject not found", response = ResponseDto.class),
-    		@ApiResponse(code = 500, message = "Server error", response = ResponseDto.class)
-    })
-    @DeleteMapping(path = "/deleteSubjectResearcher", produces = "application/json")
-   	public ResponseEntity<?> deleteSubjectResearcher(@RequestParam String identificationNumber);
-	
 	
 	@ApiOperation(value = "Register an investigation details")
     @ApiResponses(value = {
