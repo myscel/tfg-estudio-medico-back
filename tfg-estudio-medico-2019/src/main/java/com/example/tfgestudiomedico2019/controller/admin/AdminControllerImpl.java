@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusiness;
 import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
-import com.example.tfgestudiomedico2019.model.entity.Role;
+import com.example.tfgestudiomedico2019.model.entity.Rol;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
@@ -51,7 +51,8 @@ public class AdminControllerImpl implements AdminController{
 			return new ResponseEntity<>(listDto, HttpStatus.OK);
 		}
 		catch(Exception e) {
-	         return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println(e);
+	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}	
 	}
 
@@ -88,7 +89,7 @@ public class AdminControllerImpl implements AdminController{
 		     userToRegisterEntity.setGender(user.getGender());
 		     userToRegisterEntity.setSurname(user.getSurname());
 		     userToRegisterEntity.setPassword(user.getPassword());
-		     userToRegisterEntity.setRole(Role.RESEARCHER.name());
+		     userToRegisterEntity.setRole(Rol.RESEARCHER.name());
 		        
 		     UserEntity userSaved = this.userBusiness.saveUser(userToRegisterEntity);
 		        
@@ -217,7 +218,7 @@ public class AdminControllerImpl implements AdminController{
 		try {
 			UserEntity entity = this.userBusiness.findById(Integer.parseInt(id));
 			
-			if(entity == null || entity.getRole().equals(Role.ADMIN.name())) {
+			if(entity == null || entity.getRole().equals(Rol.ADMIN.name())) {
 		        return new ResponseEntity<>(new ResponseDto("Error: el usuario no existe"), HttpStatus.NOT_FOUND);
 			}
 			

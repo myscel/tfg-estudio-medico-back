@@ -5,7 +5,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.tfgestudiomedico2019.business.user.UserBusinessImpl;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 
@@ -33,27 +31,20 @@ public class UserBusinessTest {
 	@Mock
 	private UserRepository userRepository;
 	
-	@Mock
-	private PasswordEncoder passwordEncoder;
-	
 	
 	@Test
 	public void saveUserTestOK() {
-		String passNotEncoded = "pass1Encoded";
-		String passEncoded = "pass1NotEncoded";
+		String pass = "pass1";
 		
 		UserEntity userEntity = new UserEntity();	
-		userEntity.setPassword(passNotEncoded);
+		userEntity.setPassword(pass);
 		
 		when(this.userRepository.save(any())).thenReturn(userEntity);
-		when(this.passwordEncoder.encode(any())).thenReturn(passEncoded);
 		
 		this.userBusinessImpl.saveUser(userEntity);
 		
-		assertEquals(passEncoded, userEntity.getPassword());
-		assertNotEquals(passNotEncoded, userEntity.getPassword());
+		assertEquals(pass, userEntity.getPassword());
 		verify(userRepository, times(1)).save(any());
-		verify(passwordEncoder, times(1)).encode(any());
 	}
 	
 	@Test
@@ -148,7 +139,6 @@ public class UserBusinessTest {
 		userEntity.setId(1);
 		
 		String passwordToUpdate = "123456";
-		String passwordEncoded = "123456789";
 		String nameToUpdate = "Eduardo";
 		String surnameToUpdate = "Gonzalo Montero";
 		
@@ -157,7 +147,6 @@ public class UserBusinessTest {
 		userEntity.setSurname(surnameToUpdate);
 		
 		when(this.userRepository.findById(anyInt())).thenReturn(userEntity);
-		when(this.passwordEncoder.encode(any())).thenReturn(passwordEncoded);
 		
 		this.userBusinessImpl.updateUser(userEntity);
 		verify(userRepository, times(1)).findById(anyInt());

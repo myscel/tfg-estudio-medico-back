@@ -28,7 +28,6 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 
 
-@Api(value="Admin Profile", authorizations = { @Authorization(value="apiKey") })
 @RequestMapping("/api/admin")
 public interface AdminController {
 	

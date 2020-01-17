@@ -15,7 +15,7 @@ import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
-import com.example.tfgestudiomedico2019.model.entity.Role;
+import com.example.tfgestudiomedico2019.model.entity.Rol;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToRegisterDto;

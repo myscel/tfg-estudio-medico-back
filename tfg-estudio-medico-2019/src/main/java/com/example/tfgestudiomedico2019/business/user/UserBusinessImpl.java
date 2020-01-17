@@ -5,10 +5,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.tfgestudiomedico2019.model.entity.Role;
+import com.example.tfgestudiomedico2019.model.entity.Rol;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.repository.UserRepository;
 
@@ -20,13 +19,13 @@ public class UserBusinessImpl implements UserBusiness {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    @Override
+	public UserEntity findByUsernameAndPassword(String username, String password) {
+    	return userRepository.findByUsernameAndPassword(username, password);
+	}
     
     @Override
     public UserEntity saveUser(UserEntity user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -37,7 +36,8 @@ public class UserBusinessImpl implements UserBusiness {
 
 	@Override
 	public List<UserEntity> getAllResearchers() {
-		return this.userRepository.findByRole(Role.RESEARCHER.name());
+		System.out.println(Rol.RESEARCHER.name());
+		return this.userRepository.findByRole(Rol.RESEARCHER.name());
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class UserBusinessImpl implements UserBusiness {
 		UserEntity userToUpdate = this.userRepository.findById(user.getId());
 	    
 		if(user.getPassword() != null && !user.getPassword().equals("")) {
-			userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+			userToUpdate.setPassword(user.getPassword());
 		}
 		
 		if(user.getName() != null && user.getName() != "") {
@@ -72,5 +72,4 @@ public class UserBusinessImpl implements UserBusiness {
 		
 		return this.userRepository.save(userToUpdate);
 	}
-
 }

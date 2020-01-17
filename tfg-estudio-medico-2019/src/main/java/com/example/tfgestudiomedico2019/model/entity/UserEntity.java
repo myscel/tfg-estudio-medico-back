@@ -5,12 +5,13 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 
 @Entity
@@ -24,7 +25,9 @@ public class UserEntity {
 	private String username;
 	private String gender;
 	private String password;
+	
 	private String role;
+	
 	private String surname;
 	
 	@OneToMany(
@@ -33,10 +36,6 @@ public class UserEntity {
 	        orphanRemoval = true
 	)
 	private List<SubjectEntity> subjects = new ArrayList<>();
-	
-	@Transient
-	private String token;
-	
 	
 	
 	
@@ -82,12 +81,6 @@ public class UserEntity {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getToken() {
-		return token;
-	}
-	public void setToken(String token) {
-		this.token = token;
-	}
 	public String getSurname() {
 		return surname;
 	}
@@ -97,6 +90,7 @@ public class UserEntity {
 	@Override
 	public String toString() {
 		return "UserEntity [id=" + id + ", name=" + name + ", username=" + username + ", gender=" + gender
-				+ ", password=" + password + ", role=" + role + ", surname=" + surname + "]";
+				+ ", password=" + password + ", role=" + role + ", surname=" + surname + ", subjects=" + subjects + "]";
 	}
+	
 }

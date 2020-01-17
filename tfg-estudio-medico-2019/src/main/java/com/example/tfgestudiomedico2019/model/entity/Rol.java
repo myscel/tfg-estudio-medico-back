@@ -1,5 +1,5 @@
 package com.example.tfgestudiomedico2019.model.entity;
 
-public enum Role {
-	RESEARCHER, ADMIN
+public enum Rol {
+		ADMIN, RESEARCHER
 }

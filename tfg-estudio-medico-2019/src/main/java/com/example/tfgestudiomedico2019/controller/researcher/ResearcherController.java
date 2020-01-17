@@ -24,7 +24,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 
-@Api(value="Researcher Profile", authorizations = { @Authorization(value="apiKey") })
 @RequestMapping("/api/researcher")
 public interface ResearcherController {
 	

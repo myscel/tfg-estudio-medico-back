@@ -26,8 +26,7 @@ public class SwaggerConfig {
 				.apis(RequestHandlerSelectors.basePackage("com.example.tfgestudiomedico2019.controller"))
 				.paths(PathSelectors.any())
 				.build()
-				.apiInfo(apiData())
-				.securitySchemes(Arrays.asList(apiKey()));
+				.apiInfo(apiData());
 	}
 	
 	private ApiInfo apiData() {
@@ -37,7 +36,5 @@ public class SwaggerConfig {
 				.build();
 	}
 	
-	private ApiKey apiKey() {
-		return new ApiKey("Bearer", "Authorization", "header");
-	}
+
 }

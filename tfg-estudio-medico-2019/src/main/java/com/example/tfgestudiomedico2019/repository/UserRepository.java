@@ -12,6 +12,7 @@ import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	
+    UserEntity findByUsernameAndPassword(String username, String password);
     UserEntity findByUsername(String username);
     UserEntity findById(Integer id);
     List<UserEntity> findByRole(String role);
