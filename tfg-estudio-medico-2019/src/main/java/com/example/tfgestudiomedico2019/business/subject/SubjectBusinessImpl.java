@@ -102,4 +102,12 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 		return dtoList;
 	}
 
+	@Override
+	public List<SubjectEntity> getAllSubjects() {
+
+		List<SubjectEntity> listSubjects = this.SubjectRepository.findAll();
+		
+		return listSubjects;
+	}
+
 }

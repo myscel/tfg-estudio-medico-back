@@ -1,5 +1,7 @@
 package com.example.tfgestudiomedico2019.business.subject;
 
+import java.util.List;
+
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
@@ -10,4 +12,5 @@ public interface SubjectBusiness {
 	public Integer getNumberInvestigationsCompletedFromSubject(Integer identificationNumber);
 	public SubjectInfoDto getSubjectFromIdentificationNumber(Integer identificationNumber);
 	public SubjectInfoListDto getSubjectsFromDNIResearcher(String username);
+	public List<SubjectEntity> getAllSubjects();
 }

@@ -11,9 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusiness;
 import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
+import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
+import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.Rol;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
+import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowDto;
+import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditDto;
+import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
@@ -256,6 +261,30 @@ public class AdminControllerImpl implements AdminController{
 		}
 		catch(Exception e) {
 	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getAllCompletedInvestigations() {
+		try {
+			
+			List<SubjectEntity> listSubjects = this.subjectBusiness.getAllSubjects();
+			
+			InvestigationToEditListDto list = new InvestigationToEditListDto();
+			
+			for(SubjectEntity subject: listSubjects) {
+				for(InvestigationEntity investigation: subject.getInvestigations()) {
+					if(investigation.getCompleted()) {
+						InvestigationEntityDetails details = investigation.getInvestigationEntityDetails();
+						InvestigationToEditDto data = new InvestigationToEditDto(subject.getIdentificationNumber(), investigation.getNumberInvestigation(), details.getId());
+						list.getList().add(data);
+					}
+				}
+			}
+			
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}catch(Exception e) {
+	        return new ResponseEntity<>(new ResponseDto("Err0r with BBDD"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

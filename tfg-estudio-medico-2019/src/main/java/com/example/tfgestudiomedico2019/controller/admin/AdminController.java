@@ -130,5 +130,13 @@ public interface AdminController {
     })
     @PostMapping(path = "/updateResearcher", produces = "application/json")
   	public ResponseEntity<?> updateResearcher(@RequestBody UserToUpdateDto user);
+	
+	@ApiOperation(value = "Get all investigations completed")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "Successfully got investigations", response= UserDto.class),
+    		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
+    })
+    @GetMapping(path = "/completedAppointments", produces = "application/json")
+  	public ResponseEntity<?> getAllCompletedInvestigations();
     
 }
