@@ -1,7 +1,6 @@
 package com.example.tfgestudiomedico2019.model.rest;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 public class InvestigationDetailsToRegisterDto {
 	private Float vitaminD;

@@ -10,12 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusiness;
-import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusinessImpl;
 import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
-import com.example.tfgestudiomedico2019.model.entity.Rol;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToRegisterDto;
@@ -26,7 +24,6 @@ import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectToRegisterDto;
-import com.example.tfgestudiomedico2019.model.rest.UserDto;
 
 @RestController
 public class ResearcherControllerImpl implements ResearcherController {
@@ -114,10 +111,6 @@ public class ResearcherControllerImpl implements ResearcherController {
 	public ResponseEntity<?> getNumberInvestigationsCompletedFromSubjectResearcher(String identificationNumber) {
 		try {
 			NumberInvestigationsCompletedSubjectDto dto = new NumberInvestigationsCompletedSubjectDto(this.subjectBusiness.getNumberInvestigationsCompletedFromSubject(Integer.parseInt(identificationNumber)));
-			
-			if(dto == null) {
-		        return new ResponseEntity<>(new ResponseDto("Error: el paciente no existe"), HttpStatus.NOT_FOUND);
-			}
 			
 	        return new ResponseEntity<>(dto, HttpStatus.OK);
 

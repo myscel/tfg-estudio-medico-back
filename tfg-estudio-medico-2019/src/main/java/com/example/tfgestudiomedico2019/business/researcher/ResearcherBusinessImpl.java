@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
-import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowDto;
-import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;

@@ -1,7 +1,5 @@
 package com.example.tfgestudiomedico2019.model.rest;
 
-import com.example.tfgestudiomedico2019.model.entity.UserEntity;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public class SubjectInfoDto {

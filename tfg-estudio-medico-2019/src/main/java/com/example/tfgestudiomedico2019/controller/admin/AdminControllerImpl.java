@@ -2,7 +2,6 @@ package com.example.tfgestudiomedico2019.controller.admin;
 
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +11,9 @@ import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusiness;
 import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
-import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.Rol;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
-import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowDto;
 import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditDto;
 import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
@@ -163,10 +160,6 @@ public class AdminControllerImpl implements AdminController{
 	public ResponseEntity<?> getNumberInvestigationsCompletedFromSubject(String identificationNumber) {
 		try {
 			NumberInvestigationsCompletedSubjectDto dto = new NumberInvestigationsCompletedSubjectDto(this.subjectBusiness.getNumberInvestigationsCompletedFromSubject(Integer.parseInt(identificationNumber)));
-			
-			if(dto == null) {
-		        return new ResponseEntity<>(new ResponseDto("Error: el paciente no existe"), HttpStatus.NOT_FOUND);
-			}
 			
 	        return new ResponseEntity<>(dto, HttpStatus.OK);
 
