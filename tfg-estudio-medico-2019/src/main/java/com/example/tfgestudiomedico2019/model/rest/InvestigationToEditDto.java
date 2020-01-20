@@ -18,7 +18,32 @@ public class InvestigationToEditDto {
 		this.investigationDetailsId = investigationDetailsId;
 	}
 	
+	public InvestigationToEditDto() {
+	}
 	
+	public Integer getSubjectIdentificationNumber() {
+		return subjectIdentificationNumber;
+	}
+
+	public void setSubjectIdentificationNumber(Integer subjectIdentificationNumber) {
+		this.subjectIdentificationNumber = subjectIdentificationNumber;
+	}
+
+	public Integer getNumberInvestigation() {
+		return numberInvestigation;
+	}
+
+	public void setNumberInvestigation(Integer numberInvestigation) {
+		this.numberInvestigation = numberInvestigation;
+	}
+
+	public Integer getInvestigationDetailsId() {
+		return investigationDetailsId;
+	}
+
+	public void setInvestigationDetailsId(Integer investigationDetailsId) {
+		this.investigationDetailsId = investigationDetailsId;
+	}
 	public String toString() {
 		return "InvestigationToEditDto [subjectIdentificationNumber=" + subjectIdentificationNumber + ", numberInvestigation=" + numberInvestigation + ""
 				+ ", investigationDetailsId=" + investigationDetailsId + "]";
