@@ -29,52 +29,21 @@ public class ResearcherBusinessImpl implements ResearcherBusiness {
 	
 
 	@Override
-	public SubjectListFromResearcherDto getAllSubjectsAndInvestigationsByResearcher(Integer idResearcher) {
+	public List<SubjectEntity> getAllSubjectsAndInvestigationsByResearcher(Integer idResearcher) {
 		UserEntity researcher = new UserEntity();
 		researcher.setId(idResearcher);
 		
 		List<SubjectEntity> list = this.subjectRepository.findByResearcher(researcher);
 		
-		SubjectListFromResearcherDto dtoList = new SubjectListFromResearcherDto();
+		return list;
 		
-		for(SubjectEntity subject: list) {
-			SubjectFromResearcherDto dto = new SubjectFromResearcherDto();
-			
-			dto.setIdentificationNumber(subject.getIdentificationNumber());
-			dto.setId(subject.getId());
-			
-			if(subject.getInvestigations().get(0).getNumberInvestigation() == 1) {
-				dto.setFirstInvestigationCompleted(subject.getInvestigations().get(0).getCompleted());
-				dto.setSecondInvestigationCompleted(subject.getInvestigations().get(1).getCompleted());
-			}
-			else {
-				dto.setFirstInvestigationCompleted(subject.getInvestigations().get(1).getCompleted());
-				dto.setSecondInvestigationCompleted(subject.getInvestigations().get(0).getCompleted());
-			}
-			
-			dtoList.getList().add(dto);
-			
-		}
 		
-		return dtoList;
 	}
 
 	@Override
-	public SubjectInfoListDto getAllSubjects() {
+	public List<SubjectEntity> getAllSubjects() {
 		List<SubjectEntity> entityList = this.subjectRepository.findAll();
-		
-		SubjectInfoListDto dtoList = new SubjectInfoListDto();
-		
-		for(SubjectEntity elem: entityList) {
-			SubjectInfoDto dto = new SubjectInfoDto();
-			dto.setIdentificationNumber(elem.getIdentificationNumber());
-			dto.setUsernameResearcher(elem.getIdResearcher().getUsername());
-			
-			dtoList.getList().add(dto);	
-		}
-		
-		
-		return dtoList;
+		return entityList;
 	}
 
 	@Override

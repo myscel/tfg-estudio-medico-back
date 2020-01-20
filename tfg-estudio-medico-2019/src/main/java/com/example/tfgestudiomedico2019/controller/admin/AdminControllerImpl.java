@@ -2,6 +2,7 @@ package com.example.tfgestudiomedico2019.controller.admin;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditDto;
 import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
+import com.example.tfgestudiomedico2019.model.rest.SubjectFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
@@ -40,7 +42,6 @@ public class AdminControllerImpl implements AdminController{
 
 	@Override
 	public ResponseEntity<?> getAllUsers() {
-		
 		try {
 			List<UserEntity> listResearchers = this.userBusiness.getAllResearchers();
 			
@@ -53,14 +54,12 @@ public class AdminControllerImpl implements AdminController{
 			return new ResponseEntity<>(listDto, HttpStatus.OK);
 		}
 		catch(Exception e) {
-			System.out.println(e);
-	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
-		}	
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@Override
 	public ResponseEntity<?> deleteResearcher(String username) {
-		
 		try {
 			UserEntity userToDelete = this.userBusiness.findByUsername(username);
 
@@ -72,17 +71,15 @@ public class AdminControllerImpl implements AdminController{
 			}
 		}
 		catch(Exception e) {
-			return new ResponseEntity<>(new ResponseDto("Error en el srrvidor"),HttpStatus.INTERNAL_SERVER_ERROR);
-
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}	
 	}
 
 	@Override
 	public ResponseEntity<?> registerResearcher(UserToRegisterDto user) {
-		
 		try {
 			 if(userBusiness.findByUsername(user.getUsername())!=null){
-		         return new ResponseEntity<>(new ResponseDto("Error registering user..."), HttpStatus.CONFLICT);
+		         return new ResponseEntity<>(new ResponseDto("Error, el usuario ya existe"), HttpStatus.CONFLICT);
 		     }
 			 
 		     UserEntity userToRegisterEntity = new UserEntity();
@@ -96,46 +93,38 @@ public class AdminControllerImpl implements AdminController{
 		     UserEntity userSaved = this.userBusiness.saveUser(userToRegisterEntity);
 		        
 		     if(userSaved == null) {
-		         return new ResponseEntity<>(new ResponseDto("Error saving user..."), HttpStatus.INTERNAL_SERVER_ERROR);	
+		         return new ResponseEntity<>(new ResponseDto("Error en la base de datos"), HttpStatus.INTERNAL_SERVER_ERROR);	
 		     }
 		     
 		     UserDto dto = new UserDto(userSaved.getUsername(), userSaved.getName(), userSaved.getSurname(), userSaved.getGender(), userSaved.getId());
 		     
-		     
 		     return new ResponseEntity<>(dto, HttpStatus.CREATED);
 		}
 		catch(Exception e) {
-	         return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		
 	}
 	
 	@Override
 	public ResponseEntity<?> getAllSubjects() {
-		
 		try {
-			SubjectInfoListDto list = this.researcherBusiness.getAllSubjects();
+			List<SubjectEntity> entityList = this.researcherBusiness.getAllSubjects();
 			
-			return new ResponseEntity<>(list, HttpStatus.OK);
+			SubjectInfoListDto dtoList = new SubjectInfoListDto();
+			
+			for(SubjectEntity elem: entityList) {
+				SubjectInfoDto dto = new SubjectInfoDto();
+				dto.setIdentificationNumber(elem.getIdentificationNumber());
+				dto.setUsernameResearcher(elem.getIdResearcher().getUsername());
+				
+				dtoList.getList().add(dto);	
+			}
+			
+			return new ResponseEntity<>(dtoList, HttpStatus.OK);
 		}
 		catch(Exception e) {
-	         return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}	
-	}
-	
-	@Override
-	public ResponseEntity<?> getSubjectsAndInvestigationsFromIdAdmin(String id) {
-		try {
-			SubjectListFromResearcherDto list = this.researcherBusiness.getAllSubjectsAndInvestigationsByResearcher(Integer.parseInt(id));
-	        return new ResponseEntity<>(list, HttpStatus.OK);
-		}
-		catch(NumberFormatException e) {
-	         return new ResponseEntity<>(new ResponseDto("El id no es un número entero"), HttpStatus.BAD_REQUEST);
-		}
-		catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 	}
 	
 	public ResponseEntity<?> deleteSubject(String identificationNumber) {
@@ -145,14 +134,13 @@ public class AdminControllerImpl implements AdminController{
 			}
 			else {
 				return new ResponseEntity<>(new ResponseDto("Error al borrar el usuario"),HttpStatus.NOT_FOUND);
-
 			}
 		}
 		catch(NumberFormatException e) {
 	        return new ResponseEntity<>(new ResponseDto("Error: el número de identificación debe ser un entero"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -160,22 +148,23 @@ public class AdminControllerImpl implements AdminController{
 	public ResponseEntity<?> getNumberInvestigationsCompletedFromSubject(String identificationNumber) {
 		try {
 			NumberInvestigationsCompletedSubjectDto dto = new NumberInvestigationsCompletedSubjectDto(this.subjectBusiness.getNumberInvestigationsCompletedFromSubject(Integer.parseInt(identificationNumber)));
-			
 	        return new ResponseEntity<>(dto, HttpStatus.OK);
-
 		}
 		catch(NumberFormatException e) {
 	        return new ResponseEntity<>(new ResponseDto("Error: el número de identificación debe ser un entero"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@Override
 	public ResponseEntity<?> getSubjectByIdentificationNumber(String identificationNumber) {
 		try {
-			SubjectInfoDto dto = this.subjectBusiness.getSubjectFromIdentificationNumber(Integer.parseInt(identificationNumber));
+			SubjectEntity entity = this.subjectBusiness.getSubjectFromIdentificationNumber(Integer.parseInt(identificationNumber));
+			
+			ModelMapper mapper = new ModelMapper();
+			SubjectInfoDto dto  = mapper.map(entity, SubjectInfoDto.class);
 			
 			if(dto == null) {
 				ResponseDto response = new ResponseDto("Error: no existe el paciente");
@@ -189,25 +178,33 @@ public class AdminControllerImpl implements AdminController{
 	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
-			ResponseDto response = new ResponseDto("Unknown error");
-	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@Override
 	public ResponseEntity<?> getSubjectsFromDNIResearcher(String username) {
+		
+		
 		try {
-			SubjectInfoListDto dtoList = this.subjectBusiness.getSubjectsFromDNIResearcher(username);
+			List<SubjectEntity> subjects = this.subjectBusiness.getSubjectsFromDNIResearcher(username);
 			
-			if(dtoList == null) {
-		        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			if(subjects == null) {
+		        return new ResponseEntity<>(new ResponseDto("Fallo en la base de datos"), HttpStatus.INTERNAL_SERVER_ERROR);
+
+			}
+			
+			SubjectInfoListDto dtoList = new SubjectInfoListDto();	
+			ModelMapper mapper = new ModelMapper();
+				
+			for(SubjectEntity elem: subjects) {
+				dtoList.getList().add(mapper.map(elem,SubjectInfoDto.class));
 			}
 			
 			return new ResponseEntity<>(dtoList, HttpStatus.OK);
-			
 		}
 		catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -222,11 +219,10 @@ public class AdminControllerImpl implements AdminController{
 			
 			UserDto dto = new UserDto(entity.getUsername(), entity.getName(), entity.getSurname(), entity.getGender(), entity.getId());
 			
-			
 	        return new ResponseEntity<>(dto, HttpStatus.OK);
 		}
 		catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -253,7 +249,7 @@ public class AdminControllerImpl implements AdminController{
 	        return new ResponseEntity<>(dtoReturn, HttpStatus.OK);
 		}
 		catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -275,10 +271,10 @@ public class AdminControllerImpl implements AdminController{
 			}
 			
 			return new ResponseEntity<>(list, HttpStatus.OK);
-		}catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 	
 }

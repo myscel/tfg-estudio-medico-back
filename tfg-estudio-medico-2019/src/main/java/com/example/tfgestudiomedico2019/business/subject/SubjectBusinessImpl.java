@@ -62,27 +62,20 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 	}
 
 	@Override
-	public SubjectInfoDto getSubjectFromIdentificationNumber(Integer identificationNumber) {
+	public SubjectEntity getSubjectFromIdentificationNumber(Integer identificationNumber) {
 		SubjectEntity entity =  this.SubjectRepository.findByIdentificationNumber(identificationNumber);
 		
 		if(entity == null) {
 			return null;
 		}
 		
-		ModelMapper mapper = new ModelMapper();
-		SubjectInfoDto dto  = mapper.map(entity, SubjectInfoDto.class);
-		
-		return dto;
+		return entity;
 	}
 
 	
 	@Override
-	public SubjectInfoListDto getSubjectsFromDNIResearcher(String username) {
+	public List<SubjectEntity> getSubjectsFromDNIResearcher(String username) {
 		
-		SubjectInfoListDto dtoList = new SubjectInfoListDto();
-		
-		ModelMapper mapper = new ModelMapper();
-
 		UserEntity researcher = this.userRepository.findByUsername(username);
 		
 		if(researcher == null) {
@@ -91,15 +84,7 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 		
 		List<SubjectEntity> subjects = researcher.getSubjects();
 		
-		if(subjects == null) {
-			return null;
-		}
-			
-		for(SubjectEntity elem: subjects) {
-			dtoList.getList().add(mapper.map(elem,SubjectInfoDto.class));
-		}
-		
-		return dtoList;
+		return subjects;
 	}
 
 	@Override

@@ -9,8 +9,8 @@ import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 
 public interface ResearcherBusiness {
-	public SubjectListFromResearcherDto getAllSubjectsAndInvestigationsByResearcher(Integer idResearcher);
-    public SubjectInfoListDto getAllSubjects();
+	public List<SubjectEntity> getAllSubjectsAndInvestigationsByResearcher(Integer idResearcher);
+    public List<SubjectEntity> getAllSubjects();
     public InvestigationEntity getInvestigationBySubjectAndNumberInvestigation(Integer idSubject, Integer numberInvestigation);
     public Boolean saveInvestigationDetails(InvestigationEntity investigationEntity);
 	public List<SubjectEntity> getAllSubjectsByResearcher(Integer idResearcher);

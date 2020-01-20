@@ -10,7 +10,7 @@ public interface SubjectBusiness {
 	public SubjectEntity saveSubject(SubjectEntity subject);
 	public Boolean deleteSubjectByIdentificationNumber(Integer identificationNumber);
 	public Integer getNumberInvestigationsCompletedFromSubject(Integer identificationNumber);
-	public SubjectInfoDto getSubjectFromIdentificationNumber(Integer identificationNumber);
-	public SubjectInfoListDto getSubjectsFromDNIResearcher(String username);
+	public SubjectEntity getSubjectFromIdentificationNumber(Integer identificationNumber);
+	public List<SubjectEntity> getSubjectsFromDNIResearcher(String username);
 	public List<SubjectEntity> getAllSubjects();
 }

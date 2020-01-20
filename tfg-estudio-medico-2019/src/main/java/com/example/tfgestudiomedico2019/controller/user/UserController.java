@@ -15,11 +15,10 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/api/user")
 public interface UserController {
 	
-    @ApiOperation(value = "Login and logout user")
+    @ApiOperation(value = "Login user")
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Successfully logued"),
     		@ApiResponse(code = 409, message = "Fail login"),
-    		@ApiResponse(code = 500, message = "Server error")
     })
     @PostMapping(path = "/login", produces = "application/json")
     public ResponseEntity<?> login(@RequestBody UserToLoginDto userToLoginDto);

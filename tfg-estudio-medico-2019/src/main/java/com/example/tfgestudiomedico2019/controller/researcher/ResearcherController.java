@@ -46,22 +46,20 @@ public interface ResearcherController {
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Successfully got number of investigations", response = NumberInvestigationsCompletedSubjectDto.class),
     		@ApiResponse(code = 400, message = "Identification number format invalid", response = ResponseDto.class),
-    		@ApiResponse(code = 404, message = "Subject not found", response = ResponseDto.class),
     		@ApiResponse(code = 500, message = "Server error", response = ResponseDto.class)
     })
     @GetMapping(path = "/investigationsCompletedSubjectResearcher/{identificationNumber}", produces = "application/json")
     public ResponseEntity<?> getNumberInvestigationsCompletedFromSubjectResearcher(@PathVariable String identificationNumber);
     
-	
 	@ApiOperation(value = "Register an investigation details")
     @ApiResponses(value = {
     		@ApiResponse(code = 201, message = "Successfully investigation details registered", response= ResponseDto.class),
+    		@ApiResponse(code = 400, message = "Invetsigation not found", response= ResponseDto.class),
     		@ApiResponse(code = 409, message = "Investigation details already exists", response= ResponseDto.class),
     		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
     })
     @PostMapping(path = "/registerInvestigationDetails", produces = "application/json")
   	public ResponseEntity<?> registerInvestigationDetails(@RequestBody InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto);
-	
 	
 	@ApiOperation(value = "Get the investigation details based on the idSubject and numberInvestigation")
     @ApiResponses(value = {
@@ -72,9 +70,6 @@ public interface ResearcherController {
     })
     @GetMapping(path = "/getInvestigationDetails/{idSubject}/{numberInvestigation}", produces = "application/json")
     public ResponseEntity<?> getInvestigationDetails(@PathVariable String idSubject, @PathVariable String numberInvestigation);
-	
-	
-	
 	
 	@ApiOperation(value = "Get a list of investigation details based on the idSubject")
     @ApiResponses(value = {

@@ -22,14 +22,21 @@ public class UserControllerImpl implements UserController {
 	@Override
 	public ResponseEntity<?> login(UserToLoginDto userToLoginDto) {
 		
-        UserEntity userLogged = userBusiness.findByUsernameAndPassword(userToLoginDto.getUsername(), userToLoginDto.getPassword() );
-        
-        if(userLogged == null) {
-            return new ResponseEntity<>(new ResponseDto("User Not found"), HttpStatus.CONFLICT);
-        }
-   
-        userLogged.setSubjects(null);
+		try {
+	        UserEntity userLogged = userBusiness.findByUsernameAndPassword(userToLoginDto.getUsername(), userToLoginDto.getPassword() );
+	        
+	        if(userLogged == null) {
+	            return new ResponseEntity<>(new ResponseDto("User Not found"), HttpStatus.CONFLICT);
+	        }
+	   
+	        userLogged.setSubjects(null);
 
-        return new ResponseEntity<>(userLogged, HttpStatus.OK);
+	        return new ResponseEntity<>(userLogged, HttpStatus.OK);
+		}
+		catch(Exception e) {
+	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+
 	}
 }

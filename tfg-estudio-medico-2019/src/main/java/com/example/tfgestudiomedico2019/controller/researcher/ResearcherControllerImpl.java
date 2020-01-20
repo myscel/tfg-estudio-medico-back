@@ -21,6 +21,7 @@ import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowDto
 import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowListDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
+import com.example.tfgestudiomedico2019.model.rest.SubjectFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectToRegisterDto;
@@ -38,21 +39,40 @@ public class ResearcherControllerImpl implements ResearcherController {
 	@Override
 	public ResponseEntity<?> getSubjectsAndInvestigationsFromIdResearcher(String id) {
 		try {
-			SubjectListFromResearcherDto list = this.researcherBusiness.getAllSubjectsAndInvestigationsByResearcher(Integer.parseInt(id));
-	        return new ResponseEntity<>(list, HttpStatus.OK);
+			List<SubjectEntity> list = this.researcherBusiness.getAllSubjectsAndInvestigationsByResearcher(Integer.parseInt(id));
+			
+			SubjectListFromResearcherDto dtoList = new SubjectListFromResearcherDto();
+			
+			for(SubjectEntity subject: list) {
+				SubjectFromResearcherDto dto = new SubjectFromResearcherDto();
+				
+				dto.setIdentificationNumber(subject.getIdentificationNumber());
+				dto.setId(subject.getId());
+				
+				if(subject.getInvestigations().get(0).getNumberInvestigation() == 1) {
+					dto.setFirstInvestigationCompleted(subject.getInvestigations().get(0).getCompleted());
+					dto.setSecondInvestigationCompleted(subject.getInvestigations().get(1).getCompleted());
+				}
+				else {
+					dto.setFirstInvestigationCompleted(subject.getInvestigations().get(1).getCompleted());
+					dto.setSecondInvestigationCompleted(subject.getInvestigations().get(0).getCompleted());
+				}
+				
+				dtoList.getList().add(dto);	
+			}
+			
+	        return new ResponseEntity<>(dtoList, HttpStatus.OK);
 		}
 		catch(NumberFormatException e) {
 	         return new ResponseEntity<>(new ResponseDto("El id no es un número entero"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		 
 	}
 	
 	@Override
 	public ResponseEntity<?> registerSubject(SubjectToRegisterDto subject) {
-		
 		try {
 			 if(subjectBusiness.getSubjectFromIdentificationNumber(Integer.parseInt(subject.getIdentificationNumber()))!=null){
 		         return new ResponseEntity<>(new ResponseDto("Error registering user..."), HttpStatus.CONFLICT);
@@ -101,10 +121,8 @@ public class ResearcherControllerImpl implements ResearcherController {
 	         return new ResponseEntity<>(new ResponseDto("El número de identificación del sujeto no es un número entero"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
-	         return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
-		
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
 	}
 
 	@Override
@@ -119,42 +137,43 @@ public class ResearcherControllerImpl implements ResearcherController {
 	        return new ResponseEntity<>(new ResponseDto("Error: el número de identificación debe ser un entero"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-
 	@Override
 	public ResponseEntity<?> registerInvestigationDetails(InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto) {
-		
-		InvestigationEntity investigationEntityToSave = this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(investigationDetailsToRegisterDto.getIdSubject(), investigationDetailsToRegisterDto.getNumberInvestigation());
-		
-		if(investigationEntityToSave == null) {
-	        return new ResponseEntity<>(new ResponseDto("Error al cargar la cita"), HttpStatus.BAD_REQUEST);
-		}
-		
-		if(investigationEntityToSave.getCompleted() || investigationEntityToSave.getInvestigationEntityDetails() != null) {
-	        return new ResponseEntity<>(new ResponseDto("La cita ya está realizada"), HttpStatus.CONFLICT);
-		}
-		
-		ModelMapper mapper = new ModelMapper();
-		InvestigationEntityDetails investigationEntityDetails = mapper.map(investigationDetailsToRegisterDto, InvestigationEntityDetails.class);
-		
-		investigationEntityToSave.setInvestigationEntityDetails(investigationEntityDetails);
-		investigationEntityToSave.setCompleted(true);
-		
-		if(!this.researcherBusiness.saveInvestigationDetails(investigationEntityToSave)) {
-	        return new ResponseEntity<>(new ResponseDto("Error al guardar los detalles de la cita"), HttpStatus.BAD_REQUEST);
+		try {
+			InvestigationEntity investigationEntityToSave = this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(investigationDetailsToRegisterDto.getIdSubject(), investigationDetailsToRegisterDto.getNumberInvestigation());
+			
+			if(investigationEntityToSave == null) {
+		        return new ResponseEntity<>(new ResponseDto("Error al cargar la cita"), HttpStatus.BAD_REQUEST);
+			}
+			
+			if(investigationEntityToSave.getCompleted() || investigationEntityToSave.getInvestigationEntityDetails() != null) {
+		        return new ResponseEntity<>(new ResponseDto("La cita ya está realizada"), HttpStatus.CONFLICT);
+			}
+			
+			ModelMapper mapper = new ModelMapper();
+			InvestigationEntityDetails investigationEntityDetails = mapper.map(investigationDetailsToRegisterDto, InvestigationEntityDetails.class);
+			
+			investigationEntityToSave.setInvestigationEntityDetails(investigationEntityDetails);
+			investigationEntityToSave.setCompleted(true);
+			
+			if(!this.researcherBusiness.saveInvestigationDetails(investigationEntityToSave)) {
+		        return new ResponseEntity<>(new ResponseDto("Error al guardar los detalles de la cita"), HttpStatus.BAD_REQUEST);
 
+			}
+			
+	        return new ResponseEntity<>(new ResponseDto("Investigación dada de alta"), HttpStatus.CREATED);
 		}
-		
-        return new ResponseEntity<>(new ResponseDto("Investigación dada de alta"), HttpStatus.CREATED);
-
+		catch(Exception e) {
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@Override
 	public ResponseEntity<?> getInvestigationDetails(String idSubject, String numberInvestigation) {
-	
 		try {
 			int idSubjectAux = Integer.parseInt(idSubject);
 			int numberInvestigationAux = Integer.parseInt(numberInvestigation);
@@ -180,11 +199,10 @@ public class ResearcherControllerImpl implements ResearcherController {
 	        return new ResponseEntity<>(new ResponseDto("Campos de entrada no válidos"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Error en base de datos"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}	
 	}
 
-	
 	@Override
 	public ResponseEntity<?> getAllInvestigationDetails(String idSubject) {
 		try {
@@ -215,7 +233,7 @@ public class ResearcherControllerImpl implements ResearcherController {
 	        return new ResponseEntity<>(new ResponseDto("Campos de entrada no válidos"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Error en base de datos"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

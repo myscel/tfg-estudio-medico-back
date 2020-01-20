@@ -61,16 +61,7 @@ public interface AdminController {
     })
     @GetMapping(path = "/subjects", produces = "application/json")
    	public ResponseEntity<?> getAllSubjects();
-    
-	@ApiOperation(value = "Get all subjects and investigatios who belong to a admin researcher")
-    @ApiResponses(value = {
-    		@ApiResponse(code = 200, message = "Successfully got subjects with their investigations", response = SubjectListFromResearcherDto.class),
-    		@ApiResponse(code = 400, message = "Id format invalid", response = ResponseDto.class),
-    		@ApiResponse(code = 500, message = "Server error", response = ResponseDto.class)
-    })
-    @GetMapping(path = "/{id}/subjects", produces = "application/json")
-    public ResponseEntity<?> getSubjectsAndInvestigationsFromIdAdmin(@PathVariable String id);
-    
+   
 	@ApiOperation(value = "Delete a subject based on his/her identification number")
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Successfully deleted subject", response = ResponseDto.class),
