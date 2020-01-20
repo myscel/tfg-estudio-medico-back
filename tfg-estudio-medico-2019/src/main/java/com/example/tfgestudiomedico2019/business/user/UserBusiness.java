@@ -11,7 +11,5 @@ public interface UserBusiness {
     public UserEntity findById(Integer id);
     public List<UserEntity> getAllResearchers();
     public boolean deleteResearcher(String username);
-    public UserEntity updateUser(UserEntity user);
-
-    
+    public UserEntity updateUser(UserEntity user); 
 }

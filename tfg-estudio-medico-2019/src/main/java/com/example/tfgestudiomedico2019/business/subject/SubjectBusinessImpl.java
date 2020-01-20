@@ -65,10 +65,6 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 	public SubjectEntity getSubjectFromIdentificationNumber(Integer identificationNumber) {
 		SubjectEntity entity =  this.SubjectRepository.findByIdentificationNumber(identificationNumber);
 		
-		if(entity == null) {
-			return null;
-		}
-		
 		return entity;
 	}
 

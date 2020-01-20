@@ -163,14 +163,14 @@ public class AdminControllerImpl implements AdminController{
 		try {
 			SubjectEntity entity = this.subjectBusiness.getSubjectFromIdentificationNumber(Integer.parseInt(identificationNumber));
 			
-			ModelMapper mapper = new ModelMapper();
-			SubjectInfoDto dto  = mapper.map(entity, SubjectInfoDto.class);
-			
-			if(dto == null) {
-				ResponseDto response = new ResponseDto("Error: no existe el paciente");
-		        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+			if(entity == null) {
+		        return new ResponseEntity<>( new ResponseDto("Error: no existe el paciente"), HttpStatus.NOT_FOUND);
+
 			}
 			
+			ModelMapper mapper = new ModelMapper();
+			SubjectInfoDto dto  = mapper.map(entity, SubjectInfoDto.class);
+
 			return new ResponseEntity<>(dto, HttpStatus.OK);	
 		}
 		catch(NumberFormatException e) {
@@ -190,7 +190,7 @@ public class AdminControllerImpl implements AdminController{
 			List<SubjectEntity> subjects = this.subjectBusiness.getSubjectsFromDNIResearcher(username);
 			
 			if(subjects == null) {
-		        return new ResponseEntity<>(new ResponseDto("Fallo en la base de datos"), HttpStatus.INTERNAL_SERVER_ERROR);
+		        return new ResponseEntity<>(new ResponseDto("Fallo en la base de datos"), HttpStatus.NOT_FOUND);
 
 			}
 			
