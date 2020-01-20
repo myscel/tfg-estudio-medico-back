@@ -275,8 +275,7 @@ public class AdminControllerImpl implements AdminController{
 			for(SubjectEntity subject: listSubjects) {
 				for(InvestigationEntity investigation: subject.getInvestigations()) {
 					if(investigation.getCompleted()) {
-						InvestigationEntityDetails details = investigation.getInvestigationEntityDetails();
-						InvestigationToEditDto data = new InvestigationToEditDto(subject.getIdentificationNumber(), investigation.getNumberInvestigation(), details.getId());
+						InvestigationToEditDto data = new InvestigationToEditDto(subject.getIdentificationNumber(), investigation.getNumberInvestigation(), investigation.getInvestigationEntityDetails().getId());
 						list.getList().add(data);
 					}
 				}
@@ -284,7 +283,7 @@ public class AdminControllerImpl implements AdminController{
 			
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		}catch(Exception e) {
-	        return new ResponseEntity<>(new ResponseDto("Err0r with BBDD"), HttpStatus.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<>(new ResponseDto("Unknown error"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

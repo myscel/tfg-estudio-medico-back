@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
+import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
@@ -133,7 +134,7 @@ public interface AdminController {
 	
 	@ApiOperation(value = "Get all investigations completed")
     @ApiResponses(value = {
-    		@ApiResponse(code = 200, message = "Successfully got investigations", response= UserDto.class),
+    		@ApiResponse(code = 200, message = "Successfully got investigations", response= InvestigationToEditListDto.class),
     		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
     })
     @GetMapping(path = "/completedAppointments", produces = "application/json")
