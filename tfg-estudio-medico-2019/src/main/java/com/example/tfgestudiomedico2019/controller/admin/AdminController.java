@@ -15,6 +15,7 @@ import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
+import com.example.tfgestudiomedico2019.model.rest.SubjectToDeleteDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.UserListDto;
 import com.example.tfgestudiomedico2019.model.rest.UserToRegisterDto;
@@ -69,8 +70,8 @@ public interface AdminController {
     		@ApiResponse(code = 404, message = "Subject not found", response = ResponseDto.class),
     		@ApiResponse(code = 500, message = "Server error", response = ResponseDto.class)
     })
-    @DeleteMapping(path = "/deleteSubject", produces = "application/json")
-   	public ResponseEntity<?> deleteSubject(@RequestParam String identificationNumber);
+    @PostMapping(path = "/deleteSubject", produces = "application/json")
+   	public ResponseEntity<?> deleteSubject(@RequestBody SubjectToDeleteDto subjectToDeleteDto);
     
 	@ApiOperation(value = "Get the number of investigations completed from a subject based on his/her identification number")
     @ApiResponses(value = {

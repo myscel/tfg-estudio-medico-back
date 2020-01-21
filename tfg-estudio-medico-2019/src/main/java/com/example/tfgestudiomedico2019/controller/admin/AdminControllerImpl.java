@@ -23,6 +23,7 @@ import com.example.tfgestudiomedico2019.model.rest.SubjectFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
+import com.example.tfgestudiomedico2019.model.rest.SubjectToDeleteDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.UserListDto;
 import com.example.tfgestudiomedico2019.model.rest.UserToRegisterDto;
@@ -127,17 +128,20 @@ public class AdminControllerImpl implements AdminController{
 		}	
 	}
 	
-	public ResponseEntity<?> deleteSubject(String identificationNumber) {
+	public ResponseEntity<?> deleteSubject(SubjectToDeleteDto subjectToDeleteDto) {
 		try {
-			if(this.subjectBusiness.deleteSubjectByIdentificationNumber(Integer.parseInt(identificationNumber))) {
+			
+			if(subjectToDeleteDto == null) {
+				return new ResponseEntity<>(new ResponseDto("Número de identificación no válido"),HttpStatus.BAD_REQUEST);
+
+			}
+			
+			if(this.subjectBusiness.deleteSubjectByIdentificationNumber(subjectToDeleteDto.getIdentificationNumber())) {
 				return new ResponseEntity<>(new ResponseDto("Usuario borrado correctamente!"),HttpStatus.OK);
 			}
 			else {
 				return new ResponseEntity<>(new ResponseDto("Error al borrar el usuario"),HttpStatus.NOT_FOUND);
 			}
-		}
-		catch(NumberFormatException e) {
-	        return new ResponseEntity<>(new ResponseDto("Error: el número de identificación debe ser un entero"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
