@@ -39,7 +39,7 @@ public interface AdminController {
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Successfully user deleted", response = ResponseDto.class),
     		@ApiResponse(code = 404, message = "User not found", response = ResponseDto.class),
-    		@ApiResponse(code = 404, message = "User has subjects under his/her care", response = ResponseDto.class),
+    		@ApiResponse(code = 409, message = "User has subjects under his/her care", response = ResponseDto.class),
     		@ApiResponse(code = 500, message = "Server error", response = ResponseDto.class)
     })
     @PostMapping(path = "/deleteResearcher", produces = "application/json")

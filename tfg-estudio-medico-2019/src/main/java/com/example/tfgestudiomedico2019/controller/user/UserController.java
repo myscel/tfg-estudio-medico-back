@@ -20,6 +20,7 @@ public interface UserController {
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Successfully logued"),
     		@ApiResponse(code = 409, message = "Fail login"),
+    		@ApiResponse(code = 409, message = "Internal server error")
     })
     @PostMapping(path = "/login", produces = "application/json")
     public ResponseEntity<?> login(@RequestBody UserToLoginDto userToLoginDto);

@@ -129,9 +129,7 @@ public class ResearcherControllerImpl implements ResearcherController {
 	public ResponseEntity<?> getNumberInvestigationsCompletedFromSubjectResearcher(String identificationNumber) {
 		try {
 			NumberInvestigationsCompletedSubjectDto dto = new NumberInvestigationsCompletedSubjectDto(this.subjectBusiness.getNumberInvestigationsCompletedFromSubject(Integer.parseInt(identificationNumber)));
-			
 	        return new ResponseEntity<>(dto, HttpStatus.OK);
-
 		}
 		catch(NumberFormatException e) {
 	        return new ResponseEntity<>(new ResponseDto("Error: el número de identificación debe ser un entero"), HttpStatus.BAD_REQUEST);
