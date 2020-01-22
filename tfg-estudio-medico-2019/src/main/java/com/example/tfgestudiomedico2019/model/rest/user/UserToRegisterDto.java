@@ -1,32 +1,26 @@
-package com.example.tfgestudiomedico2019.model.rest;
+package com.example.tfgestudiomedico2019.model.rest.user;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class UserDto {
+public class UserToRegisterDto {
 	@ApiModelProperty(value = "The username of the user", example = "12345678A")
 	private String username;
 	@ApiModelProperty(value = "The name of the user", example = "SERGIO")
 	private String name;
 	@ApiModelProperty(value = "The gender of the user", example= "RESEARCHER")
 	private String gender;
-	@ApiModelProperty(value = "The id of the user", example = "23")
-	private Integer id;
 	@ApiModelProperty(value = "The surname of the user", example = "PACHECO FERNÁNDEZ")
 	private String surname;
+	@ApiModelProperty(value = "The password of the user")
+	private String password;
+	@ApiModelProperty(value = "The role of the user", example = "RESEARCHER")
+	private String role;
 	
 	
-	public UserDto(String username, String name, String surname, String gender, Integer id) {
-		super();
-		this.username = username;
-		this.name = name;
-		this.surname = surname;
-		this.gender = gender;
-		this.id = id;
-	}
-	
-	public UserDto() {
-	}
 
+	public UserToRegisterDto() {}
+	
+	
 	public String getUsername() {
 		return username;
 	}
@@ -45,21 +39,22 @@ public class UserDto {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	public String getSurname() {
 		return surname;
 	}
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	@Override
-	public String toString() {
-		return "UserDto [username=" + username + ", name=" + name + ", gender=" + gender + ", id=" + id + ", surname="
-				+ surname + "]";
-	}	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 }

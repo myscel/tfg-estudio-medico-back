@@ -1,4 +1,4 @@
-package com.example.tfgestudiomedico2019.model.rest;
+package com.example.tfgestudiomedico2019.model.rest.user;
 
 import java.util.ArrayList;
 import java.util.List;

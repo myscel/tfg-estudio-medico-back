@@ -5,7 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.example.tfgestudiomedico2019.model.rest.UserToLoginDto;
+
+import com.example.tfgestudiomedico2019.model.rest.user.UserToLoginDto;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

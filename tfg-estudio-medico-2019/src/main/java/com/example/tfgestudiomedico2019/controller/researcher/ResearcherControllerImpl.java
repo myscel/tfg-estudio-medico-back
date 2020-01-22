@@ -16,15 +16,15 @@ import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
-import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToRegisterDto;
-import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowDto;
-import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowListDto;
-import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
-import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectFromResearcherDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectToRegisterDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToRegisterDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToShowDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToShowListDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectFromResearcherDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectListFromResearcherDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectToRegisterDto;
+import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
 
 @RestController
 public class ResearcherControllerImpl implements ResearcherController {

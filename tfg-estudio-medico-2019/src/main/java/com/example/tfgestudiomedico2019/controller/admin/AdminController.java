@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditListDto;
-import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
-import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectToDeleteDto;
-import com.example.tfgestudiomedico2019.model.rest.UserDto;
-import com.example.tfgestudiomedico2019.model.rest.UserListDto;
-import com.example.tfgestudiomedico2019.model.rest.UserToDeleteDto;
-import com.example.tfgestudiomedico2019.model.rest.UserToRegisterDto;
-import com.example.tfgestudiomedico2019.model.rest.UserToUpdateDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditListDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoListDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectToDeleteDto;
+import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserListDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserToDeleteDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserToRegisterDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserToUpdateDto;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

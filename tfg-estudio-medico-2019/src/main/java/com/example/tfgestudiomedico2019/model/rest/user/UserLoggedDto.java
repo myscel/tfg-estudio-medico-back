@@ -1,4 +1,4 @@
-package com.example.tfgestudiomedico2019.model.rest;
+package com.example.tfgestudiomedico2019.model.rest.user;
 
 public class UserLoggedDto {
 	private Integer id;

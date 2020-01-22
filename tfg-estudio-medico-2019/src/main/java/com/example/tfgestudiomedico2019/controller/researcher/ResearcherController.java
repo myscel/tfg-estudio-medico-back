@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToRegisterDto;
-import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowDto;
-import com.example.tfgestudiomedico2019.model.rest.InvestigationDetailsToShowListDto;
-import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
-import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectToRegisterDto;
-import com.example.tfgestudiomedico2019.model.rest.UserDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToRegisterDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToShowDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToShowListDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectListFromResearcherDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectToRegisterDto;
+import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserDto;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
-import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
-import com.example.tfgestudiomedico2019.model.rest.UserLoggedDto;
-import com.example.tfgestudiomedico2019.model.rest.UserToLoginDto;
+import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserLoggedDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserToLoginDto;
 
 @RestController
 public class UserControllerImpl implements UserController {

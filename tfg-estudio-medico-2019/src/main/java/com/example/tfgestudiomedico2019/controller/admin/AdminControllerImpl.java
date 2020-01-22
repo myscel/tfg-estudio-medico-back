@@ -15,18 +15,18 @@ import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.Rol;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
-import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditDto;
-import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditListDto;
-import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
-import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectToDeleteDto;
-import com.example.tfgestudiomedico2019.model.rest.UserDto;
-import com.example.tfgestudiomedico2019.model.rest.UserListDto;
-import com.example.tfgestudiomedico2019.model.rest.UserToDeleteDto;
-import com.example.tfgestudiomedico2019.model.rest.UserToRegisterDto;
-import com.example.tfgestudiomedico2019.model.rest.UserToUpdateDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditListDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoListDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectToDeleteDto;
+import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserListDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserToDeleteDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserToRegisterDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserToUpdateDto;
 
 @RestController
 public class AdminControllerImpl implements AdminController{

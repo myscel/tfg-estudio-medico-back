@@ -1,8 +1,8 @@
-package com.example.tfgestudiomedico2019.model.rest;
+package com.example.tfgestudiomedico2019.model.rest.investigation;
 
 import java.sql.Date;
 
-public class InvestigationDetailsToRegisterDto {
+public class InvestigationDetailsToShowDto {
 	private Float vitaminD;
 	private Float hba1c;
 	private String season;
@@ -37,10 +37,9 @@ public class InvestigationDetailsToRegisterDto {
 	private String fototype;
 	private Boolean diabetesTreatment;
 	private Boolean vitaminDSupplementation;
-
-	private Integer numberInvestigation;
-	private Integer idSubject;
 	private Date investigationDate;
+	
+	private Integer identificationNumber;
 
 	public Float getVitaminD() {
 		return vitaminD;
@@ -290,22 +289,6 @@ public class InvestigationDetailsToRegisterDto {
 		this.vitaminDSupplementation = vitaminDSupplementation;
 	}
 
-	public Integer getNumberInvestigation() {
-		return numberInvestigation;
-	}
-
-	public void setNumberInvestigation(Integer numberInvestigation) {
-		this.numberInvestigation = numberInvestigation;
-	}
-
-	public Integer getIdSubject() {
-		return idSubject;
-	}
-
-	public void setIdSubject(Integer idSubject) {
-		this.idSubject = idSubject;
-	}
-
 	public Date getInvestigationDate() {
 		return investigationDate;
 	}
@@ -314,9 +297,17 @@ public class InvestigationDetailsToRegisterDto {
 		this.investigationDate = investigationDate;
 	}
 
+	public Integer getIdentificationNumber() {
+		return identificationNumber;
+	}
+
+	public void setIdentificationNumber(Integer identificationNumber) {
+		this.identificationNumber = identificationNumber;
+	}
+
 	@Override
 	public String toString() {
-		return "InvestigationDetailsToRegisterDto [vitaminD=" + vitaminD + ", hba1c=" + hba1c + ", season=" + season
+		return "InvestigationDetailsToShowDto [vitaminD=" + vitaminD + ", hba1c=" + hba1c + ", season=" + season
 				+ ", gender=" + gender + ", studyLevel=" + studyLevel + ", birthDate=" + birthDate
 				+ ", socioeconomicLevel=" + socioeconomicLevel + ", tobacco=" + tobacco + ", riskAlcohol=" + riskAlcohol
 				+ ", solarExposure=" + solarExposure + ", spfCream=" + spfCream + ", spfScore=" + spfScore
@@ -325,8 +316,9 @@ public class InvestigationDetailsToRegisterDto {
 				+ ", cholesterol=" + cholesterol + ", ldl=" + ldl + ", hdl=" + hdl + ", tg=" + tg + ", dyslipemy="
 				+ dyslipemy + ", creatinine=" + creatinine + ", glomerular=" + glomerular + ", kidneyInsufficiency="
 				+ kidneyInsufficiency + ", fototype=" + fototype + ", diabetesTreatment=" + diabetesTreatment
-				+ ", vitaminDSupplementation=" + vitaminDSupplementation + ", numberInvestigation="
-				+ numberInvestigation + ", idSubject=" + idSubject + ", investigationDate=" + investigationDate + "]";
+				+ ", vitaminDSupplementation=" + vitaminDSupplementation + ", investigationDate=" + investigationDate
+				+ ", identificationNumber=" + identificationNumber + "]";
 	}
+	
 
 }
