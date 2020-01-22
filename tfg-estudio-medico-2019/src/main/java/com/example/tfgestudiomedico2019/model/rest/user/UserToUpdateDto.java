@@ -2,16 +2,19 @@ package com.example.tfgestudiomedico2019.model.rest.user;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * User dto with information to update a user.
+ *
+ */
 public class UserToUpdateDto {
-	@ApiModelProperty(value = "The name of the user", example = "SERGIO")
+	@ApiModelProperty(value = "The name of the user", example = "SERGIO", dataType = "java.lang.String")
 	private String name;
-	@ApiModelProperty(value = "The surname of the user", example = "PACHECO FERNÁNDEZ")
+	@ApiModelProperty(value = "The surname of the user", example = "PACHECO FERNÁNDEZ", dataType = "java.lang.String")
 	private String surname;
-	@ApiModelProperty(value = "The password of the user", example = "123ABC")
+	@ApiModelProperty(value = "The password of the user", example = "123456", dataType = "java.lang.String")
 	private String password;
-	@ApiModelProperty(value = "The id of the user", example = "23")
+	@ApiModelProperty(value = "The id of the user", example = "23", dataType = "java.lang.String")
 	private String id;
-	
 	
 	
 	public UserToUpdateDto() {
@@ -51,4 +54,8 @@ public class UserToUpdateDto {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "UserToUpdateDto [name=" + name + ", surname=" + surname + ", password=" + password + ", id=" + id + "]";
+	}
 }

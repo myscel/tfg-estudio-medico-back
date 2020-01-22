@@ -5,6 +5,10 @@ import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * User dto that contains a list of  Users.
+ * 
+ */
 public class UserListDto {
 
 	@ApiModelProperty(value="The list of users")
@@ -17,6 +21,4 @@ public class UserListDto {
 	public void setList(List<UserDto> list) {
 		this.list = list;
 	}
-	
-	
 }
