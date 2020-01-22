@@ -19,13 +19,12 @@ import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditDto;
 import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectToDeleteDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.UserListDto;
+import com.example.tfgestudiomedico2019.model.rest.UserToDeleteDto;
 import com.example.tfgestudiomedico2019.model.rest.UserToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.UserToUpdateDto;
 
@@ -60,12 +59,20 @@ public class AdminControllerImpl implements AdminController{
 	}
 
 	@Override
-	public ResponseEntity<?> deleteResearcher(String username) {
+	public ResponseEntity<?> deleteResearcher(UserToDeleteDto userToDeleteDto) {
 		try {
-			UserEntity userToDelete = this.userBusiness.findByUsername(username);
+			UserEntity userToDelete = this.userBusiness.findByUsername(userToDeleteDto.getUsername());
+			
+			if(userToDelete == null || Rol.ADMIN.name().equals(userToDelete.getRole())) {
+				return new ResponseEntity<>(new ResponseDto("Error al borrar el usuario"),HttpStatus.NOT_FOUND);
+			}
+			
+			if(!userToDelete.getSubjects().isEmpty()) {
+				return new ResponseEntity<>(new ResponseDto("El investigador tiene pacientes asociados"),HttpStatus.CONFLICT);
+			}
 
-			if(this.userBusiness.deleteResearcher(username)) {
-				return new ResponseEntity<>(new ResponseDto("Usuario borrado correctamente!"),HttpStatus.OK);
+			if(this.userBusiness.deleteResearcher(userToDeleteDto.getUsername())) {
+				return new ResponseEntity<>(new ResponseDto("Usuario borrado correctamente"),HttpStatus.OK);
 			}
 			else {
 				return new ResponseEntity<>(new ResponseDto("Error al borrar el usuario"),HttpStatus.NOT_FOUND);

@@ -1,23 +1,21 @@
 package com.example.tfgestudiomedico2019.controller.admin;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.tfgestudiomedico2019.model.rest.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.SubjectToDeleteDto;
 import com.example.tfgestudiomedico2019.model.rest.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.UserListDto;
+import com.example.tfgestudiomedico2019.model.rest.UserToDeleteDto;
 import com.example.tfgestudiomedico2019.model.rest.UserToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.UserToUpdateDto;
 
@@ -41,10 +39,11 @@ public interface AdminController {
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Successfully user deleted", response = ResponseDto.class),
     		@ApiResponse(code = 404, message = "User not found", response = ResponseDto.class),
+    		@ApiResponse(code = 404, message = "User has subjects under his/her care", response = ResponseDto.class),
     		@ApiResponse(code = 500, message = "Server error", response = ResponseDto.class)
     })
-    @DeleteMapping(path = "/deleteResearcher", produces = "application/json")
-	public ResponseEntity<?> deleteResearcher(@RequestParam String username);
+    @PostMapping(path = "/deleteResearcher", produces = "application/json")
+	public ResponseEntity<?> deleteResearcher(@RequestBody UserToDeleteDto userToDeleteDto);
     
 	@ApiOperation(value = "Register a researcher")
     @ApiResponses(value = {
