@@ -5,6 +5,10 @@ import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * Subjecto dto that contains a list of Subjects from researcher dtos.
+ *
+ */
 public class SubjectListFromResearcherDto {
 	@ApiModelProperty(value = "The list of subjects investigated by the researcher")
 	private List<SubjectFromResearcherDto> list = new ArrayList<>();

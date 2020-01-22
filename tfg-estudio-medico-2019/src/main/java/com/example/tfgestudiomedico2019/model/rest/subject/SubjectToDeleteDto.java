@@ -2,8 +2,12 @@ package com.example.tfgestudiomedico2019.model.rest.subject;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * Subject dto that contains the information to delete a subject.
+ *
+ */
 public class SubjectToDeleteDto {
-	@ApiModelProperty(value = "The identification number of the subject", example = "12345678")
+	@ApiModelProperty(value = "The identification number of the subject", example = "12345678", dataType = "java.lang.Integer")
 	private Integer identificationNumber;
 
 	public Integer getIdentificationNumber() {

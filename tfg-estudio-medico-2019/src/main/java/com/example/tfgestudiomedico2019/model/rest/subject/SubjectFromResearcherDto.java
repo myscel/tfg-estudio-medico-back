@@ -2,14 +2,18 @@ package com.example.tfgestudiomedico2019.model.rest.subject;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ *  Subject dto that contains the information of subject's investigations.
+ *
+ */
 public class SubjectFromResearcherDto {
-	@ApiModelProperty(value="The id of the subject", example = "2")
+	@ApiModelProperty(value="The id of the subject", example = "2", dataType = "java.lang.Integer")
 	private Integer id;
-	@ApiModelProperty(value="The identification number of the subject", example = "12345678")
+	@ApiModelProperty(value="The identification number of the subject", example = "12345678", dataType = "java.lang.Integer")
 	private Integer identificationNumber;
-	@ApiModelProperty(value="Flag to check if the first investigation is done", example="true" )
+	@ApiModelProperty(value="Flag to check if the first investigation is done", example="true", dataType = "boolean")
 	private Boolean firstInvestigationCompleted;
-	@ApiModelProperty(value="Flag to check if the second investigation is done", example="false" )
+	@ApiModelProperty(value="Flag to check if the second investigation is done", example="false", dataType = "boolean")
 	private Boolean secondInvestigationCompleted;
 	
 	

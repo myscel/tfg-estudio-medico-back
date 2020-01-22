@@ -23,7 +23,6 @@ import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestiga
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectListFromResearcherDto;
-import com.example.tfgestudiomedico2019.model.rest.subject.SubjectToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
 
 @RestController
@@ -74,15 +73,15 @@ public class ResearcherControllerImpl implements ResearcherController {
 	}
 	
 	@Override
-	public ResponseEntity<?> registerSubject(SubjectToRegisterDto subject) {
+	public ResponseEntity<?> registerSubject(SubjectInfoDto subject) {
 		try {
-			 if(subjectBusiness.getSubjectFromIdentificationNumber(Integer.parseInt(subject.getIdentificationNumber()))!=null){
+			 if(subjectBusiness.getSubjectFromIdentificationNumber(subject.getIdentificationNumber())!=null){
 		         return new ResponseEntity<>(new ResponseDto("Error registering user..."), HttpStatus.CONFLICT);
 		     }
 			 
 			 //Set identification number
 			 SubjectEntity subjectToSave = new SubjectEntity();
-			 subjectToSave.setIdentificationNumber(Integer.parseInt(subject.getIdentificationNumber()));
+			 subjectToSave.setIdentificationNumber(subject.getIdentificationNumber());
 			 
 			 
 			 //Set researcher

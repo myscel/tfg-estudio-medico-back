@@ -11,8 +11,8 @@ import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDe
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToShowDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToShowListDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectListFromResearcherDto;
-import com.example.tfgestudiomedico2019.model.rest.subject.SubjectToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserDto;
 
@@ -40,7 +40,7 @@ public interface ResearcherController {
     		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
     })
     @PostMapping(path = "/registerSubject", produces = "application/json")
-  	public ResponseEntity<?> registerSubject(@RequestBody SubjectToRegisterDto subject);
+  	public ResponseEntity<?> registerSubject(@RequestBody SubjectInfoDto subject);
 	
 	@ApiOperation(value = "Get the number of investigations completed from a subject based on his/her identification number")
     @ApiResponses(value = {

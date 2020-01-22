@@ -5,6 +5,10 @@ import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * Investigation details dto with a list of Investigation details.
+ *
+ */
 public class InvestigationDetailsToShowListDto {
 	@ApiModelProperty(value="The list of investigation details")
 	private List<InvestigationDetailsToShowDto> list = new ArrayList<>();

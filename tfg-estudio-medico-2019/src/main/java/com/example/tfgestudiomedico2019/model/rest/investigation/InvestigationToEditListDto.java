@@ -5,6 +5,10 @@ import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * Investigation dto that contains a list of investigation to edit dtos.
+ *
+ */
 public class InvestigationToEditListDto {
 	@ApiModelProperty(value="The list of investigation completed to edit")
 	private List<InvestigationToEditDto> list = new ArrayList<>();

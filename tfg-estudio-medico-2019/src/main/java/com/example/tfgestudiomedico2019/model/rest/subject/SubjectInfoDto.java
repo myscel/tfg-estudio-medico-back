@@ -2,10 +2,14 @@ package com.example.tfgestudiomedico2019.model.rest.subject;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * Subject dto that contains the main information about him/her and the researcher.
+ *
+ */
 public class SubjectInfoDto {
-	@ApiModelProperty(value = "The identification number of the subject", example = "12345678")
+	@ApiModelProperty(value = "The identification number of the subject", example = "12345678", dataType = "java.lang.Integer")
 	private Integer identificationNumber;
-	@ApiModelProperty(value = "The dni of the researcher who investigates the subject", example = "12345678A")
+	@ApiModelProperty(value = "The dni of the researcher who investigates the subject", example = "12345678A", dataType = "java.lang.String")
 	private String usernameResearcher;
 	
 	

@@ -2,41 +2,84 @@ package com.example.tfgestudiomedico2019.model.rest.investigation;
 
 import java.sql.Date;
 
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * Investigation details dto with all the information to show an investigation detail.
+ *
+ */
 public class InvestigationDetailsToShowDto {
+	@ApiModelProperty(value = "The vitaminD  of the subject", example = "100", dataType = "java.lang.Float")
 	private Float vitaminD;
+	@ApiModelProperty(value = "The hba1c % of the subject", example = "23", dataType = "java.lang.Float")
 	private Float hba1c;
+	@ApiModelProperty(value = "The season  of the year at this moment", allowableValues="verano, invierno", example = "verano", dataType = "java.lang.Float")
 	private String season;
 	
+	
+	@ApiModelProperty(value = "The gender of the subject", example = "mujer", allowableValues="hombre, mujer", dataType = "java.lang.String")
 	private String gender;
+	@ApiModelProperty(value = "The study level  of the subject", example = "Primaria", dataType = "java.lang.String")
 	private String studyLevel;
+	@ApiModelProperty(value = "The birthDate  of the subject", example = "1995-08-06", dataType = "Date")
 	private Date birthDate;
+	@ApiModelProperty(value = "The socioeconomic level in euros of the subject per month", example = "1001-200", dataType = "java.lang.String")
 	private String socioeconomicLevel;
 
+	@ApiModelProperty(value = "If the subject consumes tobacco", example = "true", dataType = "boolean")
 	private Boolean tobacco;
+	@ApiModelProperty(value = "If the subject has risk of drinking alcohol", example = "false", dataType = "boolean")
 	private Boolean riskAlcohol;
+	@ApiModelProperty(value = "The solar exposure time per day of the subject in minutes", example = "500", dataType = "java.lang.Float")
 	private Float solarExposure;
+	@ApiModelProperty(value = "If the subject uses spfCream", example = "true", dataType = "boolean")
 	private Boolean spfCream;
+	@ApiModelProperty(value = "Spf score of the subject", example = "1", dataType = "java.lang.Integer")
 	private Float spfScore;
+	@ApiModelProperty(value = "The vitaminD  of the subject", example = "25", dataType = "java.lang.Float")
 	private Float exercise;
 	
+	@ApiModelProperty(value = "If the subject has a right control of dm2", example = "true", dataType = "boolean")
 	private Boolean dm2;
+	@ApiModelProperty(value = "The glucose level in blood of the subject", example = "320", dataType = "java.lang.Float")
 	private Float glucose;
+	@ApiModelProperty(value = "The imc level in blood of the subject", example = "15", dataType = "java.lang.Float")
 	private Float imc;
+	@ApiModelProperty(value = "If the subject has obesity", example = "false", dataType = "boolean")
 	private Boolean obesity;
+	@ApiModelProperty(value = "The tas level in blood of the subject", example = "30", dataType = "java.lang.Float")
 	private Float tas;
+	@ApiModelProperty(value = "The tad level in blood of the subject", example = "40", dataType = "java.lang.Float")
 	private Float tad;
+	@ApiModelProperty(value = "If the subject has arterial hypertension", example = "true", dataType = "boolean")
 	private Boolean arterialHypertension;
+	@ApiModelProperty(value = "The cholesterol level in blood of the subject", example = "800", dataType = "java.lang.Float")
 	private Float cholesterol;
+	@ApiModelProperty(value = "The ldl level in blood of the subject", example = "300", dataType = "java.lang.Float")
 	private Float ldl;
+	@ApiModelProperty(value = "The hdl level in blood of the subject", example = "200", dataType = "java.lang.Float")
 	private Float hdl;
+	@ApiModelProperty(value = "The tg level in blood of the subject", example = "2000", dataType = "java.lang.Float")
 	private Float tg;
+	@ApiModelProperty(value = "If the subject has dyslipemy", example = "false", dataType = "boolean")
 	private Boolean dyslipemy;
+	@ApiModelProperty(value = "The creatinine level in blood of the subject", example = "15", dataType = "java.lang.Float")
 	private Float creatinine;
+	@ApiModelProperty(value = "The glomerular level in blood of the subject", example = "150", dataType = "java.lang.Float")
 	private Float glomerular;
+	@ApiModelProperty(value = "If the subject has kidney insufficiency", example = "false", dataType = "boolean")
 	private Boolean kidneyInsufficiency;
+	@ApiModelProperty(value = "The fototype of the subject", example = "II", dataType = "java.lang.String")
 	private String fototype;
+	@ApiModelProperty(value = "If the subject has a diabetes treatment", example = "true", dataType = "boolean")
 	private Boolean diabetesTreatment;
+	@ApiModelProperty(value = "If the subject consumes a vitamin D supplementation", example = "false", dataType = "boolean")
 	private Boolean vitaminDSupplementation;
+	
+	
+	@ApiModelProperty(value = "The investigation number", example = "2", dataType = "java.lang.Integer")
+	private Integer numberInvestigation;
+	@ApiModelProperty(value = "The investigation date of the appointment", example = "2020-22-01", dataType = "Date")
 	private Date investigationDate;
 	
 	private Integer identificationNumber;
@@ -319,6 +362,4 @@ public class InvestigationDetailsToShowDto {
 				+ ", vitaminDSupplementation=" + vitaminDSupplementation + ", investigationDate=" + investigationDate
 				+ ", identificationNumber=" + identificationNumber + "]";
 	}
-	
-
 }
