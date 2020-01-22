@@ -36,7 +36,6 @@ public class UserBusinessImpl implements UserBusiness {
 
 	@Override
 	public List<UserEntity> getAllResearchers() {
-		System.out.println(Rol.RESEARCHER.name());
 		return this.userRepository.findByRole(Rol.RESEARCHER.name());
 	}
 
@@ -54,22 +53,7 @@ public class UserBusinessImpl implements UserBusiness {
 	}
 
 	@Override
-	public UserEntity updateUser(UserEntity user) {
-		
-		UserEntity userToUpdate = this.userRepository.findById(user.getId());
-	    
-		if(user.getPassword() != null && !user.getPassword().equals("")) {
-			userToUpdate.setPassword(user.getPassword());
-		}
-		
-		if(user.getName() != null && user.getName() != "") {
-			userToUpdate.setName(user.getName());
-		}
-		
-		if(user.getSurname() != null && user.getSurname() != "") {
-			userToUpdate.setSurname(user.getSurname());
-		}
-		
-		return this.userRepository.save(userToUpdate);
+	public UserEntity updateUser(UserEntity user) {	
+		return this.userRepository.save(user);
 	}
 }

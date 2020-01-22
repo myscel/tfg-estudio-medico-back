@@ -31,8 +31,10 @@ public class ResearcherControllerImpl implements ResearcherController {
 	
 	@Autowired
 	private ResearcherBusiness researcherBusiness;
+	
 	@Autowired
 	private SubjectBusiness subjectBusiness;
+	
 	@Autowired
 	private UserBusiness userBusiness;
 
@@ -114,7 +116,6 @@ public class ResearcherControllerImpl implements ResearcherController {
 		     
 		     SubjectInfoDto dto = new SubjectInfoDto(subjectSaved.getIdentificationNumber(), subjectSaved.getIdResearcher().getUsername());
 		     
-		     
 		     return new ResponseEntity<>(dto, HttpStatus.CREATED);
 		}
 		catch(NumberFormatException e) {
@@ -162,7 +163,6 @@ public class ResearcherControllerImpl implements ResearcherController {
 			
 			if(!this.researcherBusiness.saveInvestigationDetails(investigationEntityToSave)) {
 		        return new ResponseEntity<>(new ResponseDto("Error al guardar los detalles de la cita"), HttpStatus.BAD_REQUEST);
-
 			}
 			
 	        return new ResponseEntity<>(new ResponseDto("Investigación dada de alta"), HttpStatus.CREATED);
@@ -191,7 +191,6 @@ public class ResearcherControllerImpl implements ResearcherController {
 			ModelMapper mapper = new ModelMapper();
 			InvestigationDetailsToShowDto investigationDetailsToShowDto = mapper.map(investigationEntity.getInvestigationEntityDetails(), InvestigationDetailsToShowDto.class);
 			investigationDetailsToShowDto.setIdentificationNumber(investigationEntity.getSubject().getIdentificationNumber());
-			System.out.println("DETALLES: " + investigationDetailsToShowDto);
 			
 	        return new ResponseEntity<>(investigationDetailsToShowDto, HttpStatus.OK);
 		}

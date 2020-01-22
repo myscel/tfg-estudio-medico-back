@@ -4,15 +4,12 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
-import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.repository.SubjectRepository;
 import com.example.tfgestudiomedico2019.repository.UserRepository;
 
@@ -25,6 +22,7 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
 	
 	@Override
     public SubjectEntity saveSubject(SubjectEntity subject){
@@ -41,15 +39,12 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 
 	@Override
 	public Integer getNumberInvestigationsCompletedFromSubject(Integer identificationNumber) {
-		
 		SubjectEntity subject = this.SubjectRepository.findByIdentificationNumber(identificationNumber);
-		
 		List<InvestigationEntity> investigations = subject.getInvestigations();
 		
 		if(investigations == null || investigations.isEmpty()) {
 			return 0;
 		}
-		
 		int contInvestigationsCompleted = 0;
 		
 		for(InvestigationEntity elem: investigations) {
@@ -57,27 +52,20 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 				++contInvestigationsCompleted;
 			}
 		}
-		
 		return contInvestigationsCompleted;
 	}
 
 	@Override
 	public SubjectEntity getSubjectFromIdentificationNumber(Integer identificationNumber) {
-		SubjectEntity entity =  this.SubjectRepository.findByIdentificationNumber(identificationNumber);
-		
-		return entity;
+		return  this.SubjectRepository.findByIdentificationNumber(identificationNumber);
 	}
 
-	
 	@Override
 	public List<SubjectEntity> getSubjectsFromDNIResearcher(String username) {
-		
 		UserEntity researcher = this.userRepository.findByUsername(username);
-		
 		if(researcher == null) {
 			return null;
 		}
-		
 		List<SubjectEntity> subjects = researcher.getSubjects();
 		
 		return subjects;
@@ -85,8 +73,7 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 
 	@Override
 	public List<SubjectEntity> getAllSubjects() {
-		List<SubjectEntity> listSubjects = this.SubjectRepository.findAll();
-		return listSubjects;
+		return this.SubjectRepository.findAll();
 	}
 
 }

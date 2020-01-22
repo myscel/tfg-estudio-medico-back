@@ -89,13 +89,9 @@ public class AdminControllerImpl implements AdminController{
 			 if(userBusiness.findByUsername(user.getUsername())!=null){
 		         return new ResponseEntity<>(new ResponseDto("Error, el usuario ya existe"), HttpStatus.CONFLICT);
 		     }
-			 
-		     UserEntity userToRegisterEntity = new UserEntity();
-		     userToRegisterEntity.setName(user.getName());
-		     userToRegisterEntity.setUsername(user.getUsername());
-		     userToRegisterEntity.setGender(user.getGender());
-		     userToRegisterEntity.setSurname(user.getSurname());
-		     userToRegisterEntity.setPassword(user.getPassword());
+			    
+		     ModelMapper mapper = new ModelMapper();
+		     UserEntity userToRegisterEntity  = mapper.map(user, UserEntity.class);
 		     userToRegisterEntity.setRole(Rol.RESEARCHER.name());
 		        
 		     UserEntity userSaved = this.userBusiness.saveUser(userToRegisterEntity);
@@ -127,7 +123,6 @@ public class AdminControllerImpl implements AdminController{
 				
 				dtoList.getList().add(dto);	
 			}
-			
 			return new ResponseEntity<>(dtoList, HttpStatus.OK);
 		}
 		catch(Exception e) {
@@ -137,10 +132,8 @@ public class AdminControllerImpl implements AdminController{
 	
 	public ResponseEntity<?> deleteSubject(SubjectToDeleteDto subjectToDeleteDto) {
 		try {
-			
 			if(subjectToDeleteDto == null) {
 				return new ResponseEntity<>(new ResponseDto("Número de identificación no válido"),HttpStatus.BAD_REQUEST);
-
 			}
 			
 			if(this.subjectBusiness.deleteSubjectByIdentificationNumber(subjectToDeleteDto.getIdentificationNumber())) {
@@ -195,14 +188,11 @@ public class AdminControllerImpl implements AdminController{
 
 	@Override
 	public ResponseEntity<?> getSubjectsFromDNIResearcher(String username) {
-		
-		
 		try {
 			List<SubjectEntity> subjects = this.subjectBusiness.getSubjectsFromDNIResearcher(username);
 			
 			if(subjects == null) {
 		        return new ResponseEntity<>(new ResponseDto("Fallo en la base de datos"), HttpStatus.NOT_FOUND);
-
 			}
 			
 			SubjectInfoListDto dtoList = new SubjectInfoListDto();	
@@ -240,24 +230,36 @@ public class AdminControllerImpl implements AdminController{
 	@Override
 	public ResponseEntity<?> updateResearcher(UserToUpdateDto dto) {
 		try {
-			UserEntity userEntity = new UserEntity();
-			userEntity.setName(dto.getName());
-			userEntity.setSurname(dto.getSurname());
-			userEntity.setPassword(dto.getPassword());
-			userEntity.setId(Integer.parseInt(dto.getId()));
+			UserEntity userToUpdate = this.userBusiness.findById(Integer.parseInt(dto.getId()));
 			
-			UserEntity userUpdated = this.userBusiness.updateUser(userEntity);
+			if(userToUpdate == null || Rol.ADMIN.name().equals(userToUpdate.getRole())) {
+		         return new ResponseEntity<>(new ResponseDto("Error user not found..."), HttpStatus.NOT_FOUND);	
+			}
+			
+			userToUpdate.setName(dto.getName());
+			userToUpdate.setSurname(dto.getSurname());
+			
+			if(!dto.getPassword().equals(null) && !dto.getPassword().equals("")) {
+				userToUpdate.setPassword(dto.getPassword());
+			}
+			else {
+				userToUpdate.setPassword(userToUpdate.getPassword());
+			}
+		
+			UserEntity userUpdated = this.userBusiness.updateUser(userToUpdate);
 			
 			if(userUpdated == null) {
 		         return new ResponseEntity<>(new ResponseDto("Error user not found..."), HttpStatus.NOT_FOUND);	
 			}
 			
-			UserDto dtoReturn = new UserDto();
-			dtoReturn.setId(userUpdated.getId());
-			dtoReturn.setName(userUpdated.getName());
-			dtoReturn.setSurname(userUpdated.getSurname());
+			ModelMapper mapper = new ModelMapper();
+			UserDto dtoReturn = mapper.map(userUpdated,UserDto.class);
 			
 	        return new ResponseEntity<>(dtoReturn, HttpStatus.OK);
+		}
+		catch(NumberFormatException e) {
+			ResponseDto response = new ResponseDto("Error: el id debe ser un entero");
+	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
@@ -267,11 +269,9 @@ public class AdminControllerImpl implements AdminController{
 	@Override
 	public ResponseEntity<?> getAllCompletedInvestigations() {
 		try {
-			
 			List<SubjectEntity> listSubjects = this.subjectBusiness.getAllSubjects();
 			
 			InvestigationToEditListDto list = new InvestigationToEditListDto();
-			
 			for(SubjectEntity subject: listSubjects) {
 				for(InvestigationEntity investigation: subject.getInvestigations()) {
 					if(investigation.getCompleted()) {
@@ -280,7 +280,6 @@ public class AdminControllerImpl implements AdminController{
 					}
 				}
 			}
-			
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		}
 		catch(Exception e) {

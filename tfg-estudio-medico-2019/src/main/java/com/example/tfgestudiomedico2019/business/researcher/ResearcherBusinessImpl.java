@@ -10,10 +10,6 @@ import org.springframework.stereotype.Service;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
-import com.example.tfgestudiomedico2019.model.rest.SubjectFromResearcherDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectInfoDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectInfoListDto;
-import com.example.tfgestudiomedico2019.model.rest.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.repository.InvestigationRepository;
 import com.example.tfgestudiomedico2019.repository.SubjectRepository;
 
@@ -32,12 +28,8 @@ public class ResearcherBusinessImpl implements ResearcherBusiness {
 	public List<SubjectEntity> getAllSubjectsAndInvestigationsByResearcher(Integer idResearcher) {
 		UserEntity researcher = new UserEntity();
 		researcher.setId(idResearcher);
-		
 		List<SubjectEntity> list = this.subjectRepository.findByResearcher(researcher);
-		
 		return list;
-		
-		
 	}
 
 	@Override
@@ -50,29 +42,21 @@ public class ResearcherBusinessImpl implements ResearcherBusiness {
 	public InvestigationEntity getInvestigationBySubjectAndNumberInvestigation(Integer idSubject, Integer numberInvestigation) {
 		SubjectEntity subjectEntity = new SubjectEntity();
 		subjectEntity.setId(idSubject);
-		
 		InvestigationEntity investigationEntity =  this.investigationRepository.findBySubjectAndNumberInvestigation(subjectEntity, numberInvestigation);
-		
 		return investigationEntity;
 	}
 
 	@Override
 	public Boolean saveInvestigationDetails(InvestigationEntity investigationEntity) {
 		InvestigationEntity InvestigationSaved =  this.investigationRepository.save(investigationEntity);
-		
 		return InvestigationSaved != null;
 	}
 
-	
 	@Override
 	public List<SubjectEntity> getAllSubjectsByResearcher(Integer idResearcher) {
 		UserEntity researcher = new UserEntity();
 		researcher.setId(idResearcher);
-		
 		List<SubjectEntity> listSubjects = this.subjectRepository.findByResearcher(researcher);
-		
 		return listSubjects;
 	}
-	
-	
 }

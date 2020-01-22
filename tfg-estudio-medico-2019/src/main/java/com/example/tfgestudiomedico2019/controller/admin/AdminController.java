@@ -112,6 +112,7 @@ public interface AdminController {
 	@ApiOperation(value = "Update a researcher")
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Researcher successfully updated", response= UserDto.class),
+    		@ApiResponse(code = 400, message = "Id format invalid", response= ResponseDto.class),
     		@ApiResponse(code = 404, message = "Researcher doesn't exists", response= ResponseDto.class),
     		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
     })
