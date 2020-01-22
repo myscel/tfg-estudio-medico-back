@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusiness;
 import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
+import com.example.tfgestudiomedico2019.model.domain.Role;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
-import com.example.tfgestudiomedico2019.model.entity.Rol;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditDto;
@@ -63,7 +63,7 @@ public class AdminControllerImpl implements AdminController{
 		try {
 			UserEntity userToDelete = this.userBusiness.findByUsername(userToDeleteDto.getUsername());
 			
-			if(userToDelete == null || Rol.ADMIN.name().equals(userToDelete.getRole())) {
+			if(userToDelete == null || Role.ADMIN.name().equals(userToDelete.getRole())) {
 				return new ResponseEntity<>(new ResponseDto("Error al borrar el usuario"),HttpStatus.NOT_FOUND);
 			}
 			
@@ -92,7 +92,7 @@ public class AdminControllerImpl implements AdminController{
 			    
 		     ModelMapper mapper = new ModelMapper();
 		     UserEntity userToRegisterEntity  = mapper.map(user, UserEntity.class);
-		     userToRegisterEntity.setRole(Rol.RESEARCHER.name());
+		     userToRegisterEntity.setRole(Role.RESEARCHER.name());
 		        
 		     UserEntity userSaved = this.userBusiness.saveUser(userToRegisterEntity);
 		        
@@ -214,7 +214,7 @@ public class AdminControllerImpl implements AdminController{
 		try {
 			UserEntity entity = this.userBusiness.findById(Integer.parseInt(id));
 			
-			if(entity == null || entity.getRole().equals(Rol.ADMIN.name())) {
+			if(entity == null || entity.getRole().equals(Role.ADMIN.name())) {
 		        return new ResponseEntity<>(new ResponseDto("Error: el usuario no existe"), HttpStatus.NOT_FOUND);
 			}
 			
@@ -232,7 +232,7 @@ public class AdminControllerImpl implements AdminController{
 		try {
 			UserEntity userToUpdate = this.userBusiness.findById(Integer.parseInt(dto.getId()));
 			
-			if(userToUpdate == null || Rol.ADMIN.name().equals(userToUpdate.getRole())) {
+			if(userToUpdate == null || Role.ADMIN.name().equals(userToUpdate.getRole())) {
 		         return new ResponseEntity<>(new ResponseDto("Error user not found..."), HttpStatus.NOT_FOUND);	
 			}
 			

@@ -22,6 +22,7 @@ public class SubjectEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
 	@Column(name = "identificationnumber")
 	private Integer identificationNumber;
 	
@@ -29,49 +30,37 @@ public class SubjectEntity {
     @JoinColumn(name = "idresearcher")
 	private UserEntity researcher;
 	
-	
-	
 	@OneToMany(mappedBy = "subject", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<InvestigationEntity> investigations = new ArrayList<>();
 	
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public Integer getIdentificationNumber() {
 		return identificationNumber;
 	}
-	
 	public void setIdentificationNumber(Integer identificationNumber) {
 		this.identificationNumber = identificationNumber;
 	}
-
 	public UserEntity getIdResearcher() {
 		return researcher;
 	}
-
 	public void setIdResearcher(UserEntity researcher) {
 		this.researcher = researcher;
 	}
-
 	public List<InvestigationEntity> getInvestigations() {
 		return investigations;
 	}
-	
 	public void setInvestigations(List<InvestigationEntity> investigations) {
 		this.investigations = investigations;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "SubjectEntity [id=" + id + ", identificationNumber=" + identificationNumber + ", researcher="
 				+ researcher + "]";
 	}
-	
-	
-
 }

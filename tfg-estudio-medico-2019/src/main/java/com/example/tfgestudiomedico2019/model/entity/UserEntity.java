@@ -19,13 +19,12 @@ public class UserEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
 	private String name;
 	private String username;
 	private String gender;
 	private String password;
-	
 	private String role;
-	
 	private String surname;
 	
 	@OneToMany(
@@ -34,7 +33,6 @@ public class UserEntity {
 	        orphanRemoval = true
 	)
 	private List<SubjectEntity> subjects = new ArrayList<>();
-	
 	
 	
 	public List<SubjectEntity> getSubjects() {
@@ -85,10 +83,10 @@ public class UserEntity {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+	
 	@Override
 	public String toString() {
 		return "UserEntity [id=" + id + ", name=" + name + ", username=" + username + ", gender=" + gender
 				+ ", password=" + password + ", role=" + role + ", surname=" + surname + ", subjects=" + subjects + "]";
 	}
-	
 }

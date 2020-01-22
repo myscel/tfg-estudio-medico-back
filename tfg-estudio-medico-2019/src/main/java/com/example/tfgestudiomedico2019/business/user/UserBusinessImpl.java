@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.tfgestudiomedico2019.model.entity.Rol;
+import com.example.tfgestudiomedico2019.model.domain.Role;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.repository.UserRepository;
 
@@ -36,7 +36,7 @@ public class UserBusinessImpl implements UserBusiness {
 
 	@Override
 	public List<UserEntity> getAllResearchers() {
-		return this.userRepository.findByRole(Rol.RESEARCHER.name());
+		return this.userRepository.findByRole(Role.RESEARCHER.name());
 	}
 
 	@Override

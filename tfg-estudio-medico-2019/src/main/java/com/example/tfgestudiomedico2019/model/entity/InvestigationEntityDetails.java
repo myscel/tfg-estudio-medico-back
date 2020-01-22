@@ -17,8 +17,6 @@ public class InvestigationEntityDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	
-	
 	@Column(name = "vitamind")
 	private Float vitaminD;
 	@Column(name = "hba1c")
@@ -300,6 +298,4 @@ public class InvestigationEntityDetails {
 				+ ", vitaminDSupplementation=" + vitaminDSupplementation + ", investigationDate=" + investigationDate
 				+ "]";
 	}
-		
-	
 }

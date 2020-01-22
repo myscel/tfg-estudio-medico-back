@@ -51,7 +51,6 @@
 		</dependency>
 		
 		
-		
 		<!-- SWAGGER -->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -108,8 +107,6 @@
 		  <version>5.0.1.RELEASE</version>
 		  <scope>compile</scope>
 		</dependency>
-		
-		
 		
 	</dependencies>
 
