@@ -18,7 +18,7 @@ import com.example.tfgestudiomedico2019.repository.UserRepository;
 public class SubjectBusinessImpl implements SubjectBusiness {
 	
 	@Autowired
-	private SubjectRepository SubjectRepository;
+	private SubjectRepository subjectRepository;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -26,12 +26,12 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 	
 	@Override
     public SubjectEntity saveSubject(SubjectEntity subject){
-        return SubjectRepository.save(subject);
+        return subjectRepository.save(subject);
     }
 
 	@Override
 	public Boolean deleteSubjectByIdentificationNumber(Integer identificationNumber) {
-		if(this.SubjectRepository.deleteByIdentificationNumber(identificationNumber) == 1) {
+		if(this.subjectRepository.deleteByIdentificationNumber(identificationNumber) == 1) {
 			return true;
 		}
 		return false;
@@ -39,7 +39,7 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 
 	@Override
 	public Integer getNumberInvestigationsCompletedFromSubject(Integer identificationNumber) {
-		SubjectEntity subject = this.SubjectRepository.findByIdentificationNumber(identificationNumber);
+		SubjectEntity subject = this.subjectRepository.findByIdentificationNumber(identificationNumber);
 		List<InvestigationEntity> investigations = subject.getInvestigations();
 		
 		if(investigations == null || investigations.isEmpty()) {
@@ -57,7 +57,7 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 
 	@Override
 	public SubjectEntity getSubjectFromIdentificationNumber(Integer identificationNumber) {
-		return  this.SubjectRepository.findByIdentificationNumber(identificationNumber);
+		return this.subjectRepository.findByIdentificationNumber(identificationNumber);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 
 	@Override
 	public List<SubjectEntity> getAllSubjects() {
-		return this.SubjectRepository.findAll();
+		return this.subjectRepository.findAll();
 	}
 
 }
