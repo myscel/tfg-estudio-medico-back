@@ -83,12 +83,12 @@ public class ResearcherControllerImpl implements ResearcherController {
 			 SubjectEntity subjectToSave = new SubjectEntity();
 			 subjectToSave.setIdentificationNumber(subject.getIdentificationNumber());
 			 
-			 
 			 //Set researcher
 			 UserEntity user = userBusiness.findByUsername(subject.getUsernameResearcher());
-			 if(userBusiness.findByUsername(subject.getUsernameResearcher())==null){
+			 if(user == null){
 		         return new ResponseEntity<>(new ResponseDto("Error registering user..."), HttpStatus.GONE);
 		     }
+			 
 			 subjectToSave.setIdResearcher(user);
 			 
 			 //Set investigations
@@ -106,7 +106,6 @@ public class ResearcherControllerImpl implements ResearcherController {
 			 
 			 subjectToSave.setInvestigations(investigations);
 			 
-			 
 		     SubjectEntity subjectSaved = this.subjectBusiness.saveSubject(subjectToSave);
 		        
 		     if(subjectSaved == null) {
@@ -116,9 +115,6 @@ public class ResearcherControllerImpl implements ResearcherController {
 		     SubjectInfoDto dto = new SubjectInfoDto(subjectSaved.getIdentificationNumber(), subjectSaved.getIdResearcher().getUsername());
 		     
 		     return new ResponseEntity<>(dto, HttpStatus.CREATED);
-		}
-		catch(NumberFormatException e) {
-	         return new ResponseEntity<>(new ResponseDto("El número de identificación del sujeto no es un número entero"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
