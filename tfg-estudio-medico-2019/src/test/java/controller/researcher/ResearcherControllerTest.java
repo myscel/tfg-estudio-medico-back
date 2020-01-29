@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.modelmapper.ModelMapper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -29,8 +30,10 @@ import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
 import com.example.tfgestudiomedico2019.controller.researcher.ResearcherControllerImpl;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
+import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectListFromResearcherDto;
@@ -360,6 +363,120 @@ public class ResearcherControllerTest {
 
 		verify(this.subjectBusiness, times(1)).getNumberInvestigationsCompletedFromSubject(any());
 		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	
+	@Test
+	public void registerInvestigationDetailsExceptionTest() {
+		InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto = new InvestigationDetailsToRegisterDto();
+		when(this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(any(), any())).thenThrow(new IllegalArgumentException());
+		ResponseEntity<?> response = this.researcherControllerImpl.registerInvestigationDetails(investigationDetailsToRegisterDto);
+		
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.researcherBusiness, times(1)).getInvestigationBySubjectAndNumberInvestigation(any(), any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void registerInvestigationDetailsInvestigationNullTest() {
+		InvestigationEntity investigationEntityToSave = null;
+		InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto = new InvestigationDetailsToRegisterDto();
+		when(this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(any(), any())).thenReturn(investigationEntityToSave);
+		ResponseEntity<?> response = this.researcherControllerImpl.registerInvestigationDetails(investigationDetailsToRegisterDto);
+		
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		
+		verify(this.researcherBusiness, times(1)).getInvestigationBySubjectAndNumberInvestigation(any(), any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void registerInvestigationDetailsInvestigationCompletedTest() {
+		InvestigationEntity investigationEntityToSave = new InvestigationEntity();
+		investigationEntityToSave.setCompleted(true);
+		InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto = new InvestigationDetailsToRegisterDto();
+		when(this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(any(), any())).thenReturn(investigationEntityToSave);
+		ResponseEntity<?> response = this.researcherControllerImpl.registerInvestigationDetails(investigationDetailsToRegisterDto);
+		
+		assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+		
+		verify(this.researcherBusiness, times(1)).getInvestigationBySubjectAndNumberInvestigation(any(), any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void registerInvestigationDetailsInvestigationDetailsTest() {
+		InvestigationEntity investigationEntityToSave = new InvestigationEntity();
+		investigationEntityToSave.setCompleted(false);
+		investigationEntityToSave.setInvestigationEntityDetails(new InvestigationEntityDetails());
+
+		InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto = new InvestigationDetailsToRegisterDto();
+		when(this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(any(), any())).thenReturn(investigationEntityToSave);
+		ResponseEntity<?> response = this.researcherControllerImpl.registerInvestigationDetails(investigationDetailsToRegisterDto);
+		
+		assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+		
+		verify(this.researcherBusiness, times(1)).getInvestigationBySubjectAndNumberInvestigation(any(), any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void registerInvestigationDetailsInvestigationSaveExceptionTest() {
+		InvestigationEntity investigationEntityToSave = new InvestigationEntity();
+		investigationEntityToSave.setCompleted(false);
+		
+		InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto = new InvestigationDetailsToRegisterDto();
+		when(this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(any(), any())).thenReturn(investigationEntityToSave);
+		when(this.researcherBusiness.saveInvestigationDetails(any())).thenThrow(new IllegalArgumentException());
+		ResponseEntity<?> response = this.researcherControllerImpl.registerInvestigationDetails(investigationDetailsToRegisterDto);
+		
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.researcherBusiness, times(1)).getInvestigationBySubjectAndNumberInvestigation(any(), any());
+		verify(this.researcherBusiness, times(1)).saveInvestigationDetails(any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void registerInvestigationDetailsInvestigationSaveFailTest() {
+		InvestigationEntity investigationEntityToSave = new InvestigationEntity();
+		investigationEntityToSave.setCompleted(false);
+		
+		InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto = new InvestigationDetailsToRegisterDto();
+		when(this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(any(), any())).thenReturn(investigationEntityToSave);
+		when(this.researcherBusiness.saveInvestigationDetails(any())).thenReturn(false);
+		ResponseEntity<?> response = this.researcherControllerImpl.registerInvestigationDetails(investigationDetailsToRegisterDto);
+		
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		
+		verify(this.researcherBusiness, times(1)).getInvestigationBySubjectAndNumberInvestigation(any(), any());
+		verify(this.researcherBusiness, times(1)).saveInvestigationDetails(any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void registerInvestigationDetailsInvestigationOKTest() {
+		InvestigationEntity investigationEntityToSave = new InvestigationEntity();
+		investigationEntityToSave.setCompleted(false);
+		
+		InvestigationDetailsToRegisterDto investigationDetailsToRegisterDto = new InvestigationDetailsToRegisterDto();
+		when(this.researcherBusiness.getInvestigationBySubjectAndNumberInvestigation(any(), any())).thenReturn(investigationEntityToSave);
+		when(this.researcherBusiness.saveInvestigationDetails(any())).thenReturn(true);
+		ResponseEntity<?> response = this.researcherControllerImpl.registerInvestigationDetails(investigationDetailsToRegisterDto);
+		
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
+		
+		verify(this.researcherBusiness, times(1)).getInvestigationBySubjectAndNumberInvestigation(any(), any());
+		verify(this.researcherBusiness, times(1)).saveInvestigationDetails(any());
+		verifyZeroInteractions(this.subjectBusiness);
 		verifyZeroInteractions(this.userBusiness);
 	}
 	
