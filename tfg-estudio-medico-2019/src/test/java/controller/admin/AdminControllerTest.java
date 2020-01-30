@@ -26,6 +26,7 @@ import com.example.tfgestudiomedico2019.controller.admin.AdminControllerImpl;
 import com.example.tfgestudiomedico2019.model.domain.Role;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
+import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectToDeleteDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserDto;
@@ -446,4 +447,44 @@ public class AdminControllerTest {
 		verifyZeroInteractions(this.userBusiness);
 	}
 	
+	
+	@Test
+	public void getNumberInvestigationsCompletedFromSubjectInvalidIdentificationNumberTest() {
+		String identificationNumber = "INVALID_IDENTIFICATION_NUMBER";
+		
+		ResponseEntity<?> response = this.adminControllerImpl.getNumberInvestigationsCompletedFromSubject(identificationNumber);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getNumberInvestigationsCompletedFromSubjectExceptionTest() {
+		String identificationNumber = "11111111";
+		Integer numInvestigationsCompleted = 1;
+		
+		when(this.subjectBusiness.getNumberInvestigationsCompletedFromSubject(any())).thenReturn(numInvestigationsCompleted);
+		ResponseEntity<?> response = this.adminControllerImpl.getNumberInvestigationsCompletedFromSubject(identificationNumber);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(numInvestigationsCompleted, ((NumberInvestigationsCompletedSubjectDto)response.getBody()).getNumberInvestigationsCompleted());
+
+		verify(this.subjectBusiness, times(1)).getNumberInvestigationsCompletedFromSubject(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getNumberInvestigationsCompletedFromSubjectOKTest() {
+		String identificationNumber = "11111111";
+		
+		when(this.subjectBusiness.getNumberInvestigationsCompletedFromSubject(any())).thenThrow(new IllegalArgumentException());
+		ResponseEntity<?> response = this.adminControllerImpl.getNumberInvestigationsCompletedFromSubject(identificationNumber);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).getNumberInvestigationsCompletedFromSubject(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
 }
