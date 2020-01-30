@@ -27,6 +27,7 @@ import com.example.tfgestudiomedico2019.model.domain.Role;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoListDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectToDeleteDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserListDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserToDeleteDto;
@@ -384,6 +385,64 @@ public class AdminControllerTest {
 	
 		verify(this.researcherBusiness, times(1)).getAllSubjects();
 		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	
+	@Test
+	public void deleteSubjectDtoNullTest() {
+		SubjectToDeleteDto subjectToDeleteDto = null;
+		
+		ResponseEntity<?> response = this.adminControllerImpl.deleteSubject(subjectToDeleteDto);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void deleteSubjectExceptionTest() {
+		SubjectToDeleteDto subjectToDeleteDto = new SubjectToDeleteDto();
+		subjectToDeleteDto.setIdentificationNumber(11111111);
+		
+		when(this.subjectBusiness.deleteSubjectByIdentificationNumber(any())).thenThrow(new IllegalArgumentException());
+
+		ResponseEntity<?> response = this.adminControllerImpl.deleteSubject(subjectToDeleteDto);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).deleteSubjectByIdentificationNumber(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void deleteSubjectOKTest() {
+		SubjectToDeleteDto subjectToDeleteDto = new SubjectToDeleteDto();
+		subjectToDeleteDto.setIdentificationNumber(11111111);
+		
+		when(this.subjectBusiness.deleteSubjectByIdentificationNumber(any())).thenReturn(true);
+
+		ResponseEntity<?> response = this.adminControllerImpl.deleteSubject(subjectToDeleteDto);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).deleteSubjectByIdentificationNumber(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void deleteSubjectFailTest() {
+		SubjectToDeleteDto subjectToDeleteDto = new SubjectToDeleteDto();
+		subjectToDeleteDto.setIdentificationNumber(11111111);
+		
+		when(this.subjectBusiness.deleteSubjectByIdentificationNumber(any())).thenReturn(false);
+
+		ResponseEntity<?> response = this.adminControllerImpl.deleteSubject(subjectToDeleteDto);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).deleteSubjectByIdentificationNumber(any());
+		verifyZeroInteractions(this.researcherBusiness);
 		verifyZeroInteractions(this.userBusiness);
 	}
 	
