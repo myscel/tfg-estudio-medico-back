@@ -27,6 +27,7 @@ import com.example.tfgestudiomedico2019.model.domain.Role;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
+import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoListDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectToDeleteDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserDto;
@@ -487,4 +488,63 @@ public class AdminControllerTest {
 		verifyZeroInteractions(this.researcherBusiness);
 		verifyZeroInteractions(this.userBusiness);
 	}
+	
+	
+	@Test
+	public void getSubjectByIdentificationNumberInvalidIdentificationNumberTest() {
+		String identificationNumber = "INVALID_IDENTIFICATION_NUMBER";
+		
+		ResponseEntity<?> response = this.adminControllerImpl.getSubjectByIdentificationNumber(identificationNumber);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getSubjectByIdentificationNumberExceptionTest() {
+		String identificationNumber = "11111111";
+		
+		when(this.subjectBusiness.getSubjectFromIdentificationNumber(any())).thenThrow(new IllegalArgumentException());
+
+		ResponseEntity<?> response = this.adminControllerImpl.getSubjectByIdentificationNumber(identificationNumber);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).getSubjectFromIdentificationNumber(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getSubjectByIdentificationNumberNullTest() {
+		String identificationNumber = "11111111";
+		
+		when(this.subjectBusiness.getSubjectFromIdentificationNumber(any())).thenReturn(null);
+
+		ResponseEntity<?> response = this.adminControllerImpl.getSubjectByIdentificationNumber(identificationNumber);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).getSubjectFromIdentificationNumber(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getSubjectByIdentificationNumberOKTest() {
+		String identificationNumber = "11111111";
+		SubjectEntity entity = new SubjectEntity();
+		entity.setIdentificationNumber(Integer.parseInt(identificationNumber));
+		
+		when(this.subjectBusiness.getSubjectFromIdentificationNumber(any())).thenReturn(entity);
+
+		ResponseEntity<?> response = this.adminControllerImpl.getSubjectByIdentificationNumber(identificationNumber);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(entity.getIdentificationNumber(), ((SubjectInfoDto)response.getBody()).getIdentificationNumber());
+
+		verify(this.subjectBusiness, times(1)).getSubjectFromIdentificationNumber(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
 }
