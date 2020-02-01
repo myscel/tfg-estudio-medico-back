@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
+import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
+import com.example.tfgestudiomedico2019.repository.InvestigationDetailsRepository;
 import com.example.tfgestudiomedico2019.repository.SubjectRepository;
 import com.example.tfgestudiomedico2019.repository.UserRepository;
 
@@ -22,6 +24,9 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private InvestigationDetailsRepository investigationDetailsRepository;
 	
 	
 	@Override
@@ -74,6 +79,11 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 	@Override
 	public List<SubjectEntity> getAllSubjects() {
 		return this.subjectRepository.findAll();
+	}
+
+	@Override
+	public InvestigationEntityDetails getInvestitgationDetailsFromId(Integer id) {
+		return this.investigationDetailsRepository.findById(id);
 	}
 
 }

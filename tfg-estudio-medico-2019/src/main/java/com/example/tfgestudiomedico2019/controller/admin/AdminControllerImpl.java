@@ -13,6 +13,7 @@ import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
 import com.example.tfgestudiomedico2019.model.domain.Role;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
+import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditDto;
@@ -281,6 +282,19 @@ public class AdminControllerImpl implements AdminController{
 				}
 			}
 			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getAppointmentDetails(String investigationsDetailsId) {
+		try {
+
+			InvestigationEntityDetails investigationDetails = subjectBusiness.getInvestitgationDetailsFromId(Integer.parseInt(investigationsDetailsId));
+
+			return new ResponseEntity<>(investigationDetails, HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);

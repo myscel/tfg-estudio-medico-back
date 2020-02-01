@@ -126,5 +126,13 @@ public interface AdminController {
     })
     @GetMapping(path = "/completedAppointments", produces = "application/json")
   	public ResponseEntity<?> getAllCompletedInvestigations();
+	
+	@ApiOperation(value = "Get all investigations completed")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "Successfully got investigations", response= InvestigationToEditListDto.class),
+    		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
+    })
+    @GetMapping(path = "/getAppointmentDetails/{investigationsDetailsId}", produces = "application/json")
+  	public ResponseEntity<?> getAppointmentDetails(@PathVariable String investigationsDetailsId);
     
 }
