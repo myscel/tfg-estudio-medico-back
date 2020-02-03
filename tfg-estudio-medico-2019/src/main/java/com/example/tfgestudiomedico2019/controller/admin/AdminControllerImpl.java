@@ -240,7 +240,7 @@ public class AdminControllerImpl implements AdminController{
 			userToUpdate.setName(dto.getName());
 			userToUpdate.setSurname(dto.getSurname());
 			
-			if(!dto.getPassword().equals(null) && !dto.getPassword().equals("")) {
+			if(!(dto.getPassword() == null) && !dto.getPassword().equals("")) {
 				userToUpdate.setPassword(dto.getPassword());
 			}
 			else {

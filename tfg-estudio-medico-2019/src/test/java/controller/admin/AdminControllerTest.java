@@ -34,6 +34,7 @@ import com.example.tfgestudiomedico2019.model.rest.user.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserListDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserToDeleteDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserToRegisterDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserToUpdateDto;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdminControllerTest {
@@ -689,4 +690,132 @@ public class AdminControllerTest {
 		verifyZeroInteractions(this.subjectBusiness);
 	}
 	
+	
+	
+	@Test
+	public void updateResearcherInvalidIdTest() {
+		UserToUpdateDto dto = new UserToUpdateDto();
+		dto.setId("INVALID_ID");
+		
+		ResponseEntity<?> response = this.adminControllerImpl.updateResearcher(dto);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		
+		verifyZeroInteractions(this.userBusiness);
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
+	@Test
+	public void updateResearcherExceptionTest() {
+		UserToUpdateDto dto = new UserToUpdateDto();
+		dto.setId("23");
+		
+		when(this.userBusiness.findById(any())).thenThrow(new IllegalArgumentException());
+		ResponseEntity<?> response = this.adminControllerImpl.updateResearcher(dto);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.userBusiness, times(1)).findById(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
+	@Test
+	public void updateResearcherNullTest() {
+		UserToUpdateDto dto = new UserToUpdateDto();
+		dto.setId("23");
+		UserEntity userToUpdate = null;
+		
+		when(this.userBusiness.findById(any())).thenReturn(userToUpdate);
+		ResponseEntity<?> response = this.adminControllerImpl.updateResearcher(dto);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		
+		verify(this.userBusiness, times(1)).findById(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
+	@Test
+	public void updateResearcherAdminTest() {
+		UserToUpdateDto dto = new UserToUpdateDto();
+		dto.setId("23");
+		UserEntity userToUpdate = new UserEntity();
+		userToUpdate.setRole(Role.ADMIN.name());
+		
+		when(this.userBusiness.findById(any())).thenReturn(userToUpdate);
+		ResponseEntity<?> response = this.adminControllerImpl.updateResearcher(dto);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		
+		verify(this.userBusiness, times(1)).findById(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
+	@Test
+	public void updateResearcherPassNullAndUpdateExceptionTest() {
+		UserToUpdateDto dto = new UserToUpdateDto();
+		dto.setId("23");
+		UserEntity userToUpdate = new UserEntity();
+		userToUpdate.setRole(Role.RESEARCHER.name());
+		userToUpdate.setPassword("123456");
+		dto.setName("JUAN");
+		dto.setSurname("GARCÍA");
+		
+		
+
+		when(this.userBusiness.updateUser(any())).thenThrow(new IllegalArgumentException());
+		when(this.userBusiness.findById(any())).thenReturn(userToUpdate);
+		ResponseEntity<?> response = this.adminControllerImpl.updateResearcher(dto);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.userBusiness, times(1)).findById(any());
+		verify(this.userBusiness, times(1)).updateUser(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
+	@Test
+	public void updateResearcherPassEmptyAndUpdateExceptionTest() {
+		UserToUpdateDto dto = new UserToUpdateDto();
+		dto.setId("23");
+		UserEntity userToUpdate = new UserEntity();
+		userToUpdate.setRole(Role.RESEARCHER.name());
+		userToUpdate.setPassword("123456");
+		dto.setName("JUAN");
+		dto.setSurname("GARCÍA");
+		dto.setPassword("");
+		UserEntity userUpdated = null;
+		
+		when(this.userBusiness.updateUser(any())).thenReturn(userUpdated);
+		when(this.userBusiness.findById(any())).thenReturn(userToUpdate);
+		ResponseEntity<?> response = this.adminControllerImpl.updateResearcher(dto);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		
+		verify(this.userBusiness, times(1)).findById(any());
+		verify(this.userBusiness, times(1)).updateUser(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
+	@Test
+	public void updateResearcherOKTest() {
+		UserToUpdateDto dto = new UserToUpdateDto();
+		dto.setId("23");
+		UserEntity userToUpdate = new UserEntity();
+		userToUpdate.setRole(Role.RESEARCHER.name());
+		userToUpdate.setPassword("123456");
+		dto.setName("JUAN");
+		dto.setSurname("GARCÍA");
+		dto.setPassword("12345678");
+		UserEntity userUpdated = new UserEntity();
+		
+		when(this.userBusiness.updateUser(any())).thenReturn(userUpdated);
+		when(this.userBusiness.findById(any())).thenReturn(userToUpdate);
+		ResponseEntity<?> response = this.adminControllerImpl.updateResearcher(dto);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		
+		verify(this.userBusiness, times(1)).findById(any());
+		verify(this.userBusiness, times(1)).updateUser(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
 }
