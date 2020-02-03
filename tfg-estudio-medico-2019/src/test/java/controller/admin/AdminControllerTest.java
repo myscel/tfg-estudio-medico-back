@@ -24,8 +24,12 @@ import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
 import com.example.tfgestudiomedico2019.controller.admin.AdminControllerImpl;
 import com.example.tfgestudiomedico2019.model.domain.Role;
+import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
+import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoListDto;
@@ -817,5 +821,88 @@ public class AdminControllerTest {
 		verify(this.userBusiness, times(1)).updateUser(any());
 		verifyZeroInteractions(this.researcherBusiness);
 		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
+	
+	@Test
+	public void getAllCompletedInvestigationsExceptionTest() {
+
+		when(this.subjectBusiness.getAllSubjects()).thenThrow(new IllegalArgumentException());
+		ResponseEntity<?> response = this.adminControllerImpl.getAllCompletedInvestigations();
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).getAllSubjects();
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getAllCompletedInvestigationsEmptyListTest() {
+		List<SubjectEntity> listSubjects = new ArrayList<>();
+
+		when(this.subjectBusiness.getAllSubjects()).thenReturn(listSubjects);
+		ResponseEntity<?> response = this.adminControllerImpl.getAllCompletedInvestigations();
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(0, ((InvestigationToEditListDto)response.getBody()).getList().size());
+
+		
+		verify(this.subjectBusiness, times(1)).getAllSubjects();
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getAllCompletedInvestigationsNotEmptyListNoInvestigationsTest() {
+		List<SubjectEntity> listSubjects = new ArrayList<>();
+		SubjectEntity s1 = new SubjectEntity();
+		List<InvestigationEntity> investigations = new ArrayList<>();
+		s1.setInvestigations(investigations);
+
+		listSubjects.add(s1);
+
+		when(this.subjectBusiness.getAllSubjects()).thenReturn(listSubjects);
+		ResponseEntity<?> response = this.adminControllerImpl.getAllCompletedInvestigations();
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(0, ((InvestigationToEditListDto)response.getBody()).getList().size());
+		
+		verify(this.subjectBusiness, times(1)).getAllSubjects();
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getAllCompletedInvestigationsNotEmptyListWithInvestigationsTest() {
+		List<SubjectEntity> listSubjects = new ArrayList<>();
+		SubjectEntity s1 = new SubjectEntity();
+		s1.setIdentificationNumber(11111111);
+
+		List<InvestigationEntity> investigations = new ArrayList<>();
+		InvestigationEntity i1 = new InvestigationEntity();
+		i1.setCompleted(false);
+		InvestigationEntity i2 = new InvestigationEntity();
+		i2.setCompleted(true);
+		i2.setNumberInvestigation(1);
+		InvestigationEntityDetails ied1 = new InvestigationEntityDetails();
+		ied1.setId(23);
+		i2.setInvestigationEntityDetails(ied1);
+
+		investigations.add(i1);
+		investigations.add(i2);
+
+		s1.setInvestigations(investigations);
+
+		listSubjects.add(s1);
+		
+		when(this.subjectBusiness.getAllSubjects()).thenReturn(listSubjects);
+		ResponseEntity<?> response = this.adminControllerImpl.getAllCompletedInvestigations();
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(1, ((InvestigationToEditListDto)response.getBody()).getList().size());
+		assertEquals(ied1.getId(), ((InvestigationToEditListDto)response.getBody()).getList().get(0).getInvestigationDetailsId());
+		assertEquals(i2.getNumberInvestigation(), ((InvestigationToEditListDto)response.getBody()).getList().get(0).getNumberInvestigation());
+		assertEquals(s1.getIdentificationNumber(), ((InvestigationToEditListDto)response.getBody()).getList().get(0).getSubjectIdentificationNumber());
+
+		verify(this.subjectBusiness, times(1)).getAllSubjects();
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
 	}
 }
