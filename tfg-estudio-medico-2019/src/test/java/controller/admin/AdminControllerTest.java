@@ -547,4 +547,146 @@ public class AdminControllerTest {
 		verifyZeroInteractions(this.userBusiness);
 	}
 	
+	
+	@Test
+	public void getSubjectsFromDNIResearcherExceptionTest() {
+		String username = "INVALID_USERNAME";
+		
+		when(this.subjectBusiness.getSubjectsFromDNIResearcher(any())).thenThrow(new IllegalArgumentException());
+		ResponseEntity<?> response = this.adminControllerImpl.getSubjectsFromDNIResearcher(username);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).getSubjectsFromDNIResearcher(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getSubjectsFromDNIResearcherNotFoundTest() {
+		String username = "INVALID_USERNAME";
+		List<SubjectEntity> subjects = null;
+		
+		when(this.subjectBusiness.getSubjectsFromDNIResearcher(any())).thenReturn(subjects);
+		ResponseEntity<?> response = this.adminControllerImpl.getSubjectsFromDNIResearcher(username);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).getSubjectsFromDNIResearcher(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getSubjectsFromDNIResearcherEmptyListTest() {
+		String username = "12345678A";
+		List<SubjectEntity> subjects = new ArrayList<>();
+		
+		when(this.subjectBusiness.getSubjectsFromDNIResearcher(any())).thenReturn(subjects);
+		ResponseEntity<?> response = this.adminControllerImpl.getSubjectsFromDNIResearcher(username);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(0, ((SubjectInfoListDto)response.getBody()).getList().size());
+
+		verify(this.subjectBusiness, times(1)).getSubjectsFromDNIResearcher(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getSubjectsFromDNIResearcherNotEmptysListTest() {
+		String username = "12345678A";
+		List<SubjectEntity> subjects = new ArrayList<>();
+		SubjectEntity s1 = new SubjectEntity();
+		SubjectEntity s2 = new SubjectEntity();
+		subjects.add(s1);
+		subjects.add(s2);
+
+		when(this.subjectBusiness.getSubjectsFromDNIResearcher(any())).thenReturn(subjects);
+		ResponseEntity<?> response = this.adminControllerImpl.getSubjectsFromDNIResearcher(username);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(2, ((SubjectInfoListDto)response.getBody()).getList().size());
+
+		verify(this.subjectBusiness, times(1)).getSubjectsFromDNIResearcher(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	
+	@Test
+	public void getResearcherFromIdExceptionTest() {
+		String id = "23";
+		
+		when(this.userBusiness.findById(any())).thenThrow(new IllegalArgumentException());
+		ResponseEntity<?> response = this.adminControllerImpl.getResearcherFromId(id);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.userBusiness, times(1)).findById(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
+	@Test
+	public void getResearcherFromIdInvalidIdTest() {
+		String id = "INVALID_ID";
+		
+		ResponseEntity<?> response = this.adminControllerImpl.getResearcherFromId(id);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verifyZeroInteractions(this.userBusiness);
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
+	@Test
+	public void getResearcherFromIdNullTest() {
+		String id = "23";
+		UserEntity entity = null;
+		
+		when(this.userBusiness.findById(any())).thenReturn(entity);
+		ResponseEntity<?> response = this.adminControllerImpl.getResearcherFromId(id);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		
+		verify(this.userBusiness, times(1)).findById(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
+	@Test
+	public void getResearcherFromIdAdminTest() {
+		String id = "23";
+		UserEntity entity = new UserEntity();
+		entity.setRole(Role.ADMIN.name());
+		
+		when(this.userBusiness.findById(any())).thenReturn(entity);
+		ResponseEntity<?> response = this.adminControllerImpl.getResearcherFromId(id);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		
+		verify(this.userBusiness, times(1)).findById(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
+	@Test
+	public void getResearcherFromIdOKTest() {
+		String id = "23";
+		UserEntity entity = new UserEntity();
+		entity.setRole(Role.RESEARCHER.name());
+		entity.setUsername("12345678A");
+		entity.setName("JUAN");
+		entity.setSurname("GARCÍA");
+		entity.setGender("hombre");
+		entity.setId(23);
+
+		when(this.userBusiness.findById(any())).thenReturn(entity);
+		ResponseEntity<?> response = this.adminControllerImpl.getResearcherFromId(id);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(entity.getUsername(), ((UserDto)response.getBody()).getUsername());
+		assertEquals(entity.getName(), ((UserDto)response.getBody()).getName());
+		assertEquals(entity.getSurname(), ((UserDto)response.getBody()).getSurname());
+		assertEquals(entity.getGender(), ((UserDto)response.getBody()).getGender());
+		assertEquals(entity.getId(), ((UserDto)response.getBody()).getId());
+
+		verify(this.userBusiness, times(1)).findById(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+	}
+	
 }
