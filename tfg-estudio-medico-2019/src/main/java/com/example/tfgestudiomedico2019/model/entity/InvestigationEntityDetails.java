@@ -35,8 +35,8 @@ public class InvestigationEntityDetails {
 
 	@Column(name = "tobacco")
 	private Boolean tobacco;
-	@Column(name = "riskalcohol")
-	private Boolean riskalcohol;
+	@Column(name = "riskAlcohol")
+	private Boolean riskAlcohol;
 	@Column(name = "solarexposure")
 	private Float solarExposure;
 	@Column(name = "spfcream")
@@ -140,10 +140,10 @@ public class InvestigationEntityDetails {
 		this.tobacco = tobacco;
 	}
 	public Boolean getRiskalcohol() {
-		return riskalcohol;
+		return riskAlcohol;
 	}
-	public void setRiskalcohol(Boolean riskalcohol) {
-		this.riskalcohol = riskalcohol;
+	public void setRiskalcohol(Boolean riskAlcohol) {
+		this.riskAlcohol = riskAlcohol;
 	}
 	public Float getSolarExposure() {
 		return solarExposure;
@@ -288,7 +288,7 @@ public class InvestigationEntityDetails {
 	public String toString() {
 		return "InvestigationEntityDetails [id=" + id + ", vitaminD=" + vitaminD + ", hba1c=" + hba1c + ", season="
 				+ season + ", gender=" + gender + ", studyLevel=" + studyLevel + ", birthDate=" + birthDate
-				+ ", socioeconomicLevel=" + socioeconomicLevel + ", tobacco=" + tobacco + ", riskalcohol=" + riskalcohol
+				+ ", socioeconomicLevel=" + socioeconomicLevel + ", tobacco=" + tobacco + ", riskAlcohol=" + riskAlcohol
 				+ ", solarExposure=" + solarExposure + ", spfCream=" + spfCream + ", spfScore=" + spfScore
 				+ ", exercise=" + exercise + ", dm2=" + dm2 + ", glucose=" + glucose + ", imc=" + imc + ", obesity="
 				+ obesity + ", tas=" + tas + ", tad=" + tad + ", arterialHypertension=" + arterialHypertension

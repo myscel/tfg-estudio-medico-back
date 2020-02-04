@@ -17,6 +17,7 @@ import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToRegisterDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToUpdateDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
@@ -303,7 +304,7 @@ public class AdminControllerImpl implements AdminController{
 	}
 
 	@Override
-	public ResponseEntity<?> updateInvestigationDetails(InvestigationDetailsToRegisterDto investigationDetailsToUpdate) {
+	public ResponseEntity<?> updateInvestigationDetails(InvestigationDetailsToUpdateDto investigationDetailsToUpdate) {
 		
 		try {
 			ModelMapper mapper = new ModelMapper();
@@ -316,9 +317,6 @@ public class AdminControllerImpl implements AdminController{
 	catch(Exception e) {
 		return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-		
-		
-		return null;
 	}
 	
 }
