@@ -86,4 +86,10 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 		return this.investigationDetailsRepository.findById(id);
 	}
 
+	@Override
+	public Boolean updateInvestigationDetails(InvestigationEntityDetails investigationDetails) {
+		InvestigationEntityDetails InvestigationDetailsSaved =  this.investigationDetailsRepository.save(investigationDetails);
+		return InvestigationDetailsSaved != null;
+	}
+
 }

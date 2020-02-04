@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
@@ -135,4 +136,11 @@ public interface AdminController {
     @GetMapping(path = "/getAppointmentDetails/{investigationsDetailsId}", produces = "application/json")
   	public ResponseEntity<?> getAppointmentDetails(@PathVariable String investigationsDetailsId);
     
+	@ApiOperation(value = "Update an investigation details")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "Successfully investigation details updated", response= ResponseDto.class),
+    		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
+    })
+    @PostMapping(path = "/updateInvestigationDetails", produces = "application/json")
+  	public ResponseEntity<?> updateInvestigationDetails(@RequestBody InvestigationDetailsToRegisterDto investigationDetailsToUpdate);
 }

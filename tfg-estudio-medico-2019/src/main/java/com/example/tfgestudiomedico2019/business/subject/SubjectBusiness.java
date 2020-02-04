@@ -13,4 +13,5 @@ public interface SubjectBusiness {
 	public List<SubjectEntity> getSubjectsFromDNIResearcher(String username);
 	public List<SubjectEntity> getAllSubjects();
 	public InvestigationEntityDetails getInvestitgationDetailsFromId(Integer id);
+	public Boolean updateInvestigationDetails(InvestigationEntityDetails investigationDetails);
 }
