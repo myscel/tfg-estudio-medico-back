@@ -16,6 +16,7 @@ import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
@@ -299,6 +300,25 @@ public class AdminControllerImpl implements AdminController{
 		catch(Exception e) {
 			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@Override
+	public ResponseEntity<?> updateInvestigationDetails(InvestigationDetailsToRegisterDto investigationDetailsToUpdate) {
+		
+		try {
+			ModelMapper mapper = new ModelMapper();
+			InvestigationEntityDetails investigationEntityDetails = mapper.map(investigationDetailsToUpdate, InvestigationEntityDetails.class);
+			
+			this.subjectBusiness.updateInvestigationDetails(investigationEntityDetails);
+			
+			return new ResponseEntity<>(new ResponseDto("Detalles de investigación actualizados"), HttpStatus.OK);
+		}
+	catch(Exception e) {
+		return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+		
+		
+		return null;
 	}
 	
 }
