@@ -22,6 +22,7 @@ public class UserControllerImpl implements UserController {
 	@Override
 	public ResponseEntity<?> login(UserToLoginDto userToLoginDto) {
 		try {
+			System.out.println("USUARIO: " + userToLoginDto);
 	        UserEntity userLogged = userBusiness.findByUsernameAndPassword(userToLoginDto.getUsername(), userToLoginDto.getPassword() );
 	        
 	        if(userLogged == null) {
