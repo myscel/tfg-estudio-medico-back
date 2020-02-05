@@ -47,10 +47,16 @@ public class AdminControllerImpl implements AdminController{
 		try {
 			List<UserEntity> listResearchers = this.userBusiness.getAllResearchers();
 			
+			List<UserEntity> listAdmins = this.userBusiness.getAllAdmins();
+			
 			UserListDto listDto = new UserListDto();
 			
 			for(UserEntity elem: listResearchers) {
-				listDto.getList().add(new UserDto(elem.getUsername(), elem.getName(), elem.getSurname(), elem.getGender(), elem.getId()));	
+				listDto.getListResearchers().add(new UserDto(elem.getUsername(), elem.getName(), elem.getSurname(), elem.getGender(), elem.getId()));	
+			}
+			
+			for(UserEntity elem: listAdmins) {
+				listDto.getListAdmins().add(new UserDto(elem.getUsername(), elem.getName(), elem.getSurname(), elem.getGender(), elem.getId()));	
 			}
 			
 			return new ResponseEntity<>(listDto, HttpStatus.OK);

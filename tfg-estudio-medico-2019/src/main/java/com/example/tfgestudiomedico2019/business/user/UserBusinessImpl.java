@@ -38,6 +38,11 @@ public class UserBusinessImpl implements UserBusiness {
 	public List<UserEntity> getAllResearchers() {
 		return this.userRepository.findByRole(Role.RESEARCHER.name());
 	}
+	
+	@Override
+	public List<UserEntity> getAllAdmins() {
+		return this.userRepository.findByRole(Role.ADMIN.name());
+	}
 
 	@Override
 	public boolean deleteResearcher(String username) {

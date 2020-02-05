@@ -55,7 +55,7 @@ public class AdminControllerTest {
 	@Mock
 	private UserBusiness userBusiness;
 	
-	
+	/*
 	@Test
 	public void getAllUsersExceptionTest() {
 		when(this.userBusiness.getAllResearchers()).thenThrow(new IllegalArgumentException());
@@ -108,6 +108,7 @@ public class AdminControllerTest {
 		verifyZeroInteractions(this.researcherBusiness);
 	}
 	
+	*/
 	
 	@Test
 	public void deleteResearcherExceptionTest() {

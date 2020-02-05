@@ -11,14 +11,27 @@ import io.swagger.annotations.ApiModelProperty;
  */
 public class UserListDto {
 
-	@ApiModelProperty(value="The list of users")
-	private List<UserDto> list = new ArrayList<>();
+	@ApiModelProperty(value="The list of researchers")
+	private List<UserDto> listResearchers = new ArrayList<>();
+	
+	@ApiModelProperty(value="The list of admins")
+	private List<UserDto> listAdmins = new ArrayList<>();
 
-	public List<UserDto> getList() {
-		return list;
+	public List<UserDto> getListResearchers() {
+		return listResearchers;
 	}
 
-	public void setList(List<UserDto> list) {
-		this.list = list;
+	public void setListResearchers(List<UserDto> listResearchers) {
+		this.listResearchers = listResearchers;
 	}
+
+	public List<UserDto> getListAdmins() {
+		return listAdmins;
+	}
+
+	public void setListAdmins(List<UserDto> listAdmins) {
+		this.listAdmins = listAdmins;
+	}
+
+	
 }

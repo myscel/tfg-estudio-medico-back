@@ -10,6 +10,7 @@ public interface UserBusiness {
     public UserEntity findByUsername(String username);
     public UserEntity findById(Integer id);
     public List<UserEntity> getAllResearchers();
+    public List<UserEntity> getAllAdmins();
     public boolean deleteResearcher(String username);
     public UserEntity updateUser(UserEntity user); 
 }
