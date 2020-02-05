@@ -102,7 +102,7 @@ public class ResearcherControllerTest {
 		String id = "24";
 		List<SubjectEntity> list = new ArrayList<>();
 		SubjectEntity s1 = new SubjectEntity();
-		s1.setIdentificationNumber(11111111);
+		s1.setIdentificationNumber("11111111");
 		s1.setId(1);
 		
 		List<InvestigationEntity> investigations = new ArrayList<>();
@@ -141,7 +141,7 @@ public class ResearcherControllerTest {
 		String id = "24";
 		List<SubjectEntity> list = new ArrayList<>();
 		SubjectEntity s1 = new SubjectEntity();
-		s1.setIdentificationNumber(11111111);
+		s1.setIdentificationNumber("11111111");
 		s1.setId(1);
 		
 		List<InvestigationEntity> investigations = new ArrayList<>();
@@ -208,7 +208,7 @@ public class ResearcherControllerTest {
 	@Test
 	public void registerSubjectUserExceptionTest() {
 		SubjectInfoDto subject = new SubjectInfoDto();
-		subject.setIdentificationNumber(11111111);
+		subject.setIdentificationNumber("11111111");
 		subject.setUsernameResearcher("12345678A");
 		SubjectEntity subjectFound = null;
 		
@@ -227,7 +227,7 @@ public class ResearcherControllerTest {
 	@Test
 	public void registerSubjectUserNullTest() {
 		SubjectInfoDto subject = new SubjectInfoDto();
-		subject.setIdentificationNumber(11111111);
+		subject.setIdentificationNumber("11111111");
 		subject.setUsernameResearcher("12345678A");
 		SubjectEntity subjectFound = null;
 		UserEntity user = null;
@@ -247,7 +247,7 @@ public class ResearcherControllerTest {
 	@Test
 	public void registerSubjectSaveExceptionTest() {
 		SubjectInfoDto subject = new SubjectInfoDto();
-		subject.setIdentificationNumber(11111111);
+		subject.setIdentificationNumber("11111111");
 		subject.setUsernameResearcher("12345678A");
 		SubjectEntity subjectFound = null;
 		UserEntity user = new UserEntity();
@@ -270,7 +270,7 @@ public class ResearcherControllerTest {
 	@Test
 	public void registerSubjectSaveNullTest() {
 		SubjectInfoDto subject = new SubjectInfoDto();
-		subject.setIdentificationNumber(11111111);
+		subject.setIdentificationNumber("11111111");
 		subject.setUsernameResearcher("12345678A");
 		SubjectEntity subjectFound = null;
 		UserEntity user = new UserEntity();
@@ -294,13 +294,13 @@ public class ResearcherControllerTest {
 	@Test
 	public void registerSubjectOKTest() {
 		SubjectInfoDto subject = new SubjectInfoDto();
-		subject.setIdentificationNumber(11111111);
+		subject.setIdentificationNumber("11111111");
 		subject.setUsernameResearcher("12345678A");
 		SubjectEntity subjectFound = null;
 		UserEntity user = new UserEntity();
 		SubjectEntity subjectSaved = new SubjectEntity();
 		
-		subjectSaved.setIdentificationNumber(11111111);
+		subjectSaved.setIdentificationNumber("11111111");
 		UserEntity user2 = new UserEntity();
 		user2.setUsername("12345678A");
 		subjectSaved.setIdResearcher(user2);
@@ -337,18 +337,6 @@ public class ResearcherControllerTest {
 		verifyZeroInteractions(this.userBusiness);
 	}
 	
-	@Test
-	public void getNumberInvestigationsCompletedFromSubjectResearcherInvalidIdentificationNumberTest() {
-		String identificationNumber = "INVALID_ID_NUMBER";
-		
-		ResponseEntity<?> response = this.researcherControllerImpl.getNumberInvestigationsCompletedFromSubjectResearcher(identificationNumber);
-		
-		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-		
-		verifyZeroInteractions(this.subjectBusiness);
-		verifyZeroInteractions(this.researcherBusiness);
-		verifyZeroInteractions(this.userBusiness);
-	}
 	
 	@Test
 	public void getNumberInvestigationsCompletedFromSubjectResearcher_Test() {
@@ -581,7 +569,7 @@ public class ResearcherControllerTest {
 		InvestigationEntity investigationEntity = new InvestigationEntity();
 		
 		SubjectEntity subjectEntity = new SubjectEntity();
-		subjectEntity.setIdentificationNumber(11111111);
+		subjectEntity.setIdentificationNumber("11111111");
 		investigationEntity.setSubject(subjectEntity);
 		
 		investigationEntity.setCompleted(true);
@@ -662,7 +650,7 @@ public class ResearcherControllerTest {
 		String idSubject = "2";
 		List<SubjectEntity> listSubjects = new ArrayList<>();
 		SubjectEntity s1 = new SubjectEntity();
-		s1.setIdentificationNumber(11111111);
+		s1.setIdentificationNumber("11111111");
 		
 		List<InvestigationEntity> listInvestigations = new ArrayList<>();
 		InvestigationEntity i1 = new InvestigationEntity();

@@ -10,17 +10,17 @@ public class SubjectFromResearcherDto {
 	@ApiModelProperty(value="The id of the subject", example = "2", dataType = "java.lang.Integer")
 	private Integer id;
 	@ApiModelProperty(value="The identification number of the subject", example = "12345678", dataType = "java.lang.Integer")
-	private Integer identificationNumber;
+	private String identificationNumber;
 	@ApiModelProperty(value="Flag to check if the first investigation is done", example="true", dataType = "boolean")
 	private Boolean firstInvestigationCompleted;
 	@ApiModelProperty(value="Flag to check if the second investigation is done", example="false", dataType = "boolean")
 	private Boolean secondInvestigationCompleted;
 	
 	
-	public Integer getIdentificationNumber() {
+	public String getIdentificationNumber() {
 		return identificationNumber;
 	}
-	public void setIdentificationNumber(Integer identificationNumber) {
+	public void setIdentificationNumber(String identificationNumber) {
 		this.identificationNumber = identificationNumber;
 	}
 	public Boolean getFirstInvestigationCompleted() {

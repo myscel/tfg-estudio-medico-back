@@ -24,7 +24,7 @@ public class SubjectEntity {
 	private Integer id;
 	
 	@Column(name = "identificationnumber")
-	private Integer identificationNumber;
+	private String identificationNumber;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idresearcher")
@@ -39,10 +39,10 @@ public class SubjectEntity {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getIdentificationNumber() {
+	public String getIdentificationNumber() {
 		return identificationNumber;
 	}
-	public void setIdentificationNumber(Integer identificationNumber) {
+	public void setIdentificationNumber(String identificationNumber) {
 		this.identificationNumber = identificationNumber;
 	}
 	public UserEntity getIdResearcher() {

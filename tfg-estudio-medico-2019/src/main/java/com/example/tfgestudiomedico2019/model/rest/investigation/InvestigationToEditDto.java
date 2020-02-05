@@ -9,13 +9,13 @@ import io.swagger.annotations.ApiModelProperty;
 public class InvestigationToEditDto {
 
 	@ApiModelProperty(value = "The subject numbers from health card", example = "12345678", dataType = "java.lang.Integer")
-	private Integer subjectIdentificationNumber;
+	private String subjectIdentificationNumber;
 	@ApiModelProperty(value = "The investigation number", example = "1", dataType = "java.lang.Integer")
 	private Integer numberInvestigation;
 	@ApiModelProperty(value = "The investigation details number", example = "8", dataType = "java.lang.Integer")
 	private Integer investigationDetailsId;
 	
-	public InvestigationToEditDto(Integer subjectIdentificationNumber, Integer numberInvestigation, Integer investigationDetailsId) {
+	public InvestigationToEditDto(String subjectIdentificationNumber, Integer numberInvestigation, Integer investigationDetailsId) {
 		super();
 		this.subjectIdentificationNumber = subjectIdentificationNumber;
 		this.numberInvestigation = numberInvestigation;
@@ -24,10 +24,10 @@ public class InvestigationToEditDto {
 	
 	public InvestigationToEditDto() {
 	}
-	public Integer getSubjectIdentificationNumber() {
+	public String getSubjectIdentificationNumber() {
 		return subjectIdentificationNumber;
 	}
-	public void setSubjectIdentificationNumber(Integer subjectIdentificationNumber) {
+	public void setSubjectIdentificationNumber(String subjectIdentificationNumber) {
 		this.subjectIdentificationNumber = subjectIdentificationNumber;
 	}
 	public Integer getNumberInvestigation() {

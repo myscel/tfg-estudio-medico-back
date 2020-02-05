@@ -45,7 +45,6 @@ public interface ResearcherController {
 	@ApiOperation(value = "Get the number of investigations completed from a subject based on his/her identification number")
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Successfully got number of investigations", response = NumberInvestigationsCompletedSubjectDto.class),
-    		@ApiResponse(code = 400, message = "Identification number format invalid", response = ResponseDto.class),
     		@ApiResponse(code = 500, message = "Server error", response = ResponseDto.class)
     })
     @GetMapping(path = "/investigationsCompletedSubjectResearcher/{identificationNumber}", produces = "application/json")
@@ -54,7 +53,7 @@ public interface ResearcherController {
 	@ApiOperation(value = "Register an investigation details")
     @ApiResponses(value = {
     		@ApiResponse(code = 201, message = "Successfully investigation details registered", response= ResponseDto.class),
-    		@ApiResponse(code = 400, message = "Invetsigation not found", response= ResponseDto.class),
+    		@ApiResponse(code = 400, message = "Investigation not found", response= ResponseDto.class),
     		@ApiResponse(code = 409, message = "Investigation details already exists", response= ResponseDto.class),
     		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
     })

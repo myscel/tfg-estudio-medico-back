@@ -35,7 +35,7 @@ public class SubjectBusinessImpl implements SubjectBusiness {
     }
 
 	@Override
-	public Boolean deleteSubjectByIdentificationNumber(Integer identificationNumber) {
+	public Boolean deleteSubjectByIdentificationNumber(String identificationNumber) {
 		if(this.subjectRepository.deleteByIdentificationNumber(identificationNumber) == 1) {
 			return true;
 		}
@@ -43,7 +43,7 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 	}
 
 	@Override
-	public Integer getNumberInvestigationsCompletedFromSubject(Integer identificationNumber) {
+	public Integer getNumberInvestigationsCompletedFromSubject(String identificationNumber) {
 		SubjectEntity subject = this.subjectRepository.findByIdentificationNumber(identificationNumber);
 		List<InvestigationEntity> investigations = subject.getInvestigations();
 		
@@ -61,7 +61,7 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 	}
 
 	@Override
-	public SubjectEntity getSubjectFromIdentificationNumber(Integer identificationNumber) {
+	public SubjectEntity getSubjectFromIdentificationNumber(String identificationNumber) {
 		return this.subjectRepository.findByIdentificationNumber(identificationNumber);
 	}
 

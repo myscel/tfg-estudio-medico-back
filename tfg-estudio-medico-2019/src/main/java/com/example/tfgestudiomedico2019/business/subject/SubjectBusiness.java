@@ -7,9 +7,9 @@ import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 
 public interface SubjectBusiness {
 	public SubjectEntity saveSubject(SubjectEntity subject);
-	public Boolean deleteSubjectByIdentificationNumber(Integer identificationNumber);
-	public Integer getNumberInvestigationsCompletedFromSubject(Integer identificationNumber);
-	public SubjectEntity getSubjectFromIdentificationNumber(Integer identificationNumber);
+	public Boolean deleteSubjectByIdentificationNumber(String identificationNumber);
+	public Integer getNumberInvestigationsCompletedFromSubject(String identificationNumber);
+	public SubjectEntity getSubjectFromIdentificationNumber(String identificationNumber);
 	public List<SubjectEntity> getSubjectsFromDNIResearcher(String username);
 	public List<SubjectEntity> getAllSubjects();
 	public InvestigationEntityDetails getInvestitgationDetailsFromId(Integer id);

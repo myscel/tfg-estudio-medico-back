@@ -8,12 +8,12 @@ import io.swagger.annotations.ApiModelProperty;
  */
 public class SubjectInfoDto {
 	@ApiModelProperty(value = "The identification number of the subject", example = "12345678", dataType = "java.lang.Integer")
-	private Integer identificationNumber;
+	private String identificationNumber;
 	@ApiModelProperty(value = "The dni of the researcher who investigates the subject", example = "12345678A", dataType = "java.lang.String")
 	private String usernameResearcher;
 	
 	
-	public SubjectInfoDto(Integer identificationNumber, String usernameResearcher) {
+	public SubjectInfoDto(String identificationNumber, String usernameResearcher) {
 		super();
 		this.identificationNumber = identificationNumber;
 		this.usernameResearcher = usernameResearcher;
@@ -21,10 +21,10 @@ public class SubjectInfoDto {
 	public SubjectInfoDto() {
 		// TODO Auto-generated constructor stub
 	}
-	public Integer getIdentificationNumber() {
+	public String getIdentificationNumber() {
 		return identificationNumber;
 	}
-	public void setIdentificationNumber(Integer identificationNumber) {
+	public void setIdentificationNumber(String identificationNumber) {
 		this.identificationNumber = identificationNumber;
 	}
 	public String getUsernameResearcher() {

@@ -62,7 +62,7 @@ public class SubjectBusinessTest {
 	
 	@Test(expected = Exception.class)
 	public void deleteSubjectByIdentificationNumberExceptionTest() {
-		Integer identificationNumber = 24;
+		String identificationNumber = "24";
 		
 		when(this.subjectRepository.deleteByIdentificationNumber(any())).thenThrow(new Exception());		
 		this.subjectBusinessImpl.deleteSubjectByIdentificationNumber(identificationNumber);
@@ -70,7 +70,7 @@ public class SubjectBusinessTest {
 	
 	@Test
 	public void deleteSubjectByIdentificationNumberFalseTest() {
-		Integer identificationNumber = 24;
+		String identificationNumber = "24";
 		Long rowsDeleted = 0L;
 		
 		when(this.subjectRepository.deleteByIdentificationNumber(any())).thenReturn(rowsDeleted);		
@@ -80,7 +80,7 @@ public class SubjectBusinessTest {
 	
 	@Test
 	public void deleteSubjectByIdentificationNumberTrueTest() {
-		Integer identificationNumber = 24;
+		String identificationNumber = "24";
 		Long rowsDeleted = 1L;
 		
 		when(this.subjectRepository.deleteByIdentificationNumber(any())).thenReturn(rowsDeleted);		
@@ -91,7 +91,7 @@ public class SubjectBusinessTest {
 	
 	@Test(expected = Exception.class)
 	public void getNumberInvestigationsCompletedFromSubjectFindExceptionTest() {
-		Integer identificationNumber = 24;
+		String identificationNumber = "24";
 		
 		when(this.subjectRepository.findByIdentificationNumber(any())).thenThrow(new Exception());		
 		this.subjectBusinessImpl.getNumberInvestigationsCompletedFromSubject(identificationNumber);
@@ -99,7 +99,7 @@ public class SubjectBusinessTest {
 	
 	@Test
 	public void getNumberInvestigationsCompletedFromSubjectInvestigationsNullTest() {
-		Integer identificationNumber = 24;
+		String identificationNumber = "24";
 		SubjectEntity subject = new SubjectEntity();
 		
 		when(this.subjectRepository.findByIdentificationNumber(any())).thenReturn(subject);		
@@ -112,7 +112,7 @@ public class SubjectBusinessTest {
 	
 	@Test
 	public void getNumberInvestigationsCompletedFromSubjectInvestigationsEmptyTest() {
-		Integer identificationNumber = 24;
+		String identificationNumber = "24";
 		SubjectEntity subject = new SubjectEntity();
 		subject.setInvestigations(new ArrayList<>());
 		
@@ -126,7 +126,7 @@ public class SubjectBusinessTest {
 	
 	@Test
 	public void getNumberInvestigationsCompletedFromSubjectInvestigationsNoCompletedElementsTest() {
-		Integer identificationNumber = 24;
+		String identificationNumber = "24";
 		SubjectEntity subject = new SubjectEntity();
 		List<InvestigationEntity> investigations = new ArrayList<>();
 		
@@ -150,7 +150,7 @@ public class SubjectBusinessTest {
 	
 	@Test
 	public void getNumberInvestigationsCompletedFromSubjectInvestigationsAllCompletedElementsTest() {
-		Integer identificationNumber = 24;
+		String identificationNumber = "24";
 		SubjectEntity subject = new SubjectEntity();
 		List<InvestigationEntity> investigations = new ArrayList<>();
 		
@@ -174,7 +174,7 @@ public class SubjectBusinessTest {
 	
 	@Test
 	public void getNumberInvestigationsCompletedFromSubjectInvestigationsAOnlyOneCompletedElementTest() {
-		Integer identificationNumber = 24;
+		String identificationNumber = "24";
 		SubjectEntity subject = new SubjectEntity();
 		List<InvestigationEntity> investigations = new ArrayList<>();
 		
@@ -199,7 +199,7 @@ public class SubjectBusinessTest {
 	
 	@Test(expected = Exception.class)
 	public void getSubjectFromIdentificationNumberExceptionTest() {
-		Integer identificationNumber = 1;
+		String identificationNumber = "24";
 		
 		when(this.subjectRepository.findByIdentificationNumber(any())).thenThrow(new Exception());
 		this.subjectBusinessImpl.getSubjectFromIdentificationNumber(identificationNumber);
@@ -207,7 +207,7 @@ public class SubjectBusinessTest {
 	
 	@Test
 	public void getSubjectFromIdentificationNumberOKTest() {
-		Integer identificationNumber = 1;
+		String identificationNumber = "24";
 		SubjectEntity subjectEntity = new SubjectEntity();
 		
 		when(this.subjectRepository.findByIdentificationNumber(any())).thenReturn(subjectEntity);

@@ -16,7 +16,6 @@ import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
-import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToUpdateDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditListDto;
@@ -154,11 +153,8 @@ public class AdminControllerImpl implements AdminController{
 	@Override
 	public ResponseEntity<?> getNumberInvestigationsCompletedFromSubject(String identificationNumber) {
 		try {
-			NumberInvestigationsCompletedSubjectDto dto = new NumberInvestigationsCompletedSubjectDto(this.subjectBusiness.getNumberInvestigationsCompletedFromSubject(Integer.parseInt(identificationNumber)));
+			NumberInvestigationsCompletedSubjectDto dto = new NumberInvestigationsCompletedSubjectDto(this.subjectBusiness.getNumberInvestigationsCompletedFromSubject(identificationNumber));
 	        return new ResponseEntity<>(dto, HttpStatus.OK);
-		}
-		catch(NumberFormatException e) {
-	        return new ResponseEntity<>(new ResponseDto("Error: el número de identificación debe ser un entero"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
@@ -168,7 +164,7 @@ public class AdminControllerImpl implements AdminController{
 	@Override
 	public ResponseEntity<?> getSubjectByIdentificationNumber(String identificationNumber) {
 		try {
-			SubjectEntity entity = this.subjectBusiness.getSubjectFromIdentificationNumber(Integer.parseInt(identificationNumber));
+			SubjectEntity entity = this.subjectBusiness.getSubjectFromIdentificationNumber(identificationNumber);
 			
 			if(entity == null) {
 		        return new ResponseEntity<>( new ResponseDto("Error: no existe el paciente"), HttpStatus.NOT_FOUND);
@@ -179,10 +175,6 @@ public class AdminControllerImpl implements AdminController{
 			SubjectInfoDto dto  = mapper.map(entity, SubjectInfoDto.class);
 
 			return new ResponseEntity<>(dto, HttpStatus.OK);	
-		}
-		catch(NumberFormatException e) {
-			ResponseDto response = new ResponseDto("Error: el número de identificación debe ser un entero");
-	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);

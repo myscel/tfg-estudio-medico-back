@@ -28,7 +28,6 @@ import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
-import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
@@ -375,7 +374,7 @@ public class AdminControllerTest {
 	public void getAllSubjectsNotEmptyListTest() {
 		List<SubjectEntity> entityList = new ArrayList<>();
 		SubjectEntity subjectEntity = new SubjectEntity();
-		subjectEntity.setIdentificationNumber(11111111);
+		subjectEntity.setIdentificationNumber("11111111");
 		UserEntity researcher = new UserEntity(); 
 		researcher.setUsername("12345678A");
 		subjectEntity.setIdResearcher(researcher);
@@ -411,7 +410,7 @@ public class AdminControllerTest {
 	@Test
 	public void deleteSubjectExceptionTest() {
 		SubjectToDeleteDto subjectToDeleteDto = new SubjectToDeleteDto();
-		subjectToDeleteDto.setIdentificationNumber(11111111);
+		subjectToDeleteDto.setIdentificationNumber("11111111");
 		
 		when(this.subjectBusiness.deleteSubjectByIdentificationNumber(any())).thenThrow(new IllegalArgumentException());
 
@@ -426,7 +425,7 @@ public class AdminControllerTest {
 	@Test
 	public void deleteSubjectOKTest() {
 		SubjectToDeleteDto subjectToDeleteDto = new SubjectToDeleteDto();
-		subjectToDeleteDto.setIdentificationNumber(11111111);
+		subjectToDeleteDto.setIdentificationNumber("11111111");
 		
 		when(this.subjectBusiness.deleteSubjectByIdentificationNumber(any())).thenReturn(true);
 
@@ -441,7 +440,7 @@ public class AdminControllerTest {
 	@Test
 	public void deleteSubjectFailTest() {
 		SubjectToDeleteDto subjectToDeleteDto = new SubjectToDeleteDto();
-		subjectToDeleteDto.setIdentificationNumber(11111111);
+		subjectToDeleteDto.setIdentificationNumber("11111111");
 		
 		when(this.subjectBusiness.deleteSubjectByIdentificationNumber(any())).thenReturn(false);
 
@@ -453,18 +452,6 @@ public class AdminControllerTest {
 		verifyZeroInteractions(this.userBusiness);
 	}
 	
-	
-	@Test
-	public void getNumberInvestigationsCompletedFromSubjectInvalidIdentificationNumberTest() {
-		String identificationNumber = "INVALID_IDENTIFICATION_NUMBER";
-		
-		ResponseEntity<?> response = this.adminControllerImpl.getNumberInvestigationsCompletedFromSubject(identificationNumber);
-		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-		
-		verifyZeroInteractions(this.researcherBusiness);
-		verifyZeroInteractions(this.subjectBusiness);
-		verifyZeroInteractions(this.userBusiness);
-	}
 	
 	@Test
 	public void getNumberInvestigationsCompletedFromSubjectExceptionTest() {
@@ -494,18 +481,6 @@ public class AdminControllerTest {
 		verifyZeroInteractions(this.userBusiness);
 	}
 	
-	
-	@Test
-	public void getSubjectByIdentificationNumberInvalidIdentificationNumberTest() {
-		String identificationNumber = "INVALID_IDENTIFICATION_NUMBER";
-		
-		ResponseEntity<?> response = this.adminControllerImpl.getSubjectByIdentificationNumber(identificationNumber);
-		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-		
-		verifyZeroInteractions(this.researcherBusiness);
-		verifyZeroInteractions(this.subjectBusiness);
-		verifyZeroInteractions(this.userBusiness);
-	}
 	
 	@Test
 	public void getSubjectByIdentificationNumberExceptionTest() {
@@ -539,7 +514,7 @@ public class AdminControllerTest {
 	public void getSubjectByIdentificationNumberOKTest() {
 		String identificationNumber = "11111111";
 		SubjectEntity entity = new SubjectEntity();
-		entity.setIdentificationNumber(Integer.parseInt(identificationNumber));
+		entity.setIdentificationNumber(identificationNumber);
 		
 		when(this.subjectBusiness.getSubjectFromIdentificationNumber(any())).thenReturn(entity);
 
@@ -874,7 +849,7 @@ public class AdminControllerTest {
 	public void getAllCompletedInvestigationsNotEmptyListWithInvestigationsTest() {
 		List<SubjectEntity> listSubjects = new ArrayList<>();
 		SubjectEntity s1 = new SubjectEntity();
-		s1.setIdentificationNumber(11111111);
+		s1.setIdentificationNumber("11111111");
 
 		List<InvestigationEntity> investigations = new ArrayList<>();
 		InvestigationEntity i1 = new InvestigationEntity();

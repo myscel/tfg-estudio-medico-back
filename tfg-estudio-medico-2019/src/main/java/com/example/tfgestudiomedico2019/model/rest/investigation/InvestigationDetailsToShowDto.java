@@ -82,7 +82,7 @@ public class InvestigationDetailsToShowDto {
 	@ApiModelProperty(value = "The investigation date of the appointment", example = "2020-22-01", dataType = "Date")
 	private Date investigationDate;
 	
-	private Integer identificationNumber;
+	private String identificationNumber;
 
 	public Float getVitaminD() {
 		return vitaminD;
@@ -340,11 +340,11 @@ public class InvestigationDetailsToShowDto {
 		this.investigationDate = investigationDate;
 	}
 
-	public Integer getIdentificationNumber() {
+	public String getIdentificationNumber() {
 		return identificationNumber;
 	}
 
-	public void setIdentificationNumber(Integer identificationNumber) {
+	public void setIdentificationNumber(String identificationNumber) {
 		this.identificationNumber = identificationNumber;
 	}
 

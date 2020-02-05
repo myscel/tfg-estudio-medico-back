@@ -8,13 +8,13 @@ import io.swagger.annotations.ApiModelProperty;
  */
 public class SubjectToDeleteDto {
 	@ApiModelProperty(value = "The identification number of the subject", example = "12345678", dataType = "java.lang.Integer")
-	private Integer identificationNumber;
+	private String identificationNumber;
 
-	public Integer getIdentificationNumber() {
+	public String getIdentificationNumber() {
 		return identificationNumber;
 	}
 
-	public void setIdentificationNumber(Integer identificationNumber) {
+	public void setIdentificationNumber(String identificationNumber) {
 		this.identificationNumber = identificationNumber;
 	}
 
