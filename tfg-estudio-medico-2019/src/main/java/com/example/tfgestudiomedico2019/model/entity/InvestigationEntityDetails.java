@@ -35,7 +35,7 @@ public class InvestigationEntityDetails {
 
 	@Column(name = "tobacco")
 	private Boolean tobacco;
-	@Column(name = "riskAlcohol")
+	@Column(name = "riskalcohol")
 	private Boolean riskAlcohol;
 	@Column(name = "solarexposure")
 	private Float solarExposure;
