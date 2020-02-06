@@ -12,6 +12,9 @@ import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserLoggedDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserToLoginDto;
 
+/**
+ * {@link UserController} implementation.
+ */
 @RestController
 public class UserControllerImpl implements UserController {
 	

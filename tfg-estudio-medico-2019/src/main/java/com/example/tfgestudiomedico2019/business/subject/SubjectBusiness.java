@@ -5,6 +5,9 @@ import java.util.List;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 
+/**
+ * Subject business.
+ */
 public interface SubjectBusiness {
 	public SubjectEntity saveSubject(SubjectEntity subject);
 	public Boolean deleteSubjectByIdentificationNumber(String identificationNumber);

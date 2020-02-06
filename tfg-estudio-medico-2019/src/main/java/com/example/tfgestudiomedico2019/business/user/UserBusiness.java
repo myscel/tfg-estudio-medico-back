@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 
+/**
+ * User business.
+ */
 public interface UserBusiness {
     public UserEntity findByUsernameAndPassword(String username, String password);
     public UserEntity saveUser(UserEntity user);

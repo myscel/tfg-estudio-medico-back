@@ -25,6 +25,9 @@ import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
 
+/**
+ * {@link ResearcherController} implementation.
+ */
 @RestController
 public class ResearcherControllerImpl implements ResearcherController {
 	

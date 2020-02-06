@@ -6,6 +6,9 @@ import java.util.List;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 
+/**
+ * Researcher business.
+ */
 public interface ResearcherBusiness {
 	public List<SubjectEntity> getAllSubjectsAndInvestigationsByResearcher(Integer idResearcher);
     public List<SubjectEntity> getAllSubjects();

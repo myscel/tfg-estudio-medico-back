@@ -25,6 +25,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 
+/**
+ * Controller for Role Administrator.
+ */
 @RequestMapping("/api/admin")
 public interface AdminController {
 	

@@ -13,6 +13,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 
+/**
+ * Controller for All API Users.
+ */
 @RequestMapping("/api/user")
 public interface UserController {
 	

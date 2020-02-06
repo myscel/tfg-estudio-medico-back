@@ -11,7 +11,9 @@ import com.example.tfgestudiomedico2019.model.domain.Role;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.repository.UserRepository;
 
-
+/**
+ * {@link UserBusiness} implementation.
+ */
 @Service
 @Transactional
 public class UserBusinessImpl implements UserBusiness {

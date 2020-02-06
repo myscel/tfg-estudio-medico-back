@@ -30,6 +30,9 @@ import com.example.tfgestudiomedico2019.model.rest.user.UserToDeleteDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserToRegisterDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserToUpdateDto;
 
+/**
+ * {@link AdminController} implementation.
+ */
 @RestController
 public class AdminControllerImpl implements AdminController{
 	

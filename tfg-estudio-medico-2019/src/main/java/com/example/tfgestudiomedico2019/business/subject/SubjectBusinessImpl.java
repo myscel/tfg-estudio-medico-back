@@ -15,6 +15,9 @@ import com.example.tfgestudiomedico2019.repository.InvestigationDetailsRepositor
 import com.example.tfgestudiomedico2019.repository.SubjectRepository;
 import com.example.tfgestudiomedico2019.repository.UserRepository;
 
+/**
+ * {@link SubjectBusiness} implementation.
+ */
 @Service
 @Transactional
 public class SubjectBusinessImpl implements SubjectBusiness {

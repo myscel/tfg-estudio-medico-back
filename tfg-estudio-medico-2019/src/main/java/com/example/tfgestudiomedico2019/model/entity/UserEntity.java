@@ -12,6 +12,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
+/**
+*
+* Entity for user table.
+*/
 @Entity
 @Table(name = "user")
 public class UserEntity {

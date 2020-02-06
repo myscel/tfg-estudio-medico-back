@@ -7,6 +7,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Web configuration.
+ */
 @Configuration
 @EnableWebMvc
 @Import(SwaggerConfig.class)

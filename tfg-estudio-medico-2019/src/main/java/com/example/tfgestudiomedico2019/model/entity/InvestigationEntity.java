@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import javax.persistence.CascadeType;
 
 
+/**
+ * Entity for investigation table.
+ */
 @Entity
 @Table(name = "investigation")
 public class InvestigationEntity {

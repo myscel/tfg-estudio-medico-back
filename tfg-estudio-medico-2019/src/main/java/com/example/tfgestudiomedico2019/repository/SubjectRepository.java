@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 
+/**
+ * Interface to generate Subject queries.
+ */
 @Repository
 public interface SubjectRepository extends JpaRepository<SubjectEntity, Long> {
 	Long deleteByIdentificationNumber(String identificationNumber);

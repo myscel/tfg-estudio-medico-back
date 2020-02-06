@@ -13,6 +13,9 @@ import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.repository.InvestigationRepository;
 import com.example.tfgestudiomedico2019.repository.SubjectRepository;
 
+/**
+ * {@link ResearcherBusiness} implementation.
+ */
 @Service
 @Transactional
 public class ResearcherBusinessImpl implements ResearcherBusiness {

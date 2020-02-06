@@ -9,7 +9,9 @@ import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 
 
-
+/**
+ * Interface to generate Investigation queries.
+ */
 @Repository
 public interface InvestigationRepository extends JpaRepository<InvestigationEntity, Long> {
 	InvestigationEntity findBySubjectAndNumberInvestigation(SubjectEntity subject, Integer numberInvestigation);

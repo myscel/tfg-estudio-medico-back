@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 
+/**
+ * Interface to generate User queries.
+ */
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	

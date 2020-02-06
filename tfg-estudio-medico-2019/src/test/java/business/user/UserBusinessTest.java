@@ -105,6 +105,20 @@ public class UserBusinessTest {
 		verify(this.userRepository, times(1)).findByRole(any());
 	}
 	
+	@Test(expected = Exception.class)
+	public void getAllAdminsExceptionTest() {
+		when(this.userRepository.findByRole(any())).thenThrow(new Exception());
+		this.userBusinessImpl.getAllAdmins();
+	}
+	
+	@Test
+	public void getAllAdminsOKTest() {
+		List<UserEntity> list = new ArrayList<>();
+		when(this.userRepository.findByRole(any())).thenReturn(list);
+		this.userBusinessImpl.getAllAdmins();
+		verify(this.userRepository, times(1)).findByRole(any());
+	}
+	
 	
 	@Test(expected = Exception.class)
 	public void deleteResearcherExceptionTest() {

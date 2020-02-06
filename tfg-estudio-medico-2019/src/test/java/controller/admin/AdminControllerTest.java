@@ -55,9 +55,9 @@ public class AdminControllerTest {
 	@Mock
 	private UserBusiness userBusiness;
 	
-	/*
+	
 	@Test
-	public void getAllUsersExceptionTest() {
+	public void getAllUsersResearchersExceptionTest() {
 		when(this.userBusiness.getAllResearchers()).thenThrow(new IllegalArgumentException());
 		ResponseEntity<?> response = this.adminControllerImpl.getAllUsers();
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -68,47 +68,91 @@ public class AdminControllerTest {
 	}
 	
 	@Test
-	public void getAllUsersEmptyListTest() {
-		List<UserEntity> listResearchers = new ArrayList<>();
-		when(this.userBusiness.getAllResearchers()).thenReturn(listResearchers);
+	public void getAllUsersAdminsExceptionTest() {
+		when(this.userBusiness.getAllAdmins()).thenThrow(new IllegalArgumentException());
 		ResponseEntity<?> response = this.adminControllerImpl.getAllUsers();
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		assertEquals(0, ((UserListDto)response.getBody()).getList().size());
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 		
 		verify(this.userBusiness, times(1)).getAllResearchers();
+		verify(this.userBusiness, times(1)).getAllAdmins();
+
 		verifyZeroInteractions(this.subjectBusiness);
 		verifyZeroInteractions(this.researcherBusiness);
 	}
 	
+	
+	@Test
+	public void getAllUsersEmptyListsTest() {
+		List<UserEntity> listResearchers = new ArrayList<>();
+		List<UserEntity> listAdmins = new ArrayList<>();
+
+		
+		when(this.userBusiness.getAllResearchers()).thenReturn(listResearchers);
+		when(this.userBusiness.getAllAdmins()).thenReturn(listAdmins);
+
+		ResponseEntity<?> response = this.adminControllerImpl.getAllUsers();
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(0, ((UserListDto)response.getBody()).getListResearchers().size());
+		assertEquals(0, ((UserListDto)response.getBody()).getListAdmins().size());
+
+		
+		verify(this.userBusiness, times(1)).getAllResearchers();
+		verify(this.userBusiness, times(1)).getAllAdmins();
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.researcherBusiness);
+	}
+	
+
 	@Test
 	public void getAllUsersNotEmptyListTest() {
 		List<UserEntity> listResearchers = new ArrayList<>();
-		UserEntity userEntity = new UserEntity();
-		userEntity.setUsername("12345678A");
-		userEntity.setName("LUIS");
-		userEntity.setSurname("GARCIA");
-		userEntity.setGender("hombre");
-		userEntity.setId(2);
+		UserEntity researcher = new UserEntity();
+		researcher.setUsername("12345678A");
+		researcher.setName("LUIS");
+		researcher.setSurname("GARCIA");
+		researcher.setGender("hombre");
+		researcher.setId(2);
+		researcher.setRole(Role.RESEARCHER.name());
 		
-		listResearchers.add(userEntity);
+		listResearchers.add(researcher);
 		
+		List<UserEntity> listAdmins = new ArrayList<>();
+		UserEntity admin = new UserEntity();
+		admin.setUsername("12345678B");
+		admin.setName("ASIER");
+		admin.setSurname("ARÓSTEGUI PARADA");
+		admin.setGender("hombre");
+		admin.setId(3);
+		admin.setRole(Role.ADMIN.name());
+		
+		listAdmins.add(admin);
+	
 		when(this.userBusiness.getAllResearchers()).thenReturn(listResearchers);
+		when(this.userBusiness.getAllAdmins()).thenReturn(listAdmins);
+
 		ResponseEntity<?> response = this.adminControllerImpl.getAllUsers();
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		assertEquals(1, ((UserListDto)response.getBody()).getList().size());
+		assertEquals(1, ((UserListDto)response.getBody()).getListResearchers().size());
+		assertEquals(1, ((UserListDto)response.getBody()).getListAdmins().size());
+
+		assertEquals(researcher.getUsername(), ((UserListDto)response.getBody()).getListResearchers().get(0).getUsername());
+		assertEquals(researcher.getName(), ((UserListDto)response.getBody()).getListResearchers().get(0).getName());
+		assertEquals(researcher.getSurname(), ((UserListDto)response.getBody()).getListResearchers().get(0).getSurname());
+		assertEquals(researcher.getGender(), ((UserListDto)response.getBody()).getListResearchers().get(0).getGender());
+		assertEquals(researcher.getId(), ((UserListDto)response.getBody()).getListResearchers().get(0).getId());
 		
-		assertEquals(userEntity.getUsername(), ((UserListDto)response.getBody()).getList().get(0).getUsername());
-		assertEquals(userEntity.getName(), ((UserListDto)response.getBody()).getList().get(0).getName());
-		assertEquals(userEntity.getSurname(), ((UserListDto)response.getBody()).getList().get(0).getSurname());
-		assertEquals(userEntity.getGender(), ((UserListDto)response.getBody()).getList().get(0).getGender());
-		assertEquals(userEntity.getId(), ((UserListDto)response.getBody()).getList().get(0).getId());
+		assertEquals(admin.getUsername(), ((UserListDto)response.getBody()).getListAdmins().get(0).getUsername());
+		assertEquals(admin.getName(), ((UserListDto)response.getBody()).getListAdmins().get(0).getName());
+		assertEquals(admin.getSurname(), ((UserListDto)response.getBody()).getListAdmins().get(0).getSurname());
+		assertEquals(admin.getGender(), ((UserListDto)response.getBody()).getListAdmins().get(0).getGender());
+		assertEquals(admin.getId(), ((UserListDto)response.getBody()).getListAdmins().get(0).getId());
 		
 		verify(this.userBusiness, times(1)).getAllResearchers();
+		verify(this.userBusiness, times(1)).getAllAdmins();
 		verifyZeroInteractions(this.subjectBusiness);
 		verifyZeroInteractions(this.researcherBusiness);
 	}
-	
-	*/
+
 	
 	@Test
 	public void deleteResearcherExceptionTest() {

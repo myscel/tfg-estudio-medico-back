@@ -4,6 +4,9 @@ import java.sql.Date;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * Dto to update a investigation detail.
+ */
 public class InvestigationDetailsToUpdateDto {
 	
 	@ApiModelProperty(value = "The investigation details id", example = "10", dataType = "java.lang.Integer")

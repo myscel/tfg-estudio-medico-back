@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Entity for investigation_details table.
+ */
 @Entity
 @Table(name = "investigation_details")
 public class InvestigationEntityDetails {

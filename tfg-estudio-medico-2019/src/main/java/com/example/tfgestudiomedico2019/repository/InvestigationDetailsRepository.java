@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 
+/**
+ * Interface to generate Investigation Details queries.
+ */
 @Repository
 public interface InvestigationDetailsRepository extends JpaRepository<InvestigationEntityDetails, Long> {
 	InvestigationEntityDetails findById(Integer id);
