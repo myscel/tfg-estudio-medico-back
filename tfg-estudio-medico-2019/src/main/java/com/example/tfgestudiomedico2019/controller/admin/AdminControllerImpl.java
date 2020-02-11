@@ -290,6 +290,30 @@ public class AdminControllerImpl implements AdminController{
 			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@Override
+	public ResponseEntity<?> getAllCompletedInvestigationsByIdentificationNumber(String identificationNumber) {
+		try {
+			SubjectEntity subject = this.subjectBusiness.getSubjectFromIdentificationNumber(identificationNumber);
+			
+			if(subject == null) {
+		         return new ResponseEntity<>(new ResponseDto("Error subject not found..."), HttpStatus.NOT_FOUND);	
+			}
+			
+			InvestigationToEditListDto list = new InvestigationToEditListDto();
+
+			for(InvestigationEntity investigation: subject.getInvestigations()) {
+				if(investigation.getCompleted()) {
+					InvestigationToEditDto data = new InvestigationToEditDto(subject.getIdentificationNumber(), investigation.getNumberInvestigation(), investigation.getInvestigationEntityDetails().getId());
+					list.getList().add(data);
+				}
+			}
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@Override
 	public ResponseEntity<?> getAppointmentDetails(String investigationsDetailsId) {

@@ -129,6 +129,15 @@ public interface AdminController {
     @GetMapping(path = "/completedAppointments", produces = "application/json")
   	public ResponseEntity<?> getAllCompletedInvestigations();
 	
+	@ApiOperation(value = "Get all investigations completed based on a subject identification number")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "Successfully got investigations", response= InvestigationToEditListDto.class),
+    		@ApiResponse(code = 404, message = "Subject Not Found", response= ResponseDto.class),
+    		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
+    })
+    @GetMapping(path = "/completedAppointments/{identificationNumber}", produces = "application/json")
+  	public ResponseEntity<?> getAllCompletedInvestigationsByIdentificationNumber(@PathVariable String identificationNumber);
+	
 	@ApiOperation(value = "Get all investigations completed")
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Successfully got investigations", response= InvestigationToEditListDto.class),
