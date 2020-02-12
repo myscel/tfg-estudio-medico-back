@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusiness;
 import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
+import com.example.tfgestudiomedico2019.model.domain.Role;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
@@ -24,6 +25,8 @@ import com.example.tfgestudiomedico2019.model.rest.subject.SubjectFromResearcher
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserToUpdatePassDto;
 
 /**
  * {@link ResearcherController} implementation.
@@ -228,4 +231,30 @@ public class ResearcherControllerImpl implements ResearcherController {
 			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	@Override
+	public ResponseEntity<?> updatePassword(UserToUpdatePassDto userToUpdate) {
+		
+		try {
+		UserEntity user = userBusiness.findById(Integer.parseInt(userToUpdate.getId()));
+		
+		if(user == null) {
+	         return new ResponseEntity<>(new ResponseDto("Error user not found..."), HttpStatus.NOT_FOUND);	
+		}
+		
+		if(!user.getPassword().equals(userToUpdate.getOldPassword())) {
+			return new ResponseEntity<>(new ResponseDto("Contraseña antigua distinta a la que posee el usuario"), HttpStatus.BAD_REQUEST);
+		}else {
+			user.setPassword(userToUpdate.getNewPassword());
+			
+			UserEntity userUpdated = this.userBusiness.updateUser(user);
+			
+	        return new ResponseEntity<>(new ResponseDto("Contraseña de usuario actualizada"),HttpStatus.OK);
+		}
+		
+		}catch(Exception e) {
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }

@@ -15,6 +15,7 @@ import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserToUpdatePassDto;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -82,4 +83,14 @@ public interface ResearcherController {
     })
     @GetMapping(path = "/getAllInvestigationDetails/{idSubject}", produces = "application/json")
     public ResponseEntity<?> getAllInvestigationDetails(@PathVariable String idSubject);
+	
+	@ApiOperation(value = "Update the password of a user")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "Password updated successfully", response= ResponseDto.class),
+    		@ApiResponse(code = 400, message = "Old password doesn't match", response= ResponseDto.class),
+    		@ApiResponse(code = 404, message = "User to update doesn't exists", response= ResponseDto.class),
+    		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
+    })
+    @PostMapping(path = "/updatePassword", produces = "application/json")
+    public ResponseEntity<?> updatePassword(@RequestBody UserToUpdatePassDto userToUpdate);
 }
