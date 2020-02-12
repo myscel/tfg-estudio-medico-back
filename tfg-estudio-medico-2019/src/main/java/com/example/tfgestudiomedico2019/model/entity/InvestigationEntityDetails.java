@@ -145,8 +145,8 @@ public class InvestigationEntityDetails {
 	public Boolean getRiskalcohol() {
 		return riskalcohol;
 	}
-	public void setRiskalcohol(Boolean riskAlcohol) {
-		this.riskalcohol = riskAlcohol;
+	public void setRiskalcohol(Boolean riskalcohol) {
+		this.riskalcohol = riskalcohol;
 	}
 	public Float getSolarExposure() {
 		return solarExposure;

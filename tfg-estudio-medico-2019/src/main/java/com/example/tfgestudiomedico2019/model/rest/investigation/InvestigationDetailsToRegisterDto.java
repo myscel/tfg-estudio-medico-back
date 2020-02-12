@@ -133,11 +133,11 @@ public class InvestigationDetailsToRegisterDto {
 	public void setTobacco(Boolean tobacco) {
 		this.tobacco = tobacco;
 	}
-	public Boolean getRiskAlcohol() {
+	public Boolean getRiskalcohol() {
 		return riskalcohol;
 	}
-	public void setRiskAlcohol(Boolean riskAlcohol) {
-		this.riskalcohol = riskAlcohol;
+	public void setRiskalcohol(Boolean riskalcohol) {
+		this.riskalcohol = riskalcohol;
 	}
 	public Float getSolarExposure() {
 		return solarExposure;
