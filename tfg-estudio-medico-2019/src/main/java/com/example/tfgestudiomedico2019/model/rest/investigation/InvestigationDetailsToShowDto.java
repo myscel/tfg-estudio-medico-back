@@ -29,7 +29,7 @@ public class InvestigationDetailsToShowDto {
 	@ApiModelProperty(value = "If the subject consumes tobacco", example = "true", dataType = "boolean")
 	private Boolean tobacco;
 	@ApiModelProperty(value = "If the subject has risk of drinking alcohol", example = "false", dataType = "boolean")
-	private Boolean riskAlcohol;
+	private Boolean riskalcohol;
 	@ApiModelProperty(value = "The solar exposure time per day of the subject in minutes", example = "500", dataType = "java.lang.Float")
 	private Float solarExposure;
 	@ApiModelProperty(value = "If the subject uses spfCream", example = "true", dataType = "boolean")
@@ -149,11 +149,11 @@ public class InvestigationDetailsToShowDto {
 	}
 
 	public Boolean getRiskAlcohol() {
-		return riskAlcohol;
+		return riskalcohol;
 	}
 
 	public void setRiskAlcohol(Boolean riskAlcohol) {
-		this.riskAlcohol = riskAlcohol;
+		this.riskalcohol = riskAlcohol;
 	}
 
 	public Float getSolarExposure() {
@@ -352,7 +352,7 @@ public class InvestigationDetailsToShowDto {
 	public String toString() {
 		return "InvestigationDetailsToShowDto [vitaminD=" + vitaminD + ", hba1c=" + hba1c + ", season=" + season
 				+ ", gender=" + gender + ", studyLevel=" + studyLevel + ", birthDate=" + birthDate
-				+ ", socioeconomicLevel=" + socioeconomicLevel + ", tobacco=" + tobacco + ", riskAlcohol=" + riskAlcohol
+				+ ", socioeconomicLevel=" + socioeconomicLevel + ", tobacco=" + tobacco + ", riskAlcohol=" + riskalcohol
 				+ ", solarExposure=" + solarExposure + ", spfCream=" + spfCream + ", spfScore=" + spfScore
 				+ ", exercise=" + exercise + ", dm2=" + dm2 + ", glucose=" + glucose + ", imc=" + imc + ", obesity="
 				+ obesity + ", tas=" + tas + ", tad=" + tad + ", arterialHypertension=" + arterialHypertension
