@@ -87,7 +87,8 @@ public interface ResearcherController {
 	@ApiOperation(value = "Update the password of a user")
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Password updated successfully", response= ResponseDto.class),
-    		@ApiResponse(code = 400, message = "Old password doesn't match", response= ResponseDto.class),
+    		@ApiResponse(code = 400, message = "Invalid fields", response= ResponseDto.class),
+    		@ApiResponse(code = 409, message = "Old password invalid", response= ResponseDto.class),
     		@ApiResponse(code = 404, message = "User to update doesn't exists", response= ResponseDto.class),
     		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
     })

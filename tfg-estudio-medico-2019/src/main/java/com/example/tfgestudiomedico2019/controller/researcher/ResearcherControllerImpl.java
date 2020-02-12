@@ -236,23 +236,29 @@ public class ResearcherControllerImpl implements ResearcherController {
 	public ResponseEntity<?> updatePassword(UserToUpdatePassDto userToUpdate) {
 		
 		try {
-		UserEntity user = userBusiness.findById(Integer.parseInt(userToUpdate.getId()));
-		
-		if(user == null) {
-	         return new ResponseEntity<>(new ResponseDto("Error user not found..."), HttpStatus.NOT_FOUND);	
-		}
-		
-		if(!user.getPassword().equals(userToUpdate.getOldPassword())) {
-			return new ResponseEntity<>(new ResponseDto("Contraseña antigua distinta a la que posee el usuario"), HttpStatus.BAD_REQUEST);
-		}else {
-			user.setPassword(userToUpdate.getNewPassword());
+			UserEntity user = userBusiness.findById(Integer.parseInt(userToUpdate.getId()));
 			
-			UserEntity userUpdated = this.userBusiness.updateUser(user);
+			if(user == null) {
+		         return new ResponseEntity<>(new ResponseDto("Error usuario no encontrado..."), HttpStatus.NOT_FOUND);	
+			}
 			
-	        return new ResponseEntity<>(new ResponseDto("Contraseña de usuario actualizada"),HttpStatus.OK);
-		}
-		
-		}catch(Exception e) {
+			if(!user.getPassword().equals(userToUpdate.getOldPassword())) {
+				return new ResponseEntity<>(new ResponseDto("Contraseña antigua distinta a la que posee el usuario"), HttpStatus.CONFLICT);
+			} 
+			else {
+				user.setPassword(userToUpdate.getNewPassword());
+				
+				UserEntity userUpdated = this.userBusiness.updateUser(user);
+				
+				if(userUpdated == null) {
+					return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+				
+		        return new ResponseEntity<>(new ResponseDto("Contraseña de usuario actualizada"),HttpStatus.OK);
+			}
+		} catch(NumberFormatException e) {
+	        return new ResponseEntity<>(new ResponseDto("Campos de entrada no válidos"), HttpStatus.BAD_REQUEST);
+		} catch(Exception e) {
 			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
