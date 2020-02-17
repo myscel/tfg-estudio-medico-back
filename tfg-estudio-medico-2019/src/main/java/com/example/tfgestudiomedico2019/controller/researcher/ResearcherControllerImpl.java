@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.tfgestudiomedico2019.business.researcher.ResearcherBusiness;
 import com.example.tfgestudiomedico2019.business.subject.SubjectBusiness;
 import com.example.tfgestudiomedico2019.business.user.UserBusiness;
-import com.example.tfgestudiomedico2019.model.domain.Role;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
@@ -25,7 +24,6 @@ import com.example.tfgestudiomedico2019.model.rest.subject.SubjectFromResearcher
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectListFromResearcherDto;
 import com.example.tfgestudiomedico2019.model.rest.user.ResponseDto;
-import com.example.tfgestudiomedico2019.model.rest.user.UserDto;
 import com.example.tfgestudiomedico2019.model.rest.user.UserToUpdatePassDto;
 
 /**
