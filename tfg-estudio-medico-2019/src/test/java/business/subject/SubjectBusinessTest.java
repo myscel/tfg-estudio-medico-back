@@ -2,9 +2,12 @@ package business.subject;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -21,8 +24,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.example.tfgestudiomedico2019.business.subject.SubjectBusinessImpl;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
+import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
+import com.example.tfgestudiomedico2019.repository.InvestigationDetailsRepository;
 import com.example.tfgestudiomedico2019.repository.SubjectRepository;
 import com.example.tfgestudiomedico2019.repository.UserRepository;
 
@@ -39,6 +44,9 @@ public class SubjectBusinessTest {
 	
 	@Mock
 	private UserRepository userRepository;
+	
+	@Mock
+	private InvestigationDetailsRepository investigationDetailsRepository;
 	
 	@Test(expected = Exception.class)
 	public void saveSubjectExceptionTest() {
@@ -57,6 +65,7 @@ public class SubjectBusinessTest {
 		
 		verify(this.subjectRepository, times(1)).save(any());
 		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	
@@ -65,7 +74,7 @@ public class SubjectBusinessTest {
 		String identificationNumber = "24";
 		
 		when(this.subjectRepository.deleteByIdentificationNumber(any())).thenThrow(new Exception());		
-		this.subjectBusinessImpl.deleteSubjectByIdentificationNumber(identificationNumber);
+		this.subjectBusinessImpl.deleteSubjectByIdentificationNumber(identificationNumber);	
 	}
 	
 	@Test
@@ -76,6 +85,10 @@ public class SubjectBusinessTest {
 		when(this.subjectRepository.deleteByIdentificationNumber(any())).thenReturn(rowsDeleted);		
 		Boolean success = this.subjectBusinessImpl.deleteSubjectByIdentificationNumber(identificationNumber);
 		assertFalse(success);
+		
+		verify(this.subjectRepository, times(1)).deleteByIdentificationNumber(any());
+		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	@Test
@@ -86,6 +99,10 @@ public class SubjectBusinessTest {
 		when(this.subjectRepository.deleteByIdentificationNumber(any())).thenReturn(rowsDeleted);		
 		Boolean success = this.subjectBusinessImpl.deleteSubjectByIdentificationNumber(identificationNumber);
 		assertTrue(success);
+		
+		verify(this.subjectRepository, times(1)).deleteByIdentificationNumber(any());
+		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	
@@ -108,6 +125,7 @@ public class SubjectBusinessTest {
 		assertEquals(0, rows.shortValue());
 		verify(this.subjectRepository, times(1)).findByIdentificationNumber(any());
 		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	@Test
@@ -122,6 +140,7 @@ public class SubjectBusinessTest {
 		assertEquals(0, rows.shortValue());
 		verify(this.subjectRepository, times(1)).findByIdentificationNumber(any());
 		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	@Test
@@ -146,6 +165,7 @@ public class SubjectBusinessTest {
 		assertEquals(0, rows.shortValue());
 		verify(this.subjectRepository, times(1)).findByIdentificationNumber(any());
 		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	@Test
@@ -170,6 +190,7 @@ public class SubjectBusinessTest {
 		assertEquals(investigations.size(), rows.shortValue());
 		verify(this.subjectRepository, times(1)).findByIdentificationNumber(any());
 		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	@Test
@@ -194,6 +215,7 @@ public class SubjectBusinessTest {
 		assertEquals(1, rows.shortValue());
 		verify(this.subjectRepository, times(1)).findByIdentificationNumber(any());
 		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	
@@ -215,6 +237,7 @@ public class SubjectBusinessTest {
 		
 		verify(this.subjectRepository, times(1)).findByIdentificationNumber(any());
 		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	
@@ -235,6 +258,7 @@ public class SubjectBusinessTest {
 		assertNull(list);
 		verify(this.userRepository, times(1)).findByUsername(any());
 		verifyZeroInteractions(this.subjectRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	@Test
@@ -249,6 +273,7 @@ public class SubjectBusinessTest {
 		assertEquals(0, list.size());
 		verify(this.userRepository, times(1)).findByUsername(any());
 		verifyZeroInteractions(this.subjectRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	@Test
@@ -266,6 +291,7 @@ public class SubjectBusinessTest {
 		assertEquals(2, list.size());
 		verify(this.userRepository, times(1)).findByUsername(any());
 		verifyZeroInteractions(this.subjectRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
 	
@@ -273,6 +299,10 @@ public class SubjectBusinessTest {
 	public void getAllSubjectsExceptionTest() {
 		when(this.userRepository.findAll()).thenThrow(new Exception());
 		this.subjectBusinessImpl.getAllSubjects();
+		
+		verify(this.investigationDetailsRepository, times(1)).findById(anyInt());
+		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.subjectRepository);
 	}
 	
 	@Test
@@ -283,6 +313,74 @@ public class SubjectBusinessTest {
 		
 		verify(this.subjectRepository, times(1)).findAll();
 		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.investigationDetailsRepository);
 	}
 	
+	
+	@Test
+	public void getInvestigationDetailsFromIdFindNullTest() {
+		Integer id = 1;
+		InvestigationEntityDetails investigationEntityDetails1 = null;
+		
+		when(this.investigationDetailsRepository.findById(anyInt())).thenReturn(investigationEntityDetails1);
+		InvestigationEntityDetails investigationEntityDetails2 = this.subjectBusinessImpl.getInvestigationDetailsFromId(id);
+		
+		verify(this.investigationDetailsRepository, times(1)).findById(anyInt());
+		
+		assertNull(investigationEntityDetails2);
+		
+		verify(this.investigationDetailsRepository, times(1)).findById(anyInt());
+		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.subjectRepository);
+	}
+	
+	@Test
+	public void getInvestigationDetailsFromIdOKTest() {
+		Integer id = 1;
+		InvestigationEntityDetails investigationEntityDetails1 = new InvestigationEntityDetails();
+		
+		when(this.investigationDetailsRepository.findById(anyInt())).thenReturn(investigationEntityDetails1);
+		InvestigationEntityDetails investigationEntityDetails2 = this.subjectBusinessImpl.getInvestigationDetailsFromId(id);
+		
+		verify(this.investigationDetailsRepository, times(1)).findById(anyInt());
+		
+		assertNotNull(investigationEntityDetails2);
+	}
+	
+	
+	
+	@Test(expected = Exception.class)
+	public void updateInvestigationDetailsUpdateExceptionTest() {
+		InvestigationEntityDetails investigationDetails = new InvestigationEntityDetails();
+
+		when(this.investigationDetailsRepository.save(any())).thenThrow(new Exception());
+		this.subjectBusinessImpl.updateInvestigationDetails(investigationDetails);
+	}
+	
+	@Test
+	public void updateInvestigationDetailsOKFalseTest() {
+		InvestigationEntityDetails investigationDetails = new InvestigationEntityDetails();
+
+		when(this.investigationDetailsRepository.save(any())).thenReturn(null);
+		Boolean success = this.subjectBusinessImpl.updateInvestigationDetails(investigationDetails);
+		
+		assertFalse(success);
+		verify(this.investigationDetailsRepository, times(1)).save(any());
+		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.subjectRepository);
+	}
+	
+	@Test
+	public void updateInvestigationDetailsOKTrueTest() {
+		InvestigationEntityDetails investigationDetails = new InvestigationEntityDetails();
+		InvestigationEntityDetails investigationDetailsSaved = new InvestigationEntityDetails();
+
+		when(this.investigationDetailsRepository.save(any())).thenReturn(investigationDetailsSaved);
+		Boolean success = this.subjectBusinessImpl.updateInvestigationDetails(investigationDetails);
+		
+		assertTrue(success);
+		verify(this.investigationDetailsRepository, times(1)).save(any());
+		verifyZeroInteractions(this.userRepository);
+		verifyZeroInteractions(this.subjectRepository);
+	}
 }

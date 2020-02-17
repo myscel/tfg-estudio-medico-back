@@ -91,8 +91,8 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 
 	@Override
 	public Boolean updateInvestigationDetails(InvestigationEntityDetails investigationDetails) {
-		InvestigationEntityDetails InvestigationDetailsSaved =  this.investigationDetailsRepository.save(investigationDetails);
-		return InvestigationDetailsSaved != null;
+		InvestigationEntityDetails investigationDetailsSaved =  this.investigationDetailsRepository.save(investigationDetails);
+		return investigationDetailsSaved != null;
 	}
 
 }
