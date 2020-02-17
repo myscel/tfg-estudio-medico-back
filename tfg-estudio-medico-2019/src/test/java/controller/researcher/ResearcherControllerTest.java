@@ -36,6 +36,7 @@ import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDe
 import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectListFromResearcherDto;
+import com.example.tfgestudiomedico2019.model.rest.user.UserToUpdatePassDto;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -677,5 +678,143 @@ public class ResearcherControllerTest {
 		verify(this.researcherBusiness, times(1)).getAllSubjectsByResearcher(any());
 		verifyZeroInteractions(this.subjectBusiness);
 		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	
+	@Test
+	public void updatePasswordInvalidFormatIdTest() {
+		UserToUpdatePassDto userToUpdate = new UserToUpdatePassDto();
+		userToUpdate.setId("INVALID_ID");
+		
+		ResponseEntity<?> response = this.researcherControllerImpl.updatePassword(userToUpdate);
+		
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void updatePasswordFindExceptionTest() {
+		UserToUpdatePassDto userToUpdate = new UserToUpdatePassDto();
+		userToUpdate.setId("2");
+		
+		when(this.userBusiness.findById(any())).thenThrow(new IllegalArgumentException());
+
+		ResponseEntity<?> response = this.researcherControllerImpl.updatePassword(userToUpdate);
+		
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+
+		verify(this.userBusiness, times(1)).findById(any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.researcherBusiness);
+	}
+	
+	@Test
+	public void updatePasswordFindNullTest() {
+		UserToUpdatePassDto userToUpdate = new UserToUpdatePassDto();
+		userToUpdate.setId("2");
+		
+		when(this.userBusiness.findById(any())).thenReturn(null);
+
+		ResponseEntity<?> response = this.researcherControllerImpl.updatePassword(userToUpdate);
+		
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+
+		verify(this.userBusiness, times(1)).findById(any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.researcherBusiness);
+	}
+	
+	@Test
+	public void updatePasswordDifferentPasswordTest() {
+		UserToUpdatePassDto userToUpdate = new UserToUpdatePassDto();
+		userToUpdate.setId("2");
+		userToUpdate.setOldPassword("passB");
+		
+		UserEntity user = new UserEntity();
+		user.setPassword("passA");
+		
+		when(this.userBusiness.findById(any())).thenReturn(user);
+
+		ResponseEntity<?> response = this.researcherControllerImpl.updatePassword(userToUpdate);
+		
+		assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+
+		verify(this.userBusiness, times(1)).findById(any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.researcherBusiness);
+	}
+	
+	@Test
+	public void updatePasswordUpdateExceptionTest() {
+		UserToUpdatePassDto userToUpdate = new UserToUpdatePassDto();
+		userToUpdate.setId("2");
+		userToUpdate.setOldPassword("passA");
+		userToUpdate.setNewPassword("passNew");
+		
+		UserEntity user = new UserEntity();
+		user.setPassword("passA");
+		
+		when(this.userBusiness.findById(any())).thenReturn(user);
+		when(this.userBusiness.updateUser(any())).thenThrow(new IllegalArgumentException());
+
+		ResponseEntity<?> response = this.researcherControllerImpl.updatePassword(userToUpdate);
+		
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+
+		verify(this.userBusiness, times(1)).findById(any());
+		verify(this.userBusiness, times(1)).updateUser(any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.researcherBusiness);
+	}
+	
+	@Test
+	public void updatePasswordUpdateNullTest() {
+		UserToUpdatePassDto userToUpdate = new UserToUpdatePassDto();
+		userToUpdate.setId("2");
+		userToUpdate.setOldPassword("passA");
+		userToUpdate.setNewPassword("passNew");
+		
+		UserEntity user = new UserEntity();
+		user.setPassword("passA");
+		
+		when(this.userBusiness.findById(any())).thenReturn(user);
+		when(this.userBusiness.updateUser(any())).thenReturn(null);
+
+		ResponseEntity<?> response = this.researcherControllerImpl.updatePassword(userToUpdate);
+		
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+
+		verify(this.userBusiness, times(1)).findById(any());
+		verify(this.userBusiness, times(1)).updateUser(any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.researcherBusiness);
+	}
+	
+	@Test
+	public void updatePasswordUpdateOKTest() {
+		UserToUpdatePassDto userToUpdate = new UserToUpdatePassDto();
+		userToUpdate.setId("2");
+		userToUpdate.setOldPassword("passA");
+		userToUpdate.setNewPassword("passNew");
+		
+		UserEntity userUpdated = new UserEntity();
+		
+		UserEntity user = new UserEntity();
+		user.setPassword("passA");
+		
+		when(this.userBusiness.findById(any())).thenReturn(user);
+		when(this.userBusiness.updateUser(any())).thenReturn(userUpdated);
+
+		ResponseEntity<?> response = this.researcherControllerImpl.updatePassword(userToUpdate);
+		
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+
+		verify(this.userBusiness, times(1)).findById(any());
+		verify(this.userBusiness, times(1)).updateUser(any());
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.researcherBusiness);
 	}
 }
