@@ -142,6 +142,8 @@ public interface AdminController {
 	@ApiOperation(value = "Get all investigations completed")
     @ApiResponses(value = {
     		@ApiResponse(code = 200, message = "Successfully got investigations", response= InvestigationDetailsToShowDto.class),
+    		@ApiResponse(code = 400, message = "Id format invalid", response= ResponseDto.class),
+    		@ApiResponse(code = 404, message = "investigationsDetails Not Found", response= ResponseDto.class),
     		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
     })
     @GetMapping(path = "/getAppointmentDetails/{investigationsDetailsId}", produces = "application/json")

@@ -85,7 +85,7 @@ public class SubjectBusinessImpl implements SubjectBusiness {
 	}
 
 	@Override
-	public InvestigationEntityDetails getInvestitgationDetailsFromId(Integer id) {
+	public InvestigationEntityDetails getInvestigationDetailsFromId(Integer id) {
 		return this.investigationDetailsRepository.findById(id);
 	}
 

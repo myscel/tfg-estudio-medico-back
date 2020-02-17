@@ -320,12 +320,19 @@ public class AdminControllerImpl implements AdminController{
 	public ResponseEntity<?> getAppointmentDetails(String investigationsDetailsId) {
 		try {
 
-			InvestigationEntityDetails investigationDetails = subjectBusiness.getInvestitgationDetailsFromId(Integer.parseInt(investigationsDetailsId));
+			InvestigationEntityDetails investigationDetails = subjectBusiness.getInvestigationDetailsFromId(Integer.parseInt(investigationsDetailsId));
+			
+			if(investigationDetails == null) {
+		         return new ResponseEntity<>(new ResponseDto("Error investigationDetails not found..."), HttpStatus.NOT_FOUND);	
+			}
 			
 			ModelMapper mapper = new ModelMapper();
 			InvestigationDetailsToShowDto investigationDetailsToShow  = mapper.map(investigationDetails, InvestigationDetailsToShowDto.class);
 
 			return new ResponseEntity<>(investigationDetailsToShow, HttpStatus.OK);
+		}
+		catch(NumberFormatException e) {
+	        return new ResponseEntity<>(new ResponseDto("Error: el id debe ser un entero"), HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
@@ -334,7 +341,6 @@ public class AdminControllerImpl implements AdminController{
 
 	@Override
 	public ResponseEntity<?> updateInvestigationDetails(InvestigationDetailsToUpdateDto investigationDetailsToUpdate) {
-		
 		try {
 			ModelMapper mapper = new ModelMapper();
 			InvestigationEntityDetails investigationEntityDetails = mapper.map(investigationDetailsToUpdate, InvestigationEntityDetails.class);
@@ -343,9 +349,9 @@ public class AdminControllerImpl implements AdminController{
 			
 			return new ResponseEntity<>(new ResponseDto("Detalles de investigación actualizados"), HttpStatus.OK);
 		}
-	catch(Exception e) {
+		catch(Exception e) {
 		return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+		}
 	}
 	
 }

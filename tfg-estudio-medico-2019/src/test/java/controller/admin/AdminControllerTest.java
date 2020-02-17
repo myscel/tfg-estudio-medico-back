@@ -1,6 +1,7 @@
 package controller.admin;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +29,8 @@ import com.example.tfgestudiomedico2019.model.entity.InvestigationEntity;
 import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToShowDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToUpdateDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
 import com.example.tfgestudiomedico2019.model.rest.subject.SubjectInfoDto;
@@ -1001,6 +1004,91 @@ public class AdminControllerTest {
 		assertEquals(new Integer(2), ((InvestigationToEditListDto)response.getBody()).getList().get(0).getInvestigationDetailsId());
 
 		verify(this.subjectBusiness, times(1)).getSubjectFromIdentificationNumber(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	
+	@Test
+	public void getAppointmentDetailsInvalidFormatTest() {
+		String investigationsDetailsId = "INVALID_ID";
+		
+		ResponseEntity<?> response = this.adminControllerImpl.getAppointmentDetails(investigationsDetailsId);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		
+		verifyZeroInteractions(this.subjectBusiness);
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getAppointmentDetailsIFindExceptionTest() {
+		String investigationsDetailsId = "2";
+		
+		when(this.subjectBusiness.getInvestigationDetailsFromId(any())).thenThrow(new IllegalArgumentException());
+
+		ResponseEntity<?> response = this.adminControllerImpl.getAppointmentDetails(investigationsDetailsId);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).getInvestigationDetailsFromId(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getAppointmentDetailsInvestigationNullTest() {
+		String investigationsDetailsId = "2";
+		
+		when(this.subjectBusiness.getInvestigationDetailsFromId(any())).thenReturn(null);
+
+		ResponseEntity<?> response = this.adminControllerImpl.getAppointmentDetails(investigationsDetailsId);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).getInvestigationDetailsFromId(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getAppointmentDetailsOKTest() {
+		String investigationsDetailsId = "2";
+		InvestigationEntityDetails investigationDetails = new InvestigationEntityDetails();
+		
+		when(this.subjectBusiness.getInvestigationDetailsFromId(any())).thenReturn(investigationDetails);
+
+		ResponseEntity<?> response = this.adminControllerImpl.getAppointmentDetails(investigationsDetailsId);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		
+		assertNotNull(((InvestigationDetailsToShowDto)response.getBody()));
+
+		verify(this.subjectBusiness, times(1)).getInvestigationDetailsFromId(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	
+	@Test
+	public void updateInvestigationDetaxilsUpdateExceptionTest() {
+		InvestigationDetailsToUpdateDto investigationDetailsToUpdate = new InvestigationDetailsToUpdateDto();
+		
+		when(this.subjectBusiness.updateInvestigationDetails(any())).thenThrow(new IllegalArgumentException());
+
+		ResponseEntity<?> response = this.adminControllerImpl.updateInvestigationDetails(investigationDetailsToUpdate);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).updateInvestigationDetails(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void updateInvestigationDetaxilsOKTest() {
+		InvestigationDetailsToUpdateDto investigationDetailsToUpdate = new InvestigationDetailsToUpdateDto();
+		
+		ResponseEntity<?> response = this.adminControllerImpl.updateInvestigationDetails(investigationDetailsToUpdate);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).updateInvestigationDetails(any());
 		verifyZeroInteractions(this.researcherBusiness);
 		verifyZeroInteractions(this.userBusiness);
 	}
