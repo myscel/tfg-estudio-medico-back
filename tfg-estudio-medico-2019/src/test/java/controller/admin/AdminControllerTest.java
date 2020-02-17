@@ -925,4 +925,83 @@ public class AdminControllerTest {
 		verifyZeroInteractions(this.researcherBusiness);
 		verifyZeroInteractions(this.userBusiness);
 	}
+	
+	
+	@Test
+	public void getAllCompletedInvestigationsByIdentificationNumberFindExceptionTest() {
+		String identificationNumber = "12345678A";
+		when(this.subjectBusiness.getSubjectFromIdentificationNumber(any())).thenThrow(new IllegalArgumentException());
+		
+		ResponseEntity<?> response = this.adminControllerImpl.getAllCompletedInvestigationsByIdentificationNumber(identificationNumber);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).getSubjectFromIdentificationNumber(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getAllCompletedInvestigationsByIdentificationNumberFindNullTest() {
+		String identificationNumber = "12345678A";
+		when(this.subjectBusiness.getSubjectFromIdentificationNumber(any())).thenReturn(null);
+		
+		ResponseEntity<?> response = this.adminControllerImpl.getAllCompletedInvestigationsByIdentificationNumber(identificationNumber);
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		
+		verify(this.subjectBusiness, times(1)).getSubjectFromIdentificationNumber(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getAllCompletedInvestigationsByIdentificationNumberEmptyListTest() {
+		String identificationNumber = "12345678A";
+		SubjectEntity subject = new SubjectEntity();
+		when(this.subjectBusiness.getSubjectFromIdentificationNumber(any())).thenReturn(subject);
+		
+		ResponseEntity<?> response = this.adminControllerImpl.getAllCompletedInvestigationsByIdentificationNumber(identificationNumber);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(0, ((InvestigationToEditListDto)response.getBody()).getList().size());
+
+		
+		verify(this.subjectBusiness, times(1)).getSubjectFromIdentificationNumber(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
+	
+	@Test
+	public void getAllCompletedInvestigationsByIdentificationNumberNotEmptyListTest() {
+		String identificationNumber = "12345678A";
+		SubjectEntity subject = new SubjectEntity();
+		subject.setIdentificationNumber("1");
+	
+		List<InvestigationEntity> investigations = new ArrayList<>();
+		InvestigationEntity investigation1 = new InvestigationEntity();
+		investigation1.setCompleted(true);
+		investigation1.setNumberInvestigation(1);
+
+		InvestigationEntityDetails investigationEntityDetails = new InvestigationEntityDetails();
+		investigationEntityDetails.setId(2);
+		investigation1.setInvestigationEntityDetails(investigationEntityDetails);
+
+		InvestigationEntity investigation2 = new InvestigationEntity();
+		investigation2.setCompleted(false);
+		investigations.add(investigation1);
+		investigations.add(investigation2);
+
+		subject.setInvestigations(investigations);
+		
+		when(this.subjectBusiness.getSubjectFromIdentificationNumber(any())).thenReturn(subject);
+		
+		ResponseEntity<?> response = this.adminControllerImpl.getAllCompletedInvestigationsByIdentificationNumber(identificationNumber);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(1, ((InvestigationToEditListDto)response.getBody()).getList().size());
+		assertEquals("1", ((InvestigationToEditListDto)response.getBody()).getList().get(0).getSubjectIdentificationNumber());
+		assertEquals(new Integer(1), ((InvestigationToEditListDto)response.getBody()).getList().get(0).getNumberInvestigation());
+		assertEquals(new Integer(2), ((InvestigationToEditListDto)response.getBody()).getList().get(0).getInvestigationDetailsId());
+
+		verify(this.subjectBusiness, times(1)).getSubjectFromIdentificationNumber(any());
+		verifyZeroInteractions(this.researcherBusiness);
+		verifyZeroInteractions(this.userBusiness);
+	}
 }
