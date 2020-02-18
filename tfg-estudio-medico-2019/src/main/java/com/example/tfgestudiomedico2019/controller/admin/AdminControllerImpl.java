@@ -17,6 +17,7 @@ import com.example.tfgestudiomedico2019.model.entity.InvestigationEntityDetails;
 import com.example.tfgestudiomedico2019.model.entity.SubjectEntity;
 import com.example.tfgestudiomedico2019.model.entity.UserEntity;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToShowDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToShowListDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToUpdateDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditListDto;
@@ -351,6 +352,36 @@ public class AdminControllerImpl implements AdminController{
 		}
 		catch(Exception e) {
 		return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<?> getAllInvestigationDetailsAdmin() {
+		try {
+			List<SubjectEntity> listSubjects = this.researcherBusiness.getAllSubjects();
+
+			if(listSubjects == null) {
+		        return new ResponseEntity<>(new ResponseDto("Error al obtener la lista de citas"), HttpStatus.CONFLICT);
+			}
+			
+			ModelMapper mapper = new ModelMapper();
+			InvestigationDetailsToShowListDto investigationDetailsToShowListDto = new InvestigationDetailsToShowListDto();
+			
+			for(SubjectEntity subject: listSubjects) {
+				for(InvestigationEntity elem: subject.getInvestigations()) {
+					InvestigationDetailsToShowDto investigationDetailsToShowDto = new InvestigationDetailsToShowDto();
+					if(elem.getCompleted()) {
+						investigationDetailsToShowDto = mapper.map(elem.getInvestigationEntityDetails(), InvestigationDetailsToShowDto.class);
+					}
+					investigationDetailsToShowDto.setIdentificationNumber(subject.getIdentificationNumber());
+					investigationDetailsToShowListDto.getList().add(investigationDetailsToShowDto);
+				}
+			}
+
+	        return new ResponseEntity<>(investigationDetailsToShowListDto, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(new ResponseDto("Error en el servidor"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

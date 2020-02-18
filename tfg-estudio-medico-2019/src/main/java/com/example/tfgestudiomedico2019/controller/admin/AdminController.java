@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToShowDto;
+import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToShowListDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationDetailsToUpdateDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.InvestigationToEditListDto;
 import com.example.tfgestudiomedico2019.model.rest.investigation.NumberInvestigationsCompletedSubjectDto;
@@ -156,4 +157,13 @@ public interface AdminController {
     })
     @PostMapping(path = "/updateInvestigationDetails", produces = "application/json")
   	public ResponseEntity<?> updateInvestigationDetails(@RequestBody InvestigationDetailsToUpdateDto investigationDetailsToUpdate);
+
+	@ApiOperation(value = "Get a list of investigation details for all subjects")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "List Investigation details found successfully", response = InvestigationDetailsToShowListDto.class),
+    		@ApiResponse(code = 409, message = "List Investigation details doesn't exists", response= ResponseDto.class),
+    		@ApiResponse(code = 500, message = "Server error", response= ResponseDto.class)
+    })
+    @GetMapping(path = "/getAllInvestigationDetailsAdmin", produces = "application/json")
+    public ResponseEntity<?> getAllInvestigationDetailsAdmin();
 }
