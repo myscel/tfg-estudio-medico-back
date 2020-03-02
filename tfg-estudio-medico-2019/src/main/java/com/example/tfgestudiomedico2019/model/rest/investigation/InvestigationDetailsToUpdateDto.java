@@ -38,9 +38,9 @@ public class InvestigationDetailsToUpdateDto {
 	@ApiModelProperty(value = "If the subject uses spfCream", example = "true", dataType = "boolean")
 	private Boolean spfCream;
 	@ApiModelProperty(value = "Spf score of the subject", example = "1", dataType = "java.lang.Integer")
-	private Float spfScore;
+	private Integer spfScore;
 	@ApiModelProperty(value = "The vitaminD  of the subject", example = "25", dataType = "java.lang.Float")
-	private Float exercise;
+	private Integer exercise;
 	
 	@ApiModelProperty(value = "If the subject has a right control of dm2", example = "true", dataType = "boolean")
 	private Boolean dm2;
@@ -152,16 +152,16 @@ public class InvestigationDetailsToUpdateDto {
 	public void setSpfCream(Boolean spfCream) {
 		this.spfCream = spfCream;
 	}
-	public Float getSpfScore() {
+	public Integer getSpfScore() {
 		return spfScore;
 	}
-	public void setSpfScore(Float spfScore) {
+	public void setSpfScore(Integer spfScore) {
 		this.spfScore = spfScore;
 	}
-	public Float getExercise() {
+	public Integer getExercise() {
 		return exercise;
 	}
-	public void setExercise(Float exercise) {
+	public void setExercise(Integer exercise) {
 		this.exercise = exercise;
 	}
 	public Boolean getDm2() {
