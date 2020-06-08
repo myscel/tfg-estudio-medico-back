@@ -16,5 +16,5 @@
     - ``` mvn install ``` : Genera el archivo .jar definido en el pom.xml.
     
   2. Si queremos ejecutar la aplicación backend de manera local, lo único que tenemos que hacer es
-ejecutar la clase [TfgEstudioMedico2019Application](tree/master/tfg-estudio-medico-2019/src/main/java/com/example/tfgestudiomedico2019/TfgEstudioMedico2019Application.java), la cual contiene el método *main* en el entorno de desarrollo elegido, en nuestro caso, Eclipse.
+ejecutar la clase [TfgEstudioMedico2019Application](https://github.com/myscel/tfg-estudio-medico-back/tree/master/tfg-estudio-medico-2019/src/main/java/com/example/tfgestudiomedico2019/TfgEstudioMedico2019Application.java), la cual contiene el método *main* en el entorno de desarrollo elegido, en nuestro caso, Eclipse.
 
