@@ -1,5 +1,9 @@
 # TRABAJO DE FIN DE GRADO 2019/2020. UCM. Facultad de Informática 
 
+<p align="center">
+  <img src="imgs/logo_UCM.jpg" width="350">
+</p
+
 ## Esd2: Cuaderno de recogida de datos para un estudio médico
 
 **-Autores:** Eduardo Gonzalo Montero & Sergio Pacheco Fernández
