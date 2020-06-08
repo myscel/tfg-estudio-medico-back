@@ -15,6 +15,8 @@
     - ``` mvn clean ``` : Elimina los archivos generados anteriormente y descarga las librerías añadidas como dependencias en el archivo [pom.xml](https://github.com/myscel/tfg-estudio-medico-back/tree/master/tfg-estudio-medico-2019/pom.xml).                                          
     - ``` mvn install ``` : Genera el archivo .jar a partir del [pom.xml](https://github.com/myscel/tfg-estudio-medico-back/tree/master/tfg-estudio-medico-2019/pom.xml).
     
+![ejemplo clean install](https://github.com/myscel/tfg-estudio-medico-back/tree/master/imgs/cleaninstall.JPG)
+    
   2. Si queremos ejecutar la aplicación backend de manera local, lo único que tenemos que hacer es
 ejecutar la clase [TfgEstudioMedico2019Application](https://github.com/myscel/tfg-estudio-medico-back/tree/master/tfg-estudio-medico-2019/src/main/java/com/example/tfgestudiomedico2019/TfgEstudioMedico2019Application.java), la cual contiene el método *main*.
 
