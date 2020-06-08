@@ -2,7 +2,7 @@
 
 ## Esd2: Cuaderno de recogida de datos para un estudio médico
 
-**-Autores:** Eduardo Gonzalo Montero & Sergio Pacheco Fern´andez
+**-Autores:** Eduardo Gonzalo Montero & Sergio Pacheco Fernández
 
 **-Proyecto Backend:** Este repositorio contiene el proyecto Java Spring Boot el cual se trata de una API-REST implementada en el lenguaje de programación Java 8.
 
@@ -12,9 +12,9 @@
   
 **-Pasos a seguir para inicializar el proyecto:**
   1. Ejecutar los comandos:                                                          
-    - ``` mvn clean ``` : Elimina los archivos generados anteriormente y descarga las librer´ıas a˜nadidas como dependencias en el archivo pom.xml.                                          
+    - ``` mvn clean ``` : Elimina los archivos generados anteriormente y descarga las librerías añadidas como dependencias en el archivo pom.xml.                                          
     - ``` mvn install ``` : Genera el archivo .jar definido en el pom.xml.
     
   2. Si queremos ejecutar la aplicación backend de manera local, lo único que tenemos que hacer es
-ejecutar la clase ``` TfgEstudioMedico2019Application.java ```, la cual contiene el método *main* en el entorno de desarrollo elegido, en nuestro caso, Eclipse.
+ejecutar la clase [TfgEstudioMedico2019Application](tree/master/tfg-estudio-medico-2019/src/main/java/com/example/tfgestudiomedico2019/TfgEstudioMedico2019Application.java), la cual contiene el método *main* en el entorno de desarrollo elegido, en nuestro caso, Eclipse.
 
