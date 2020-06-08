@@ -12,5 +12,9 @@
   
 **-Pasos a seguir para inicializar el proyecto:**
   1. Ejecutar los comandos:
-    - ``` mvn clean ```
-    - ``` mvn install ```
+    - ``` mvn clean ``` : Elimina los archivos generados anteriormente y descarga las librer´ıas a˜nadidas como dependencias en el archivo pom.xml.
+    - ``` mvn install ``` : Genera el archivo .jar definido en el pom.xml.
+    
+  2. Si queremos ejecutar la aplicación backend de manera local, lo único que tenemos que hacer es
+ejecutar la clase ``` TfgEstudioMedico2019Application.java ```, la cual contiene el método *main* en el entorno de desarrollo elegido, en nuestro caso, Eclipse.
+
