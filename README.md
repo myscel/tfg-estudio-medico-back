@@ -27,3 +27,5 @@
   2. Si queremos ejecutar la aplicación backend de manera local, lo único que tenemos que hacer es
 ejecutar la clase [TfgEstudioMedico2019Application](https://github.com/myscel/tfg-estudio-medico-back/tree/master/tfg-estudio-medico-2019/src/main/java/com/example/tfgestudiomedico2019/TfgEstudioMedico2019Application.java), la cual contiene el método *main*.
 
+  3. Si queremos ejecutar la aplicacóon backend de manera remota, solo tenemos que desplegar el archivo .jar generado anteriormente en el servicio de Hosting escogido.
+
