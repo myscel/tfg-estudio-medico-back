@@ -12,7 +12,7 @@
   
 **-Pasos a seguir para inicializar el proyecto:**
   1. Ejecutar los comandos:                                                          
-    - ``` mvn clean ``` : Elimina los archivos generados anteriormente y descarga las librerías añadidas como dependencias en el archivo pom.xml.                                          
+    - ``` mvn clean ``` : Elimina los archivos generados anteriormente y descarga las librerías añadidas como dependencias en el archivo [pom.xml](https://github.com/myscel/tfg-estudio-medico-back/tree/master/tfg-estudio-medico-2019/pom.xml).                                          
     - ``` mvn install ``` : Genera el archivo .jar definido en el pom.xml.
     
   2. Si queremos ejecutar la aplicación backend de manera local, lo único que tenemos que hacer es
