@@ -11,4 +11,6 @@
   - IDE capaz de ejecutar proyectos Java Spring (en nuestro caso Eclipse).
   
 **-Pasos a seguir para inicializar el proyecto:**
-  - Ejecutar el comando 
+  1. Ejecutar los comandos:
+    - ``` mvn clean ```
+    - ``` mvn install ```
