@@ -1,4 +1,7 @@
-# TRABAJO DE FIN DE GRADO 2019/2020. UCM. Facultad de Informática 
+
+<p align="center">
+  TRABAJO DE FIN DE GRADO 2019/2020. UCM. Facultad de Informática 
+</p>
 
 <p align="center">
   <img src="imgs/logo_UCM.jpg" width="500">
